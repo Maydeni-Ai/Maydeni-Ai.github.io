@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maydeni AI — Inscription</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: linear-gradient(135deg, #0D6B6E 0%, #094D4F 100%); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:20px; }
+        .register-card { background:#FFF; border-radius:16px; padding:40px; max-width:560px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+        .logo { text-align:center; margin-bottom:24px; }
+        .logo h1 { font-size:28px; color:#0D6B6E; font-weight:900; }
+        .logo p { color:#6B7280; font-size:14px; margin-top:4px; }
+        h2 { color:#1F2937; margin-bottom:20px; font-size:20px; }
+        .form-group { margin-bottom:16px; }
+        .form-group label { display:block; font-size:13px; font-weight:600; color:#374151; margin-bottom:4px; }
+        .form-group input, .form-group select { width:100%; padding:10px 12px; border:1px solid #D1D5DB; border-radius:8px; font-size:14px; }
+        .form-group input:focus, .form-group select:focus { outline:none; border-color:#0D6B6E; box-shadow:0 0 0 3px rgba(13,107,110,0.1); }
+        .form-row { display:flex; gap:12px; }
+        .form-row .form-group { flex:1; }
+        .section-title { font-size:14px; font-weight:700; color:#0D6B6E; margin:24px 0 12px; padding-bottom:4px; border-bottom:2px solid #E5E7EB; }
+        .btn-submit { width:100%; padding:12px; background:#0D6B6E; color:#FFF; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; margin-top:20px; }
+        .btn-submit:hover { background:#003d7a; }
+        .btn-submit:disabled { background:#9CA3AF; cursor:not-allowed; }
+        .msg { padding:12px; border-radius:8px; margin-top:16px; font-size:14px; display:none; }
+        .msg.success { display:block; background:#D1FAE5; color:#065F46; border:1px solid #6EE7B7; }
+        .msg.error { display:block; background:#FEE2E2; color:#991B1B; border:1px solid #FCA5A5; }
+        .login-link { text-align:center; margin-top:20px; }
+        .login-link a { color:#0D6B6E; text-decoration:none; font-weight:600; }
+        /* Payment success box */
+        .payment-box { display:none; background:#FFF; border-radius:16px; padding:32px; max-width:560px; width:100%; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
+        /* Billing period picker */
+        .billing-opt { cursor:pointer;border:2px solid #D1D5DB;border-radius:10px;padding:10px;text-align:center;background:#FFF;transition:all .2s; }
+        .billing-opt.selected { border-color:#0D6B6E;background:#EFF6FF;box-shadow:0 0 0 3px rgba(13,107,110,0.15); }
+        .billing-opt:hover { border-color:#0D6B6E; }
+        .bo-badge { font-size:11px;font-weight:700;color:#0D6B6E;margin-bottom:2px; }
+        .bo-label { font-weight:700;font-size:14px;color:#1F2937; }
+        .bo-price { font-size:18px;font-weight:900;color:#10B981;margin:2px 0; }
+        .bo-old { font-size:11px;color:#9CA3AF;text-decoration:line-through; }
+    </style>
+</head>
+<body>
+    <!-- REGISTRATION FORM -->
+    <div class="register-card" id="register-card">
+        <div class="logo">
+            <img src="img/logo-full.png" alt="Maydeni AI" style="width:260px;height:auto;margin:0 auto;display:block;">
+            <p>Smart Field Operations</p>
+        </div>
+        <h2>Créer un compte société</h2>
+        <form id="register-form" onsubmit="return submitRegistration(event)" autocomplete="off">
+            <div class="section-title">Informations société</div>
+            <div class="form-group">
+                <label>Nom de la société *</label>
+                <input type="text" id="company_name" required minlength="2" placeholder="Ex: Pharma Distribution SA">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Secteur d'activité</label>
+                    <input type="text" id="industry" placeholder="Ex: Distribution pharmaceutique">
+                </div>
+                <div class="form-group">
+                    <label>Ville</label>
+                    <input type="text" id="city" placeholder="Ex: Tunis">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Adresse</label>
+                <input type="text" id="address" placeholder="Ex: 12 Rue de la Liberté, 1002 Tunis">
+            </div>
+            <div class="form-group">
+                <label>Matricule fiscale</label>
+                <input type="text" id="matricule_fiscale" placeholder="Ex: 1234567/A/M/000" maxlength="50">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email société *</label>
+                    <input type="email" id="email" required placeholder="contact@societe.com">
+                </div>
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel" id="phone" placeholder="+216 XX XXX XXX">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Forfait *</label>
+                <select id="plan_id" required>
+                    <option value="">-- Choisir un forfait --</option>
+                </select>
+            </div>
+
+            <div class="section-title">Durée d'abonnement</div>
+            <div id="billing-picker" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px;">
+                <label class="billing-opt selected" onclick="selectBilling(this,1)">
+                    <input type="radio" name="reg_billing" value="1" checked style="display:none;">
+                    <div class="bo-label">1 mois</div>
+                    <div class="bo-price" id="bp-1">—</div>
+                </label>
+                <label class="billing-opt" onclick="selectBilling(this,3)">
+                    <input type="radio" name="reg_billing" value="3" style="display:none;">
+                    <div class="bo-badge">🔥 -10%</div>
+                    <div class="bo-label">3 mois</div>
+                    <div class="bo-price" id="bp-3">—</div>
+                    <div class="bo-old" id="bp-3-old"></div>
+                </label>
+                <label class="billing-opt" onclick="selectBilling(this,6)">
+                    <input type="radio" name="reg_billing" value="6" style="display:none;">
+                    <div class="bo-badge">⭐ -20%</div>
+                    <div class="bo-label">6 mois</div>
+                    <div class="bo-price" id="bp-6">—</div>
+                    <div class="bo-old" id="bp-6-old"></div>
+                </label>
+                <label class="billing-opt" onclick="selectBilling(this,12)">
+                    <input type="radio" name="reg_billing" value="12" style="display:none;">
+                    <div class="bo-badge">💎 -30%</div>
+                    <div class="bo-label">12 mois</div>
+                    <div class="bo-price" id="bp-12">—</div>
+                    <div class="bo-old" id="bp-12-old"></div>
+                </label>
+            </div>
+
+            <div class="section-title">Compte directeur</div>
+            <div class="form-group">
+                <label>Nom complet du directeur *</label>
+                <input type="text" id="director_name" required minlength="2" placeholder="Prénom Nom">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Identifiant de connexion *</label>
+                    <input type="text" id="director_username" required minlength="3" placeholder="identifiant123" autocomplete="new-username" data-lpignore="true" data-form-type="other">
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe *</label>
+                    <input type="password" id="director_password" required minlength="8" placeholder="Min 8 caractères" autocomplete="new-password" data-lpignore="true" data-form-type="other">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email directeur</label>
+                    <input type="email" id="director_email" placeholder="directeur@societe.com">
+                </div>
+                <div class="form-group">
+                    <label>Téléphone directeur</label>
+                    <input type="tel" id="director_phone" placeholder="+216 XX XXX XXX">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit" id="btn-submit">Envoyer la demande d'inscription</button>
+        </form>
+        <div id="msg" class="msg"></div>
+    </div>
+
+    <!-- PAYMENT BOX — shown after successful registration -->
+    <div class="payment-box" id="payment-box">
+        <div style="text-align:center;">
+            <div style="font-size:48px;margin-bottom:8px;">🎉</div>
+            <h2 style="color:#0D6B6E;margin-bottom:4px;">Inscription envoyée !</h2>
+        </div>
+
+        <!-- Amount + ref -->
+        <div style="background:linear-gradient(135deg,#0D6B6E,#094D4F);border-radius:14px;padding:24px;margin:16px 0;text-align:center;color:#FFF;">
+            <p style="font-size:13px;opacity:0.8;margin-bottom:4px;">Montant à payer</p>
+            <p style="font-size:36px;font-weight:900;margin:4px 0;" id="pay-amount-big">—</p>
+            <p style="font-size:12px;opacity:0.7;">Réf: <span id="pay-ref" style="font-family:monospace;font-weight:600;">—</span></p>
+        </div>
+
+        <!-- ★ FLOUCI — primary method, ultra simple -->
+        <div style="background:#F0FDF4;border:3px solid #10B981;border-radius:14px;padding:20px;margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                <div style="font-size:32px;">📱</div>
+                <div>
+                    <div style="font-weight:800;font-size:17px;color:#065F46;">Payez en 30 secondes via Flouci</div>
+                    <div style="font-size:12px;color:#10B981;font-weight:600;">⚡ Le plus rapide — Activation sous 24h</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Copy phone -->
+            <div style="display:flex;align-items:center;gap:10px;background:#FFF;border-radius:10px;padding:12px;margin-bottom:10px;border:1px solid #D1FAE5;">
+                <div style="background:#10B981;color:#FFF;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">1</div>
+                <div style="flex:1;">
+                    <div style="font-size:12px;color:#6B7280;">Envoyez à ce numéro :</div>
+                    <div style="font-size:18px;font-weight:900;color:#0D6B6E;font-family:monospace;" id="flouci-phone">—</div>
+                </div>
+                <button onclick="event.stopPropagation();copyBtn(this, document.getElementById('flouci-phone').textContent)" style="background:#0D6B6E;color:#FFF;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">📋 Copier</button>
+            </div>
+
+            <!-- Step 2: Amount -->
+            <div style="display:flex;align-items:center;gap:10px;background:#FFF;border-radius:10px;padding:12px;margin-bottom:10px;border:1px solid #D1FAE5;">
+                <div style="background:#10B981;color:#FFF;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">2</div>
+                <div style="flex:1;">
+                    <div style="font-size:12px;color:#6B7280;">Montant exact :</div>
+                    <div style="font-size:18px;font-weight:900;color:#10B981;" id="flouci-amount">—</div>
+                </div>
+                <button onclick="event.stopPropagation();copyBtn(this, document.getElementById('flouci-amount').textContent.replace(' DT',''))" style="background:#10B981;color:#FFF;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">📋 Copier</button>
+            </div>
+
+            <!-- Step 3: Ref -->
+            <div style="display:flex;align-items:center;gap:10px;background:#FFF;border-radius:10px;padding:12px;margin-bottom:14px;border:1px solid #D1FAE5;">
+                <div style="background:#10B981;color:#FFF;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">3</div>
+                <div style="flex:1;">
+                    <div style="font-size:12px;color:#6B7280;">Dans la note/motif :</div>
+                    <div style="font-size:15px;font-weight:700;color:#0D6B6E;font-family:monospace;" id="flouci-ref">—</div>
+                </div>
+                <button onclick="event.stopPropagation();copyBtn(this, document.getElementById('flouci-ref').textContent)" style="background:#6B7280;color:#FFF;border:none;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;">📋 Copier</button>
+            </div>
+
+            <!-- Big CTA button -->
+            <button onclick="window.open('https://flouci.page.link','_blank')" style="width:100%;padding:14px;background:linear-gradient(135deg,#10B981,#059669);color:#FFF;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);">
+                📱 Ouvrir Flouci et Envoyer
+            </button>
+            <p style="font-size:11px;color:#6B7280;text-align:center;margin-top:6px;">Vous n'avez pas Flouci ? <a href="https://onelink.to/flouci" target="_blank" style="color:#0D6B6E;font-weight:600;">Téléchargez l'app gratuitement</a></p>
+        </div>
+
+        <!-- Other methods (collapsed) -->
+        <details style="margin-bottom:12px;">
+            <summary style="cursor:pointer;font-size:14px;color:#6B7280;font-weight:600;padding:8px 0;">
+                📮 Autres méthodes de paiement
+            </summary>
+            <div style="padding-top:12px;">
+                <!-- D17 -->
+                <div style="border:1px solid #E5E7EB;border-radius:10px;padding:14px;margin-bottom:10px;">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">📮 D17 (La Poste Tunisienne)</div>
+                    <p style="font-size:13px;color:#374151;">
+                        Envoyez <strong id="d17-amount">—</strong> au numéro <strong id="d17-phone" style="color:#0D6B6E;">—</strong>
+                        <button onclick="copyBtn(this, document.getElementById('d17-phone').textContent)" style="background:none;border:none;cursor:pointer;font-size:14px;vertical-align:middle;">📋</button>
+                    </p>
+                </div>
+                <!-- Virement -->
+                <div style="border:1px solid #E5E7EB;border-radius:10px;padding:14px;">
+                    <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🏦 Virement bancaire</div>
+                    <div style="font-size:13px;color:#374151;line-height:1.8;">
+                        <div><strong>IBAN :</strong> <span id="vir-iban" style="font-family:monospace;color:#0D6B6E;">—</span>
+                            <button onclick="copyBtn(this, document.getElementById('vir-iban').textContent.replace(/\s/g,''))" style="background:none;border:none;cursor:pointer;font-size:14px;vertical-align:middle;">📋</button></div>
+                        <div><strong>Bénéficiaire :</strong> <span id="vir-benef">—</span></div>
+                        <div><strong>Banque :</strong> <span id="vir-bank">—</span></div>
+                        <div><strong>SWIFT :</strong> <span id="vir-swift">—</span></div>
+                        <div><strong>Motif :</strong> <span id="vir-ref" style="font-family:monospace;color:#0D6B6E;">—</span></div>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <!-- After payment notice -->
+        <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:14px;">
+            <p style="font-size:13px;color:#92400E;margin:0;">
+                <strong>⏱ Après votre envoi :</strong> Votre compte sera activé sous <strong>24h max</strong>. Vous recevrez un email avec vos identifiants et liens de téléchargement.
+            </p>
+        </div>
+
+        <!-- ═══ ONBOARDING: Upload data files ═══ -->
+        <div style="margin-top:20px;border-top:2px solid #E5E7EB;padding-top:20px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+                <div style="font-size:32px;">📊</div>
+                <div>
+                    <h3 style="margin:0;color:#1F2937;font-size:17px;">Envoyez vos données maintenant !</h3>
+                    <p style="margin:2px 0 0;font-size:13px;color:#6B7280;">Vos prospects, produits et commandes seront prêts dès l'activation</p>
+                </div>
+            </div>
+
+            <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:16px;margin-bottom:16px;">
+                <p style="margin:0;font-size:13px;color:#1E40AF;">
+                    <strong>💡 Astuce :</strong> Envoyez vos fichiers Excel (.xlsx) ou CSV maintenant. Nous importerons automatiquement vos données pour que tout soit en place quand votre compte sera activé !
+                </p>
+            </div>
+
+            <form id="onboarding-form" onsubmit="return submitOnboarding(event)" enctype="multipart/form-data">
+                <!-- Prospects file -->
+                <div style="border:1px solid #E5E7EB;border-radius:10px;padding:14px;margin-bottom:10px;">
+                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                        <div style="background:#0D6B6E;color:#FFF;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📋</div>
+                        <div style="flex:1;">
+                            <div style="font-weight:700;font-size:14px;color:#1F2937;">Liste des Prospects / Clients</div>
+                            <div style="font-size:12px;color:#6B7280;">Colonnes : nom, type, ville, téléphone, email, spécialité...</div>
+                        </div>
+                    </label>
+                    <input type="file" id="file-prospects" accept=".xlsx,.xls,.csv" style="margin-top:8px;font-size:13px;width:100%;">
+                    <div id="status-prospects" style="font-size:12px;margin-top:4px;display:none;"></div>
+                </div>
+
+                <!-- Products file -->
+                <div style="border:1px solid #E5E7EB;border-radius:10px;padding:14px;margin-bottom:10px;">
+                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                        <div style="background:#10B981;color:#FFF;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📦</div>
+                        <div style="flex:1;">
+                            <div style="font-weight:700;font-size:14px;color:#1F2937;">Liste des Produits</div>
+                            <div style="font-size:12px;color:#6B7280;">Colonnes : nom, catégorie, prix, référence...</div>
+                        </div>
+                    </label>
+                    <input type="file" id="file-products" accept=".xlsx,.xls,.csv" style="margin-top:8px;font-size:13px;width:100%;">
+                    <div id="status-products" style="font-size:12px;margin-top:4px;display:none;"></div>
+                </div>
+
+                <!-- Orders file -->
+                <div style="border:1px solid #E5E7EB;border-radius:10px;padding:14px;margin-bottom:14px;">
+                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                        <div style="background:#F59E0B;color:#FFF;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🧾</div>
+                        <div style="flex:1;">
+                            <div style="font-weight:700;font-size:14px;color:#1F2937;">Historique des Commandes</div>
+                            <div style="font-size:12px;color:#6B7280;">Colonnes : client, produit, quantité, prix, date...</div>
+                        </div>
+                    </label>
+                    <input type="file" id="file-orders" accept=".xlsx,.xls,.csv" style="margin-top:8px;font-size:13px;width:100%;">
+                    <div id="status-orders" style="font-size:12px;margin-top:4px;display:none;"></div>
+                </div>
+
+                <button type="submit" id="btn-onboarding" style="width:100%;padding:14px;background:linear-gradient(135deg,#0D6B6E,#094D4F);color:#FFF;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 4px 12px rgba(13,107,110,0.3);">
+                    📤 Envoyer mes données
+                </button>
+                <p style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:6px;">Formats acceptés : .xlsx, .xls, .csv (max 10 Mo par fichier)</p>
+            </form>
+
+            <div id="onboarding-result" style="display:none;margin-top:16px;"></div>
+        </div>
+    </div>
+
+    <style>
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+
+    <script>
+        const API_BASE = window.MAYDENI_API_URL || 'https://mega-supervision-api.onrender.com/api';
+        let plansData = []; // store loaded plans for billing calc
+
+        function selectBilling(el, months) {
+            document.querySelectorAll('.billing-opt').forEach(l => l.classList.remove('selected'));
+            el.classList.add('selected');
+            el.querySelector('input').checked = true;
+        }
+
+        function updateBillingPrices() {
+            const select = document.getElementById('plan_id');
+            const selectedOpt = select.options[select.selectedIndex];
+            if (!selectedOpt || !selectedOpt.value) return;
+            const plan = plansData.find(p => p.id == selectedOpt.value);
+            if (!plan) return;
+            const mp = parseFloat(plan.price_dt);
+            const discounts = { 1: 0, 3: 10, 6: 20, 12: 30 };
+            [1, 3, 6, 12].forEach(m => {
+                const d = discounts[m];
+                const total = +(mp * m * (1 - d / 100)).toFixed(0);
+                const el = document.getElementById('bp-' + m);
+                if (el) el.textContent = total + ' DT HT';
+                const oldEl = document.getElementById('bp-' + m + '-old');
+                if (oldEl) oldEl.textContent = d > 0 ? (mp * m).toFixed(0) + ' DT HT' : '';
+            });
+        }
+
+        // Pre-select plan from URL param
+        (async function() {
+            try {
+                const res = await fetch(API_BASE + '/plans');
+                const data = await res.json();
+                plansData = data.plans || [];
+                const select = document.getElementById('plan_id');
+                plansData.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    const agentsLabel = p.max_delegates >= 9999 ? '11 et +' : 'max ' + p.max_delegates;
+                    opt.textContent = `${p.display_name} — ${p.price_dt} DT HT/mois (${agentsLabel} agents terrain)`;
+                    select.appendChild(opt);
+                });
+                // Auto-select plan from URL
+                const urlPlan = new URLSearchParams(window.location.search).get('plan');
+                if (urlPlan) {
+                    for (const opt of select.options) {
+                        if (opt.textContent.toLowerCase().includes(urlPlan.toLowerCase())) {
+                            opt.selected = true; break;
+                        }
+                    }
+                }
+                // Update billing prices when plan changes
+                select.addEventListener('change', updateBillingPrices);
+                updateBillingPrices();
+                // Auto-select billing from URL param
+                const urlBilling = new URLSearchParams(window.location.search).get('billing');
+                if (urlBilling && [3,6,12].includes(parseInt(urlBilling))) {
+                    const radio = document.querySelector(`input[name="reg_billing"][value="${urlBilling}"]`);
+                    if (radio) {
+                        radio.checked = true;
+                        const label = radio.closest('.billing-opt');
+                        if (label) selectBilling(label, parseInt(urlBilling));
+                    }
+                }
+            } catch (err) {
+                console.error('Erreur chargement forfaits:', err);
+            }
+        })();
+
+        async function submitRegistration(e) {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit');
+            const msg = document.getElementById('msg');
+            btn.disabled = true;
+            btn.textContent = 'Envoi en cours...';
+            msg.className = 'msg';
+            msg.style.display = 'none';
+
+            const body = {
+                company_name: document.getElementById('company_name').value.trim(),
+                industry: document.getElementById('industry').value.trim() || undefined,
+                city: document.getElementById('city').value.trim() || undefined,
+                address: document.getElementById('address').value.trim() || undefined,
+                matricule_fiscale: document.getElementById('matricule_fiscale').value.trim() || undefined,
+                email: document.getElementById('email').value.trim(),
+                phone: document.getElementById('phone').value.trim() || undefined,
+                plan_id: parseInt(document.getElementById('plan_id').value),
+                director_name: document.getElementById('director_name').value.trim(),
+                director_username: document.getElementById('director_username').value.trim(),
+                director_password: document.getElementById('director_password').value,
+                director_email: document.getElementById('director_email').value.trim() || undefined,
+                director_phone: document.getElementById('director_phone').value.trim() || undefined,
+            };
+
+            try {
+                const res = await fetch(API_BASE + '/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || data.errors?.[0]?.msg || 'Erreur');
+
+                // Registration successful → store credentials and show payment box
+                sessionStorage.setItem('fp_token', data.token || 'registered');
+                if (data.user) sessionStorage.setItem('fp_user', JSON.stringify(data.user));
+                _tenantId = data.tenant?.id;
+                await showPaymentBox(data, body);
+
+            } catch (err) {
+                msg.className = 'msg error';
+                msg.textContent = '❌ ' + err.message;
+                btn.disabled = false;
+                btn.textContent = "Envoyer la demande d'inscription";
+            }
+            return false;
+        }
+
+        async function showPaymentBox(regData, formData) {
+            // Get plan price and billing months
+            const select = document.getElementById('plan_id');
+            const selectedText = select.options[select.selectedIndex]?.textContent || '';
+            const priceMatch = selectedText.match(/(\d+)\s*DT/);
+            const amountDT = priceMatch ? priceMatch[1] : '?';
+            const billingRadio = document.querySelector('input[name="reg_billing"]:checked');
+            const billingMonths = billingRadio ? parseInt(billingRadio.value) : 1;
+
+            // Show payment box
+            document.getElementById('register-card').style.display = 'none';
+            const box = document.getElementById('payment-box');
+            box.style.display = 'block';
+
+            try {
+                const payRes = await fetch(API_BASE + '/payments/first-payment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tenant_id: regData.tenant?.id, billing_months: billingMonths }),
+                });
+                const payData = await payRes.json();
+
+                // Populate payment reference and amount
+                const ref = payData.payment_ref || '—';
+                const amount = payData.amount_dt ? payData.amount_dt + ' DT' : amountDT + ' DT';
+                document.getElementById('pay-ref').textContent = ref;
+                document.getElementById('pay-amount-big').textContent = amount;
+
+                // Populate Virement details
+                if (payData.payment_methods?.virement) {
+                    const v = payData.payment_methods.virement;
+                    const el = id => { const e = document.getElementById(id); if (e) e.textContent = v[id.replace('vir-','')] || ''; };
+                    if (v.beneficiary) document.getElementById('vir-benef').textContent = v.beneficiary;
+                    if (v.bank) document.getElementById('vir-bank').textContent = v.bank;
+                    if (v.iban) document.getElementById('vir-iban').textContent = v.iban;
+                    if (v.swift) document.getElementById('vir-swift').textContent = v.swift;
+                    document.getElementById('vir-amount').textContent = amount;
+                    document.getElementById('vir-ref').textContent = ref;
+                    document.getElementById('vir-ref2').textContent = ref;
+                }
+
+                // Auto-open first payment method if available
+                const firstPayMethod = document.querySelector('.pay-method');
+                if (firstPayMethod) togglePayMethod(firstPayMethod);
+
+            } catch(e) {
+                // API error — show basic info
+                document.getElementById('pay-amount-big').textContent = amountDT + ' DT';
+            }
+        }
+
+        function togglePayMethod(el) {
+            const details = el.querySelector('.pay-details');
+            const isOpen = details.style.display !== 'none';
+            // Close all
+            document.querySelectorAll('.pay-method .pay-details').forEach(d => d.style.display = 'none');
+            document.querySelectorAll('.pay-method').forEach(m => m.style.borderColor = '#E5E7EB');
+            // Open clicked if was closed
+            if (!isOpen) {
+                details.style.display = 'block';
+                el.style.borderColor = '#0D6B6E';
+            }
+        }
+
+        function copyText(text, label) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert(label + ' copié : ' + text);
+            });
+        }
+
+        function copyBtn(btn, text) {
+            navigator.clipboard.writeText(text.trim()).then(() => {
+                const orig = btn.innerHTML;
+                btn.innerHTML = '✓ Copié';
+                btn.style.background = '#10B981';
+                setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 1500);
+            }).catch(() => {
+                // Fallback for insecure context
+                const ta = document.createElement('textarea');
+                ta.value = text.trim();
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                const orig = btn.innerHTML;
+                btn.innerHTML = '✓ Copié';
+                setTimeout(() => { btn.innerHTML = orig; }, 1500);
+            });
+        }
+
+        // ═══ ONBOARDING FILE UPLOAD ═══
+        let _tenantId = null;
+
+        async function submitOnboarding(e) {
+            e.preventDefault();
+            if (!_tenantId) return alert('Erreur: inscription non trouvée');
+
+            const fProspects = document.getElementById('file-prospects').files[0];
+            const fProducts = document.getElementById('file-products').files[0];
+            const fOrders = document.getElementById('file-orders').files[0];
+
+            if (!fProspects && !fProducts && !fOrders) {
+                return alert('Veuillez sélectionner au moins un fichier');
+            }
+
+            const btn = document.getElementById('btn-onboarding');
+            btn.disabled = true;
+            btn.textContent = '⏳ Import en cours...';
+
+            const formData = new FormData();
+            formData.append('tenant_id', _tenantId);
+            if (fProspects) formData.append('prospects', fProspects);
+            if (fProducts) formData.append('products', fProducts);
+            if (fOrders) formData.append('orders', fOrders);
+
+            try {
+                const res = await fetch(API_BASE + '/onboarding/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'Erreur serveur');
+
+                const resultDiv = document.getElementById('onboarding-result');
+                let html = '<div style="background:#D1FAE5;border:1px solid #6EE7B7;border-radius:10px;padding:16px;">';
+                html += '<h4 style="margin:0 0 8px;color:#065F46;">✅ Données importées avec succès !</h4>';
+
+                const r = data.results;
+                if (r.prospects) {
+                    html += `<p style="margin:2px 0;font-size:13px;">📋 Prospects : <strong>${r.prospects.imported}</strong> importés`;
+                    if (r.prospects.skipped > 0) html += ` (${r.prospects.skipped} ignorés)`;
+                    html += '</p>';
+                    showFileStatus('prospects', true, `${r.prospects.imported} importés`);
+                }
+                if (r.products) {
+                    html += `<p style="margin:2px 0;font-size:13px;">📦 Produits : <strong>${r.products.imported}</strong> importés`;
+                    if (r.products.skipped > 0) html += ` (${r.products.skipped} ignorés)`;
+                    html += '</p>';
+                    showFileStatus('products', true, `${r.products.imported} importés`);
+                }
+                if (r.orders) {
+                    html += `<p style="margin:2px 0;font-size:13px;">🧾 Commandes : <strong>${r.orders.imported}</strong> importées`;
+                    if (r.orders.skipped > 0) html += ` (${r.orders.skipped} ignorées)`;
+                    html += '</p>';
+                    showFileStatus('orders', true, `${r.orders.imported} importées`);
+                }
+
+                html += '<p style="margin:8px 0 0;font-size:12px;color:#065F46;">Vos données seront prêtes dès l\'activation de votre compte !</p>';
+                html += '</div>';
+                resultDiv.innerHTML = html;
+                resultDiv.style.display = 'block';
+
+                btn.textContent = '✅ Données envoyées !';
+                btn.style.background = '#10B981';
+            } catch (err) {
+                alert('❌ Erreur: ' + err.message);
+                btn.disabled = false;
+                btn.textContent = '📤 Envoyer mes données';
+            }
+            return false;
+        }
+
+        function showFileStatus(type, success, msg) {
+            const el = document.getElementById('status-' + type);
+            if (!el) return;
+            el.style.display = 'block';
+            el.style.color = success ? '#065F46' : '#991B1B';
+            el.textContent = success ? '✅ ' + msg : '❌ ' + msg;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "build": 1,
+  "date": "2026-04-15",
+  "changelog": [
+    "Version initiale de Maydeni AI",
+    "Dashboard directeur commercial natif",
+    "Application agents terrain multi-plateforme",
+    "IA prédictive et anti-fraude GPS",
+    "Gamification et scoring en temps réel"
+  ],
+  "downloads": {
+    "dashboard": {
+      "web": "dashboard/"
+    },
+    "agent": {
+      "android": "downloads/maydeni.apk",
+      "ios": "downloads/MaydeniAI.ipa"
+    }
+  },
+  "mandatory": false,
+  "message": ""
+}

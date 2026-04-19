@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <linearGradient id="wg" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0D6B6E"/>
+      <stop offset="50%" style="stop-color:#1B9EA1"/>
+      <stop offset="100%" style="stop-color:#4DC9D9"/>
+    </linearGradient>
+    <linearGradient id="ag" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#1B9EA1"/>
+      <stop offset="100%" style="stop-color:#5DD8E8"/>
+    </linearGradient>
+  </defs>
+  <!-- M Wave -->
+  <path d="M20,72 C28,72 32,52 42,38 C52,24 56,48 66,62 C76,76 80,48 90,30 C94,22 96,18 100,16" 
+        stroke="url(#wg)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Arrow -->
+  <polygon points="100,8 108,20 100,16 93,24" fill="url(#ag)"/>
+  <!-- AI -->
+  <circle cx="104" cy="8" r="4" fill="#0D6B6E"/>
+  <circle cx="112" cy="13" r="2.5" fill="#4DC9D9" opacity="0.7"/>
+  <line x1="104" y1="8" x2="112" y2="13" stroke="#4DC9D9" stroke-width="1" opacity="0.5"/>
+  <text x="104" y="8" font-family="Inter,sans-serif" font-weight="800" font-size="7" fill="#FFF" text-anchor="middle" dominant-baseline="central">AI</text>
+  <!-- MAYDANI below -->
+  <text x="60" y="102" text-anchor="middle" font-family="Inter,sans-serif" font-weight="900" font-size="18" fill="#1A2332" letter-spacing="2">MAYDANI</text>
+</svg>

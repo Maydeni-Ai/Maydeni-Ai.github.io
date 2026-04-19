@@ -1,0 +1,2215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maydeni AI | Dashboard</title>
+    <meta name="description" content="Dashboard Maydeni AI — Supervision terrain en temps réel">
+    <meta name="theme-color" content="#0D6B6E">
+    <link rel="icon" type="image/png" sizes="48x48" href="../img/logo-icon-48.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Maydeni AI">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta property="og:title" content="Maydeni AI — Dashboard Directeur">
+    <meta property="og:description" content="Supervision terrain en temps réel : GPS, anti-fraude, IA prédictive, gamification.">
+    <meta property="og:image" content="https://neolamcha.github.io/Mega-Supervision/img/og-preview.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://neolamcha.github.io/Mega-Supervision/dashboard/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Maydeni AI">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://neolamcha.github.io/Mega-Supervision/img/og-preview.png">
+    <link rel="stylesheet" href="css/dashboard.css?v=6">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>.agent-label{background:#0D6B6E!important;color:#fff!important;border:none!important;border-radius:6px!important;padding:2px 8px!important;font-size:11px!important;font-weight:600!important;font-family:Inter,sans-serif!important;box-shadow:0 2px 6px rgba(0,0,0,.2)!important;white-space:nowrap!important;}.agent-label::before{border-top-color:#0D6B6E!important;}</style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- API Backend Render.com -->
+    <script>window.MAYDENI_API_URL = 'https://mega-supervision-api.onrender.com/api';</script>
+</head>
+<body>
+
+<!-- ════════════ INTRO — AI NEURAL GENESIS ════════════ -->
+<div id="intro-overlay">
+    <canvas id="intro-neural"></canvas>
+    <div class="intro-content">
+        <div class="ai-brain-container" id="aiBrain">
+            <div class="ai-orbit ai-orbit-1"></div>
+            <div class="ai-orbit ai-orbit-2"></div>
+            <div class="ai-orbit ai-orbit-3"></div>
+            <div class="ai-core"><div class="ai-core-inner">AI</div></div>
+            <div class="ai-pulse-ring"></div>
+            <div class="ai-pulse-ring r2"></div>
+            <div class="ai-pulse-ring r3"></div>
+        </div>
+        <div class="ai-powered-text" id="aiPoweredText">
+            <span class="ai-p-word">Powered</span>
+            <span class="ai-p-by">by</span>
+            <span class="ai-p-ai">Artificial Intelligence</span>
+        </div>
+        <div class="intro-logo-wrap" id="logoReveal">
+            <div class="intro-brand-name">MAYDENI</div>
+            <div class="intro-brand-ai">AI</div>
+        </div>
+        <div class="intro-sub-wrap" id="introSub">
+            <div class="intro-tagline-new">SMART FIELD OPERATIONS</div>
+            <div class="intro-loader"><div class="intro-loader-bar"></div></div>
+            <div class="intro-dev-credit">Développé par le <strong>Dr. Slim Lamouchi</strong> fondateur d'Elyesio</div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════ LOGIN ════════════ -->
+<div id="login-screen" style="display:none;">
+    <div class="login-card">
+        <div class="login-logo">
+            <img src="../img/logo-full.png" alt="Maydeni AI" style="width:280px;height:auto;margin:0 auto;display:block;">
+        </div>
+        <h2 data-i18n="login.title">Connexion Dashboard</h2>
+        <form id="login-form">
+            <div class="form-group">
+                <label data-i18n="login.username">Identifiant</label>
+                <input type="text" id="login-username" required placeholder="Identifiant" data-i18n="login.username" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label data-i18n="login.password">Mot de passe</label>
+                <input type="password" id="login-password" required placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <div id="login-error" class="error-msg" style="display:none;"></div>
+            <button type="submit" class="btn btn-primary btn-full">
+                <span data-i18n="login.submit">Se connecter</span>
+            </button>
+            <div class="change-password-link" style="text-align:center;margin-top:16px;">
+                <a href="#" id="show-change-pwd" style="color:var(--primary);font-size:13px;text-decoration:none;" data-i18n="login.change_password">Changer mon mot de passe</a>
+            </div>
+        </form>
+        <!-- Formulaire changement mot de passe -->
+        <form id="change-pwd-form" style="display:none;margin-top:20px;">
+            <h3 style="font-size:16px;margin-bottom:16px;color:var(--text);" data-i18n="login.change_btn">Changer le mot de passe</h3>
+            <div class="form-group">
+                <label data-i18n="login.username">Identifiant</label>
+                <input type="text" id="cp-username" required placeholder="Identifiant" data-i18n="login.username">
+            </div>
+            <div class="form-group">
+                <label data-i18n="login.current_password">Mot de passe actuel</label>
+                <input type="password" id="cp-current" required placeholder="Mot de passe actuel" data-i18n="login.current_password">
+            </div>
+            <div class="form-group">
+                <label data-i18n="login.new_password">Nouveau mot de passe</label>
+                <input type="password" id="cp-new" required minlength="6" placeholder="Min. 6 caractères" data-i18n="login.min_chars">
+            </div>
+            <div class="form-group">
+                <label data-i18n="login.confirm_password">Confirmer le nouveau mot de passe</label>
+                <input type="password" id="cp-confirm" required minlength="6" placeholder="Confirmer">
+            </div>
+            <div id="cp-error" class="error-msg" style="display:none;"></div>
+            <div id="cp-success" class="success-msg" style="display:none;"></div>
+            <button type="submit" class="btn btn-primary btn-full" data-i18n="login.change_btn">Changer le mot de passe</button>
+            <div style="text-align:center;margin-top:12px;">
+                <a href="#" id="back-to-login" style="color:var(--text-light);font-size:13px;text-decoration:none;" data-i18n="login.back">← Retour à la connexion</a>
+            </div>
+        </form>
+    </div>
+    <!-- Hidden admin access -->
+    <div class="admin-access-hint" id="admin-access-trigger" title="Administration">
+        <span class="admin-dot"></span>
+    </div>
+</div>
+
+<!-- ════════════ ADMIN PANEL ════════════ -->
+<div id="admin-panel" style="display:none;">
+    <div class="admin-panel-card">
+        <div class="admin-panel-header">
+            <img src="../img/logo-icon.png" alt="Maydeni AI" style="height:40px;filter:brightness(0) invert(1);">
+            <h2>Administration Maydeni AI</h2>
+            <button class="admin-back-btn" onclick="document.getElementById('admin-panel').style.display='none';document.getElementById('login-screen').style.display='flex';">
+                <i data-lucide="x" style="width:20px;height:20px;"></i>
+            </button>
+        </div>
+
+        <!-- Admin Login -->
+        <div id="admin-login-section">
+            <form id="admin-login-form" class="admin-form">
+                <div class="form-group">
+                    <label>Identifiant Admin</label>
+                    <input type="text" id="admin-username" required placeholder="Identifiant" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="admin-code" required placeholder="••••••••" autocomplete="off">
+                </div>
+                <div id="admin-login-error" class="error-msg" style="display:none;"></div>
+                <button type="submit" class="btn btn-primary btn-full">Accéder</button>
+            </form>
+        </div>
+
+        <!-- Admin Dashboard (after login) -->
+        <div id="admin-main" style="display:none;">
+            <!-- Navigation tabs -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="demo">Démo / Simulation</button>
+                <button class="admin-tab" data-tab="admin-access">Accès Dashboard Admin</button>
+            </div>
+
+            <!-- Tab: Demo Simulation -->
+            <div class="admin-tab-content active" id="tab-demo">
+                <h3>Simulation de démonstration</h3>
+                <p class="admin-desc">Choisissez un forfait pour lancer une simulation complète avec données fictives, agents et IA. Parfait pour les présentations clients.</p>
+
+                <!-- Concept Licence + Abonnement -->
+                <div style="background:linear-gradient(135deg,#F0FDFA,#ECFDF5);border:1px solid #99F6E4;border-radius:14px;padding:20px 24px;margin-bottom:24px;">
+                    <h4 style="color:#0D6B6E;margin:0 0 10px;font-size:16px;"><i data-lucide="info" style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i> Comment ça marche ?</h4>
+                    <div style="display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;">
+                        <div style="flex:1;min-width:200px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                                <span style="background:#0D6B6E;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">1</span>
+                                <strong style="color:#134E4A;font-size:14px;">Achat de licence (one-time)</strong>
+                            </div>
+                            <p style="color:#6B7280;font-size:13px;margin:0 0 0 38px;">Le client achète une licence unique correspondant à son forfait. C'est un paiement <strong>une seule fois</strong> qui active son compte.</p>
+                        </div>
+                        <div style="flex:1;min-width:200px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                                <span style="background:#0D6B6E;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">2</span>
+                                <strong style="color:#134E4A;font-size:14px;">Phase de calibrage</strong>
+                            </div>
+                            <p style="color:#6B7280;font-size:13px;margin:0 0 0 38px;">L'IA calibre les données du client (prospects, produits, secteurs). Cette phase est <strong>100% gratuite</strong> — aucune facturation ne démarre.</p>
+                        </div>
+                        <div style="flex:1;min-width:200px;">
+                            <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                                <span style="background:#0D6B6E;color:white;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">3</span>
+                                <strong style="color:#134E4A;font-size:14px;">1 mois offert + abonnement</strong>
+                            </div>
+                            <p style="color:#6B7280;font-size:13px;margin:0 0 0 38px;">Une fois le calibrage terminé, le client bénéficie d'<strong>1 mois gratuit</strong>. Ensuite, l'abonnement mensuel démarre automatiquement.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-plans-grid">
+                    <!-- Starter Demo -->
+                    <div class="demo-plan-card" data-plan="starter">
+                        <div class="demo-plan-badge">STARTER</div>
+                        <div style="background:#F0FDFA;border:1px solid #99F6E4;border-radius:10px;padding:10px 14px;margin-bottom:12px;text-align:center;">
+                            <div style="font-size:11px;color:#0D6B6E;text-transform:uppercase;letter-spacing:1px;font-weight:700;">Licence (one-time)</div>
+                            <div style="font-size:28px;font-weight:900;color:#0D6B6E;">1 500 <span style="font-size:14px;font-weight:600;">DT<small style="font-size:.65em;opacity:.5">HT</small></span></div>
+                        </div>
+                        <div class="demo-plan-price" data-plan-name="starter">99 DT<small style="font-size:.65em;opacity:.5">HT</small><span>/mois</span></div>
+                        <div style="font-size:11px;color:#9CA3AF;margin-top:-8px;margin-bottom:8px;">après calibrage + 1 mois offert</div>
+                        <div class="demo-plan-agents" data-plan-name="starter">5 agents terrain</div>
+                        <ul class="demo-plan-features">
+                            <li>GPS temps réel</li>
+                            <li>Anti-fraude</li>
+                            <li>Gamification</li>
+                            <li>Dashboard basique</li>
+                        </ul>
+                        <button class="btn btn-primary btn-full demo-launch-btn" onclick="launchDemo('starter')">
+                            <i data-lucide="play" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:6px;"></i> Lancer la démo Starter
+                        </button>
+                    </div>
+
+                    <!-- Pro Demo -->
+                    <div class="demo-plan-card demo-plan-popular" data-plan="pro">
+                        <div class="demo-plan-badge" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));">PRO</div>
+                        <div style="background:#F0FDFA;border:1px solid #99F6E4;border-radius:10px;padding:10px 14px;margin-bottom:12px;text-align:center;">
+                            <div style="font-size:11px;color:#0D6B6E;text-transform:uppercase;letter-spacing:1px;font-weight:700;">Licence (one-time)</div>
+                            <div style="font-size:28px;font-weight:900;color:#0D6B6E;">3 500 <span style="font-size:14px;font-weight:600;">DT<small style="font-size:.65em;opacity:.5">HT</small></span></div>
+                        </div>
+                        <div class="demo-plan-price" data-plan-name="pro">249 DT<small style="font-size:.65em;opacity:.5">HT</small><span>/mois</span></div>
+                        <div style="font-size:11px;color:#9CA3AF;margin-top:-8px;margin-bottom:8px;">après calibrage + 1 mois offert</div>
+                        <div class="demo-plan-agents" data-plan-name="pro">12 agents terrain</div>
+                        <ul class="demo-plan-features">
+                            <li>Tout du Starter</li>
+                            <li>Analytiques avancées</li>
+                            <li>Import Excel</li>
+                            <li>Heatmap & tendances</li>
+                        </ul>
+                        <button class="btn btn-primary btn-full demo-launch-btn" onclick="launchDemo('pro')">
+                            <i data-lucide="play" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:6px;"></i> Lancer la démo Pro
+                        </button>
+                    </div>
+
+                    <!-- Enterprise Demo -->
+                    <div class="demo-plan-card" data-plan="enterprise">
+                        <div class="demo-plan-badge" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9);">ENTERPRISE</div>
+                        <div style="background:#F0FDFA;border:1px solid #99F6E4;border-radius:10px;padding:10px 14px;margin-bottom:12px;text-align:center;">
+                            <div style="font-size:11px;color:#0D6B6E;text-transform:uppercase;letter-spacing:1px;font-weight:700;">Licence (one-time)</div>
+                            <div style="font-size:28px;font-weight:900;color:#0D6B6E;">6 000 <span style="font-size:14px;font-weight:600;">DT<small style="font-size:.65em;opacity:.5">HT</small></span></div>
+                        </div>
+                        <div class="demo-plan-price" data-plan-name="enterprise">499 DT<small style="font-size:.65em;opacity:.5">HT</small><span>/mois</span></div>
+                        <div style="font-size:11px;color:#9CA3AF;margin-top:-8px;margin-bottom:8px;">après calibrage + 1 mois offert</div>
+                        <div class="demo-plan-agents" data-plan-name="enterprise">Agents illimités</div>
+                        <ul class="demo-plan-features">
+                            <li>Tout du Pro</li>
+                            <li>IA Prédictive complète</li>
+                            <li>Prévision CA & stocks</li>
+                            <li>Support prioritaire</li>
+                        </ul>
+                        <button class="btn btn-primary btn-full demo-launch-btn" onclick="launchDemo('enterprise')">
+                            <i data-lucide="play" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:6px;"></i> Lancer la démo Enterprise
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab: Admin Access -->
+            <div class="admin-tab-content" id="tab-admin-access">
+                <h3>Accès Dashboard Administrateur</h3>
+                <p class="admin-desc">Accéder au dashboard complet avec gestion des paiements, sociétés, abonnements et statistiques de la plateforme.</p>
+                <button class="btn btn-primary btn-lg" onclick="loginAsAdmin()" style="margin-top:20px;">
+                    <i data-lucide="layout-dashboard" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:8px;"></i> Ouvrir le Dashboard Admin
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ════════════ DASHBOARD PRINCIPAL ════════════ -->
+<div id="dashboard" style="display:none;">
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="../img/logo-icon.png" alt="Maydeni AI" style="height:48px;width:auto;filter:brightness(0) invert(1) brightness(1.1);">
+        </div>
+        <ul class="sidebar-nav">
+            <li class="nav-item active" data-section="overview">
+                <span class="nav-icon"><i data-lucide="layout-dashboard"></i></span>
+                <span class="nav-label" data-i18n="nav.overview">Vue d'ensemble</span>
+            </li>
+            <li class="nav-item" data-section="map">
+                <span class="nav-icon"><i data-lucide="map"></i></span>
+                <span class="nav-label" data-i18n="nav.map">Carte Live</span>
+            </li>
+            <li class="nav-item" data-section="leaderboard">
+                <span class="nav-icon"><i data-lucide="trophy"></i></span>
+                <span class="nav-label" data-i18n="nav.leaderboard">Classement</span>
+            </li>
+            <li class="nav-item" data-section="delegues">
+                <span class="nav-icon"><i data-lucide="users"></i></span>
+                <span class="nav-label" data-i18n="nav.delegues">Agents</span>
+            </li>
+            <li class="nav-item" data-section="prospects">
+                <span class="nav-icon"><i data-lucide="building-2"></i></span>
+                <span class="nav-label" data-i18n="nav.prospects">Prospects</span>
+            </li>
+            <li class="nav-item" data-section="assignments">
+                <span class="nav-icon"><i data-lucide="user-check"></i></span>
+                <span class="nav-label" data-i18n="nav.assignments">Affectations</span>
+            </li>
+            <li class="nav-item" data-section="planning">
+                <span class="nav-icon"><i data-lucide="calendar-days"></i></span>
+                <span class="nav-label" data-i18n="nav.planning">Planning</span>
+            </li>
+            <li class="nav-item" data-section="formations">
+                <span class="nav-icon"><i data-lucide="graduation-cap"></i></span>
+                <span class="nav-label">Formation</span>
+            </li>
+            <li class="nav-item" data-section="visits">
+                <span class="nav-icon"><i data-lucide="map-pin"></i></span>
+                <span class="nav-label" data-i18n="nav.visits">Visites</span>
+            </li>
+            <li class="nav-item" data-section="alerts">
+                <span class="nav-icon"><i data-lucide="shield-alert"></i></span>
+                <span class="nav-label" data-i18n="nav.alerts">Alertes</span>
+                <span class="nav-badge" id="alert-badge" style="display:none;">0</span>
+            </li>
+            <li class="nav-item" data-section="reports">
+                <span class="nav-icon"><i data-lucide="file-text"></i></span>
+                <span class="nav-label" data-i18n="nav.reports">Rapports</span>
+            </li>
+            <li class="nav-item" data-section="trends">
+                <span class="nav-icon"><i data-lucide="trending-up"></i></span>
+                <span class="nav-label" data-i18n="nav.trends">Tendances</span>
+            </li>
+            <li class="nav-item" data-section="predictions">
+                <span class="nav-icon"><i data-lucide="brain"></i></span>
+                <span class="nav-label" data-i18n="nav.predictions">IA Prédictive</span>
+            </li>
+            <li class="nav-item bi-enterprise-only" data-section="analytics" style="display:none;">
+                <span class="nav-icon"><i data-lucide="bar-chart-big"></i></span>
+                <span class="nav-label" data-i18n="nav.analytics">Business Analytics</span>
+                <span class="nav-badge" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:#FFF;border-radius:10px;padding:2px 6px;font-size:9px;margin-left:auto;">PRO</span>
+            </li>
+            <li class="nav-item" data-section="points">
+                <span class="nav-icon"><i data-lucide="coins"></i></span>
+                <span class="nav-label" data-i18n="nav.points">Points</span>
+                <span class="nav-badge" id="points-badge" style="display:none;">0</span>
+            </li>
+            <li class="nav-item" data-section="order-validation">
+                <span class="nav-icon"><i data-lucide="shield-check"></i></span>
+                <span class="nav-label" data-i18n="nav.order-validation">Validation Commandes</span>
+                <span class="nav-badge" id="order-validation-badge" style="display:none;background:#EF4444;">0</span>
+            </li>
+            <li class="nav-item" data-section="import">
+                <span class="nav-icon"><i data-lucide="brain"></i></span>
+                <span class="nav-label" data-i18n="nav.import">Import IA</span>
+            </li>
+            <li class="nav-item" data-section="subscription">
+                <span class="nav-icon"><i data-lucide="credit-card"></i></span>
+                <span class="nav-label" data-i18n="nav.subscription">Abonnement</span>
+                <span class="nav-badge" id="subscription-badge" style="display:none;background:#F59E0B;color:#FFF;border-radius:10px;padding:2px 6px;font-size:10px;margin-left:auto;white-space:nowrap;"></span>
+            </li>
+            <li class="nav-item" data-section="settings">
+                <span class="nav-icon"><i data-lucide="settings"></i></span>
+                <span class="nav-label" data-i18n="nav.settings">Paramètres</span>
+            </li>
+            <!-- ADMIN ONLY SECTION -->
+            <li class="nav-item admin-only" data-section="pending" style="display:none;">
+                <span class="nav-icon"><i data-lucide="user-check"></i></span>
+                <span class="nav-label" data-i18n="nav.pending">Inscriptions</span>
+                <span class="nav-badge" id="pending-badge" style="display:none;background:#EF4444;color:#FFF;border-radius:50%;width:20px;height:20px;font-size:11px;display:none;align-items:center;justify-content:center;margin-left:auto;"></span>
+            </li>
+            <li class="nav-item admin-only" data-section="payments" style="display:none;">
+                <span class="nav-icon"><i data-lucide="credit-card"></i></span>
+                <span class="nav-label" data-i18n="nav.payments">Paiements</span>
+                <span class="nav-badge" id="payment-badge" style="display:none;background:#F59E0B;color:#FFF;border-radius:50%;width:20px;height:20px;font-size:11px;align-items:center;justify-content:center;margin-left:auto;"></span>
+            </li>
+            <li class="nav-item admin-only" data-section="tenants" style="display:none;">
+                <span class="nav-icon"><i data-lucide="building-2"></i></span>
+                <span class="nav-label" data-i18n="nav.tenants">Sociétés</span>
+            </li>
+            <li class="nav-item admin-only" data-section="subscriptions" style="display:none;">
+                <span class="nav-icon"><i data-lucide="credit-card"></i></span>
+                <span class="nav-label" data-i18n="nav.subscriptions">Abonnements</span>
+            </li>
+            <li class="nav-item admin-only" data-section="licenses" style="display:none;">
+                <span class="nav-icon"><i data-lucide="key-round"></i></span>
+                <span class="nav-label">Licences</span>
+                <span class="nav-badge" style="background:linear-gradient(135deg,#10B981,#059669);color:#FFF;border-radius:10px;padding:2px 6px;font-size:9px;margin-left:auto;">NEW</span>
+            </li>
+            <li class="nav-item admin-only" data-section="platform" style="display:none;">
+                <span class="nav-icon"><i data-lucide="bar-chart-3"></i></span>
+                <span class="nav-label" data-i18n="nav.platform">Plateforme</span>
+            </li>
+            <li class="nav-item admin-only" data-section="demo-simulation" style="display:none;">
+                <span class="nav-icon"><i data-lucide="play-circle"></i></span>
+                <span class="nav-label" data-i18n="nav.demo-simulation">Démo / Simulation</span>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">DC</div>
+                <div>
+                    <div class="user-name" id="user-name">Directeur</div>
+                    <div class="user-role" id="user-role">directeur</div>
+                </div>
+            </div>
+            <button class="btn-logout" id="btn-logout" data-i18n="common.disconnect">Déconnexion</button>
+            <button id="lang-toggle" onclick="toggleLang()" style="margin-top:8px;padding:6px 16px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;font-weight:700;font-size:13px;width:100%;transition:all .2s;" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">EN</button>
+            <div class="sidebar-credit"><span data-i18n="footer.credit">Développé par Maydeni AI</span></div>
+        </div>
+    </nav>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="main-content">
+        <!-- ═══ UPDATE NOTIFICATION BANNER ═══ -->
+        <div id="update-banner" class="update-banner" style="display:none;">
+            <div class="update-banner-icon">
+                <i data-lucide="download-cloud" style="width:28px;height:28px;"></i>
+            </div>
+            <div class="update-banner-content">
+                <div class="update-banner-title">
+                    <span class="update-badge">NOUVEAU</span>
+                    Mise à jour disponible — Version <span id="update-new-version"></span>
+                </div>
+                <div class="update-banner-desc" id="update-changelog"></div>
+            </div>
+            <div class="update-banner-actions">
+                <button class="btn btn-sm btn-outline" onclick="dismissUpdate()" style="margin-right:8px;">Plus tard</button>
+                <button class="btn btn-sm btn-primary" onclick="startUpdate()">
+                    <i data-lucide="download" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Mettre à jour
+                </button>
+            </div>
+        </div>
+
+        <!-- Update progress modal -->
+        <div id="update-modal" class="update-modal" style="display:none;">
+            <div class="update-modal-card">
+                <div class="update-modal-icon">
+                    <i data-lucide="download-cloud" style="width:48px;height:48px;color:var(--primary);"></i>
+                </div>
+                <h3>Mise à jour en cours...</h3>
+                <p id="update-step-text">Téléchargement de la nouvelle version...</p>
+                <div class="update-progress">
+                    <div class="update-progress-bar" id="update-progress-bar"></div>
+                </div>
+                <p class="update-progress-pct" id="update-progress-pct">0%</p>
+                <div id="update-complete" style="display:none;">
+                    <p style="color:var(--success);font-weight:600;margin-top:16px;">✓ Mise à jour terminée avec succès !</p>
+                    <p style="font-size:13px;color:var(--text-light);margin-top:8px;">L'application va redémarrer automatiquement...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ VUE D'ENSEMBLE ═══ -->
+        <section id="section-overview" class="section active">
+            <div class="section-header">
+                <h1>Vue d'ensemble</h1>
+                <div class="header-date" id="current-date"></div>
+            </div>
+
+            <!-- AI INSIGHT BANNER -->
+            <div class="ai-banner" id="ai-banner">
+                <div class="ai-banner-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a4 4 0 0 1 4 4v1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1l-2 5H11l-2-5H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2V6a4 4 0 0 1 4-4z"/>
+                        <path d="M9 6v1"/><path d="M15 6v1"/><path d="M12 16v2"/><path d="M9 18h6"/><path d="M10 22h4"/>
+                    </svg>
+                </div>
+                <div class="ai-banner-content">
+                    <div class="ai-banner-title">
+                        <span class="ai-badge">IA</span>
+                        Intelligence Artificielle intégrée
+                    </div>
+                    <div class="ai-banner-text">
+                        Votre dashboard est propulsé par une <strong>IA prédictive</strong> qui analyse en continu les données terrain.
+                        Elle détecte automatiquement les <strong>zones sous-exploitées</strong>, prédit les <strong>tendances de vente</strong>,
+                        identifie les <strong>anomalies de performance</strong> et calcule la <strong>probabilité de commande</strong> pour chaque prospect.
+                        Vos décisions sont basées sur des données — pas des intuitions.
+                    </div>
+                    <div class="ai-banner-features">
+                        <span class="ai-feature"><i data-lucide="brain" style="width:14px;height:14px;"></i> Prédictions de CA</span>
+                        <span class="ai-feature"><i data-lucide="target" style="width:14px;height:14px;"></i> Zones sous-exploitées</span>
+                        <span class="ai-feature"><i data-lucide="trending-up" style="width:14px;height:14px;"></i> Tendances automatiques</span>
+                        <span class="ai-feature"><i data-lucide="shield-alert" style="width:14px;height:14px;"></i> Détection anti-fraude IA</span>
+                    </div>
+                </div>
+                <button class="ai-banner-close" onclick="this.closest('.ai-banner').style.display='none';localStorage.setItem('fp_ai_banner_dismissed','1');" title="Fermer">&times;</button>
+            </div>
+            <script>if(localStorage.getItem('fp_ai_banner_dismissed')==='1'){document.getElementById('ai-banner').style.display='none';}</script>
+
+            <div class="stats-grid">
+                <div class="stat-card stat-blue">
+                    <div class="stat-icon"><i data-lucide="users"></i></div>
+                    <div class="stat-value" id="stat-delegues">0</div>
+                    <div class="stat-label">Agents actifs</div>
+                </div>
+                <div class="stat-card stat-green">
+                    <div class="stat-icon"><i data-lucide="map-pin"></i></div>
+                    <div class="stat-value" id="stat-visits">0</div>
+                    <div class="stat-label">Visites aujourd'hui</div>
+                </div>
+                <div class="stat-card stat-red">
+                    <div class="stat-icon"><i data-lucide="shield-alert"></i></div>
+                    <div class="stat-value" id="stat-suspect">0</div>
+                    <div class="stat-label">Visites suspectes</div>
+                </div>
+                <div class="stat-card stat-purple">
+                    <div class="stat-icon"><i data-lucide="package"></i></div>
+                    <div class="stat-value" id="stat-orders">0</div>
+                    <div class="stat-label">Commandes</div>
+                </div>
+                <div class="stat-card stat-gold">
+                    <div class="stat-icon"><i data-lucide="banknote"></i></div>
+                    <div class="stat-value" id="stat-revenue">0 DT</div>
+                    <div class="stat-label">Chiffre du jour</div>
+                </div>
+                <div class="stat-card stat-teal">
+                    <div class="stat-icon"><i data-lucide="globe"></i></div>
+                    <div class="stat-value" id="stat-online">0</div>
+                    <div class="stat-label">En ligne</div>
+                </div>
+            </div>
+
+            <!-- Top 5 rapide -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i data-lucide="trophy" style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i> Top 5 Agents aujourd'hui</h3>
+                </div>
+                <div class="card-body">
+                    <div id="quick-leaderboard"></div>
+                </div>
+            </div>
+
+            <!-- Dernières alertes -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i data-lucide="shield-alert" style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i> Dernières alertes</h3>
+                </div>
+                <div class="card-body">
+                    <div id="recent-alerts"></div>
+                </div>
+            </div>
+
+            <!-- BI QUICK INSIGHTS (Enterprise only — loaded dynamically) -->
+            <div id="bi-overview-widget" style="display:none;">
+                <div style="margin-top:24px;border:1px solid rgba(139,92,246,.25);border-radius:16px;overflow:hidden;">
+                    <div style="background:linear-gradient(135deg,#0D6B6E 0%,#1B9EA1 50%,#8B5CF6 100%);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;">
+                                <i data-lucide="bar-chart-big" style="width:22px;height:22px;color:#FFF;"></i>
+                            </div>
+                            <div>
+                                <div style="color:#FFF;font-weight:700;font-size:16px;">Business Analytics</div>
+                                <div style="color:rgba(255,255,255,.7);font-size:12px;">Aperçu rapide — Forfait Enterprise</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm" onclick="navigateTo('analytics')" style="background:#FFF;color:#0D6B6E;font-weight:600;border:0;padding:8px 20px;">
+                            <i data-lucide="arrow-right" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px;"></i> Analyse complète
+                        </button>
+                    </div>
+                    <div style="padding:20px 24px;background:var(--card-bg);">
+                        <div id="bi-overview-kpis" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-bottom:16px;"></div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;" id="bi-overview-details">
+                            <div id="bi-overview-forecast" style="background:var(--surface);border-radius:12px;padding:16px;"></div>
+                            <div id="bi-overview-rfm" style="background:var(--surface);border-radius:12px;padding:16px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ CARTE LIVE ═══ -->
+        <section id="section-map" class="section">
+            <div class="section-header">
+                <h1>Carte Live</h1>
+                <div class="header-actions">
+                    <button class="btn btn-sm" onclick="refreshMap()"><i data-lucide="refresh-cw" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i> Actualiser</button>
+                    <button class="btn btn-sm" id="toggle-heatmap"><i data-lucide="flame" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i> Heatmap</button>
+                </div>
+            </div>
+            <div id="map-container"></div>
+        </section>
+
+        <!-- ═══ CLASSEMENT ═══ -->
+        <section id="section-leaderboard" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="trophy" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Classement & Gamification</h1>
+            </div>
+            <div id="leaderboard-content"></div>
+        </section>
+
+        <!-- ═══ AGENTS TERRAIN ═══ -->
+        <section id="section-delegues" class="section">
+            <div class="section-header">
+                <h1>Gestion des Agents</h1>
+                <button class="btn btn-primary" onclick="showCreateUserModal()">+ Nouvel Agent</button>
+            </div>
+            <div id="delegues-list"></div>
+        </section>
+
+        <!-- ═══ PROSPECTS ═══ -->
+        <section id="section-prospects" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="building-2" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Prospects</h1>
+                <div class="header-actions">
+                    <input type="text" id="prospect-search-filter" class="input-sm" placeholder="Rechercher...">
+                    <select id="prospect-city-filter" class="input-sm"><option value="">Toutes villes</option></select>
+                </div>
+            </div>
+            <div id="prospects-list"></div>
+        </section>
+
+        <!-- ═══ AFFECTATIONS PROSPECTS ═══ -->
+        <section id="section-assignments" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="user-check" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Affectation des Prospects</h1>
+                <p style="color:var(--muted);font-size:14px;">Chaque Agent a ses propres prospects — le directeur décide qui visite qui</p>
+            </div>
+
+            <!-- Résumé par agent -->
+            <div id="assignments-summary" style="margin-bottom:24px;"></div>
+
+            <!-- Panel d'affectation -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i data-lucide="settings" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Gérer les affectations</h3>
+                </div>
+                <div class="card-body">
+                    <div class="grid grid-2" style="gap:20px;">
+                        <!-- Sélecteur agent -->
+                        <div>
+                            <label style="font-weight:600;margin-bottom:8px;display:block;">Agent</label>
+                            <select id="assign-agent-select" class="form-input" onchange="loadAgentAssignments()">
+                                <option value="">-- Sélectionner un agent --</option>
+                            </select>
+                        </div>
+                        <div style="display:flex;align-items:flex-end;">
+                            <button class="btn btn-primary" onclick="saveAssignments()" id="btn-save-assignments" style="display:none;">
+                                <i data-lucide="save" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:4px;"></i>
+                                Enregistrer les affectations
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Liste des prospects avec checkboxes -->
+                    <div id="assignments-prospect-list" style="margin-top:20px;"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ PLANNING VISITES ═══ -->
+        <section id="section-planning" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="calendar-days" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Planning des Visites</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="showPlanningModal()">
+                        <i data-lucide="plus" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:4px;"></i>
+                        Planifier des visites
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filtres -->
+            <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center;">
+                <select id="planning-agent-filter" class="input-sm" onchange="loadPlanningSection()">
+                    <option value="">Tous les agents</option>
+                </select>
+                <input type="date" id="planning-date-from" class="input-sm" onchange="loadPlanningSection()">
+                <span style="color:var(--muted);">→</span>
+                <input type="date" id="planning-date-to" class="input-sm" onchange="loadPlanningSection()">
+                <select id="planning-status-filter" class="input-sm" onchange="loadPlanningSection()">
+                    <option value="">Tous statuts</option>
+                    <option value="planifiee">Planifiées</option>
+                    <option value="effectuee">Effectuées</option>
+                    <option value="manquee">Manquées</option>
+                </select>
+            </div>
+
+            <!-- Stats planning -->
+            <div id="planning-stats" class="stats-grid" style="margin-bottom:20px;"></div>
+
+            <!-- Tableau planning -->
+            <div id="planning-content"></div>
+
+            <!-- Modal planifier visite -->
+            <div id="modal-planning" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;overflow-y:auto;" onclick="if(event.target===this)closeModal('modal-planning')">
+                <div style="max-width:600px;margin:40px auto;background:var(--card);border-radius:16px;padding:32px;position:relative;">
+                    <button onclick="closeModal('modal-planning')" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;">&times;</button>
+                    <h2 style="margin-bottom:20px;"><i data-lucide="calendar-plus" style="width:20px;height:20px;display:inline;vertical-align:middle;margin-right:8px;"></i> Planifier des visites</h2>
+                    <form id="planning-form" onsubmit="handleCreatePlanning(event)">
+                        <div class="form-group" style="margin-bottom:16px;">
+                            <label>Agent</label>
+                            <select id="plan-agent" class="form-input" required onchange="loadAgentProspectsForPlanning()">
+                                <option value="">-- Choisir un agent --</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:16px;">
+                            <label>Date</label>
+                            <input type="date" id="plan-date" class="form-input" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom:16px;">
+                            <label>Prospects à visiter <small style="color:var(--muted);">(seuls les prospects affectés à cet agent)</small></label>
+                            <div id="plan-prospects-list" style="max-height:250px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:8px;"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width:100%;">Créer le planning</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ FORMATIONS / TRAINING ═══ -->
+        <section id="section-formations" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="graduation-cap" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Formation personnalisée</h1>
+            </div>
+
+            <!-- Client: booking widget -->
+            <div id="formation-client" style="display:none;">
+                <div id="formation-existing" style="display:none;margin-bottom:24px;"></div>
+
+                <div id="formation-booking" style="max-width:600px;">
+                    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;">
+                        <h3 style="margin:0 0 4px;"><i data-lucide="headset" style="width:18px;height:18px;display:inline;vertical-align:middle;margin-right:6px;"></i> Assistance technique</h3>
+                        <p style="color:var(--muted);font-size:13px;margin:0 0 20px;">Décrivez votre problème et choisissez comment vous souhaitez être assisté.</p>
+
+                        <!-- Request type choice -->
+                        <div style="display:flex;gap:12px;margin-bottom:20px;">
+                            <label onclick="setFormationType('meeting')" id="formation-type-meeting-label" style="flex:1;cursor:pointer;border:2px solid var(--primary,#3b82f6);border-radius:12px;padding:14px 16px;text-align:center;background:rgba(59,130,246,0.06);transition:all .15s;">
+                                <input type="radio" name="formation-type" value="meeting" checked style="display:none;">
+                                <div style="font-size:22px;margin-bottom:4px;">🎥</div>
+                                <div style="font-weight:700;font-size:14px;">Meeting live</div>
+                                <div style="font-size:11px;color:var(--muted);margin-top:2px;">Visioconférence 1h avec le développeur</div>
+                            </label>
+                            <label onclick="setFormationType('email')" id="formation-type-email-label" style="flex:1;cursor:pointer;border:2px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center;transition:all .15s;">
+                                <input type="radio" name="formation-type" value="email" style="display:none;">
+                                <div style="font-size:22px;margin-bottom:4px;">📧</div>
+                                <div style="font-weight:700;font-size:14px;">Réponse par email</div>
+                                <div style="font-size:11px;color:var(--muted);margin-top:2px;">Recevez une solution par email</div>
+                            </label>
+                        </div>
+
+                        <!-- Problem description -->
+                        <div style="margin-bottom:20px;">
+                            <label style="font-size:13px;font-weight:600;display:block;margin-bottom:6px;">Décrivez votre problème <span style="color:#ef4444;">*</span></label>
+                            <textarea id="formation-problem" class="input" rows="4" placeholder="Expliquez en détail le problème rencontré..." style="width:100%;resize:vertical;font-size:13px;"></textarea>
+                            <div style="font-size:11px;color:var(--muted);margin-top:4px;">Minimum 10 caractères</div>
+                        </div>
+
+                        <!-- Email submit button (hidden by default) -->
+                        <div id="formation-email-submit" style="display:none;margin-bottom:20px;">
+                            <button class="btn btn-primary" onclick="submitEmailRequest()" style="width:100%;padding:12px;">
+                                <i data-lucide="send" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Envoyer ma demande par email
+                            </button>
+                        </div>
+
+                        <!-- Meeting: calendar (shown by default) -->
+                        <div id="formation-meeting-section">
+                            <p style="color:var(--muted);font-size:12px;margin:0 0 12px;">Choisissez une date et un créneau. Réservation <strong>2 jours à l'avance minimum</strong>, du lundi au vendredi, 8h–13h.</p>
+
+                            <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;">
+                                <button class="btn btn-sm" onclick="changeFormationMonth(-1)" id="formation-prev-month">&larr;</button>
+                                <span id="formation-month-label" style="font-weight:700;font-size:15px;min-width:140px;text-align:center;"></span>
+                                <button class="btn btn-sm" onclick="changeFormationMonth(1)" id="formation-next-month">&rarr;</button>
+                            </div>
+
+                            <!-- Calendar grid -->
+                            <div id="formation-calendar" style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:20px;"></div>
+
+                            <!-- Time slots -->
+                            <div id="formation-slots" style="display:none;">
+                                <h4 id="formation-slots-title" style="margin:0 0 12px;"></h4>
+                                <div id="formation-slots-list" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+                            </div>
+
+                            <!-- Confirmation panel -->
+                            <div id="formation-confirm" style="display:none;margin-top:16px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin: all sessions list -->
+            <div id="formation-admin" style="display:none;">
+                <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;align-items:center;">
+                    <select id="formation-admin-status" class="input-sm" onchange="loadAdminFormations()">
+                        <option value="">Tous statuts</option>
+                        <option value="booked">Réservées (meeting)</option>
+                        <option value="pending">En attente (email)</option>
+                        <option value="completed">Terminées</option>
+                        <option value="responded">Répondues</option>
+                        <option value="cancelled">Annulées</option>
+                        <option value="no_show">No-show</option>
+                    </select>
+                    <select id="formation-admin-type" class="input-sm" onchange="loadAdminFormations()">
+                        <option value="">Tous types</option>
+                        <option value="meeting">Meeting</option>
+                        <option value="email">Email</option>
+                    </select>
+                    <input type="date" id="formation-admin-from" class="input-sm" onchange="loadAdminFormations()">
+                    <span style="color:var(--muted);">→</span>
+                    <input type="date" id="formation-admin-to" class="input-sm" onchange="loadAdminFormations()">
+                </div>
+                <div id="formation-admin-stats" class="stats-grid" style="margin-bottom:20px;"></div>
+                <div id="formation-admin-list"></div>
+            </div>
+        </section>
+
+        <!-- ═══ VISITES ═══ -->
+        <section id="section-visits" class="section">
+            <div class="section-header">
+                <h1>Visites</h1>
+                <div class="header-actions">
+                    <input type="date" id="visit-date-filter" class="input-sm">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="visit-suspect-filter"> Suspectes uniquement
+                    </label>
+                </div>
+            </div>
+            <div id="visits-list"></div>
+        </section>
+
+        <!-- ═══ ALERTES ═══ -->
+        <section id="section-alerts" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="shield-alert" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Journal de Sécurité</h1>
+            </div>
+            <div id="alerts-list"></div>
+        </section>
+
+        <!-- ═══ RAPPORTS ═══ -->
+        <section id="section-reports" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="file-text" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Rapports</h1>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="report-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Date début</label>
+                                <input type="date" id="report-date-from" class="input">
+                            </div>
+                            <div class="form-group">
+                                <label>Date fin</label>
+                                <input type="date" id="report-date-to" class="input">
+                            </div>
+                            <div class="form-group">
+                                <label>Format</label>
+                                <select id="report-format" class="input">
+                                    <option value="json">Afficher</option>
+                                    <option value="csv">Export CSV</option>
+                                    <option value="excel">Export Excel</option>
+                                    <option value="pdf">Export PDF</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="generateReport()">Générer le rapport</button>
+                    </div>
+                    <div id="report-result"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ TENDANCES & HISTORIQUE ═══ -->
+        <section id="section-trends" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="trending-up" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Tendances & Historique Prix</h1>
+                <div class="header-actions">
+                    <select id="trends-period" class="input-sm" onchange="loadTrends()">
+                        <option value="3">3 mois</option>
+                        <option value="6" selected>6 mois</option>
+                        <option value="12">12 mois</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- CA Global -->
+            <div class="card">
+                <div class="card-header"><h3><i data-lucide="banknote" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Évolution du Chiffre d'Affaires</h3></div>
+                <div class="card-body">
+                    <div class="chart-container" id="chart-revenue-trend"></div>
+                </div>
+            </div>
+
+            <!-- CA par Produit -->
+            <div class="card">
+                <div class="card-header"><h3><i data-lucide="package" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> CA par Produit</h3></div>
+                <div class="card-body">
+                    <div id="chart-product-revenue"></div>
+                </div>
+            </div>
+
+            <!-- CA par Agent -->
+            <div class="card">
+                <div class="card-header"><h3><i data-lucide="users" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> CA par Agent</h3></div>
+                <div class="card-body">
+                    <div id="chart-delegue-revenue"></div>
+                </div>
+            </div>
+
+            <!-- CA par Zone -->
+            <div class="card">
+                <div class="card-header"><h3><i data-lucide="map" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> CA par Zone Géographique</h3></div>
+                <div class="card-body">
+                    <div id="chart-zone-revenue"></div>
+                </div>
+            </div>
+
+            <!-- Détection baisses -->
+            <div class="card">
+                <div class="card-header"><h3><i data-lucide="trending-down" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Détection des Baisses de Commandes</h3></div>
+                <div class="card-body">
+                    <div id="drop-detection-results"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ IA PRÉDICTIVE ═══ -->
+        <section id="section-predictions" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="brain" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Tableau de Bord IA Prédictif</h1>
+                <div class="header-actions">
+                    <button class="btn btn-sm btn-primary" onclick="loadPredictions()"><i data-lucide="refresh-cw" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i> Recalculer</button>
+                </div>
+            </div>
+
+            <!-- Résumé IA -->
+            <div class="stats-grid" id="ai-summary-stats"></div>
+
+            <!-- Prévision CA -->
+            <div class="card">
+                <div class="card-header"><h3><i data-lucide="bar-chart-3" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Prévision du CA — Mois en cours</h3></div>
+                <div class="card-body">
+                    <div id="revenue-forecast-content"></div>
+                </div>
+            </div>
+
+            <!-- Zones sous-exploitées -->
+            <div class="card">
+                <div class="card-header"><h3><i data-lucide="map" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Zones Sous-exploitées</h3></div>
+                <div class="card-body">
+                    <div id="zones-analysis-content"></div>
+                </div>
+            </div>
+
+            <!-- Scoring prospects -->
+            <div class="card">
+                <div class="card-header"><h3><i data-lucide="crosshair" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Scoring Probabilité de Commande par Prospect</h3></div>
+                <div class="card-body">
+                    <div id="prospect-scoring-content"></div>
+                </div>
+            </div>
+
+            <!-- Prévision stocks -->
+            <div class="card">
+                <div class="card-header"><h3><i data-lucide="package-search" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Prévision de Rupture de Stock</h3></div>
+                <div class="card-body">
+                    <div id="stock-forecast-content"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ BUSINESS ANALYTICS (Enterprise) ═══ -->
+        <section id="section-analytics" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="bar-chart-big" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Business Analytics</h1>
+                <div class="header-actions" id="bi-actions" style="display:none;">
+                    <select id="bi-period" class="form-input" style="width:auto;padding:6px 12px;font-size:13px;">
+                        <option value="3">3 mois</option>
+                        <option value="6">6 mois</option>
+                        <option value="12" selected>12 mois</option>
+                        <option value="24">24 mois</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary" onclick="loadBusinessAnalytics()"><i data-lucide="refresh-cw" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i> Générer</button>
+                    <button class="btn btn-sm btn-outline" onclick="exportBIData()"><i data-lucide="download" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i> Exporter</button>
+                </div>
+            </div>
+
+            <!-- Upgrade prompt for non-Enterprise -->
+            <div id="bi-upgrade-prompt" style="display:none;">
+                <div class="card" style="text-align:center;padding:60px 24px;background:linear-gradient(135deg,#0D6B6E 0%,#1B9EA1 100%);color:#FFF;border:0;">
+                    <i data-lucide="lock" style="width:48px;height:48px;margin:0 auto 16px;display:block;opacity:.7;"></i>
+                    <h2 style="margin-bottom:12px;font-size:24px;">Business Analytics Avancée</h2>
+                    <p style="max-width:500px;margin:0 auto 24px;opacity:.85;font-size:15px;">Accédez à l'intelligence commerciale complète : segmentation RFM, analyse Pareto, prévisions IA, KPI temps réel et export de données enrichies.</p>
+                    <p style="background:rgba(255,255,255,.15);border-radius:12px;padding:12px 24px;display:inline-block;font-weight:600;font-size:18px;">Exclusif au forfait Enterprise — 399 DT/mois</p>
+                    <br>
+                    <button class="btn" onclick="navigateTo('subscription')" style="margin-top:16px;background:#FFF;color:#0D6B6E;font-weight:600;padding:10px 32px;">Mettre à niveau</button>
+                </div>
+            </div>
+
+            <!-- BI Content (Enterprise only) -->
+            <div id="bi-content" style="display:none;">
+                <!-- KPI Summary -->
+                <div class="stats-grid" id="bi-kpi-grid" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));margin-bottom:24px;"></div>
+
+                <!-- Forecast Card -->
+                <div class="card" style="margin-bottom:24px;border-left:4px solid #10B981;">
+                    <div class="card-header"><h3><i data-lucide="trending-up" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;color:#10B981;"></i> Prévisions IA</h3></div>
+                    <div class="card-body" id="bi-forecast-content">
+                        <p style="color:var(--muted);text-align:center;">Cliquez sur "Générer" pour lancer l'analyse...</p>
+                    </div>
+                </div>
+
+                <!-- 2-column: Trend Chart + Weekday -->
+                <div class="grid grid-2" style="margin-bottom:24px;">
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="line-chart" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Tendance Mensuelle</h3></div>
+                        <div class="card-body"><canvas id="bi-trend-chart" height="200"></canvas></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="calendar-days" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Performance par Jour</h3></div>
+                        <div class="card-body"><canvas id="bi-weekday-chart" height="200"></canvas></div>
+                    </div>
+                </div>
+
+                <!-- 2-column: Agent Perf + Efficiency -->
+                <div class="grid grid-2" style="margin-bottom:24px;">
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="users" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Performance Agents</h3></div>
+                        <div class="card-body" id="bi-agents-content"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="target" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Efficacité Agents</h3></div>
+                        <div class="card-body" id="bi-efficiency-content"></div>
+                    </div>
+                </div>
+
+                <!-- Products Pareto -->
+                <div class="card" style="margin-bottom:24px;">
+                    <div class="card-header"><h3><i data-lucide="package" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Analyse Pareto — Produits</h3></div>
+                    <div class="card-body" id="bi-products-content"></div>
+                </div>
+
+                <!-- 2-column: Zones + RFM -->
+                <div class="grid grid-2" style="margin-bottom:24px;">
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="map-pin" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Zones Commerciales</h3></div>
+                        <div class="card-body" id="bi-zones-content"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="pie-chart" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Segmentation RFM Clients</h3></div>
+                        <div class="card-body" id="bi-rfm-content"></div>
+                    </div>
+                </div>
+
+                <!-- Top Clients + At Risk -->
+                <div class="grid grid-2" style="margin-bottom:24px;">
+                    <div class="card">
+                        <div class="card-header"><h3><i data-lucide="crown" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;color:#F59E0B;"></i> Top 20 Clients</h3></div>
+                        <div class="card-body" id="bi-top-clients"></div>
+                    </div>
+                    <div class="card" style="border-left:4px solid #EF4444;">
+                        <div class="card-header"><h3><i data-lucide="alert-triangle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;color:#EF4444;"></i> Clients à Risque</h3></div>
+                        <div class="card-body" id="bi-risk-clients"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ POINTS & CONVERSIONS ═══ -->
+        <section id="section-points" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="coins" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Gestion des Points</h1>
+            </div>
+
+            <!-- Info banner -->
+            <div style="background:linear-gradient(135deg,#0D6B6E,#1B9EA1);color:#FFF;padding:16px 24px;border-radius:12px;margin-bottom:20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+                <i data-lucide="info" style="width:24px;height:24px;flex-shrink:0;"></i>
+                <div style="flex:1;min-width:250px;">
+                    <strong style="font-size:14px;">Points = uniquement via commandes validées</strong>
+                    <p style="font-size:12px;opacity:.85;margin-top:4px;">Les points s'accumulent à chaque commande validée par le directeur (+15 pts). Ils se déduisent automatiquement en cas de fraude GPS, visite trop courte, inactivité ou récidive.</p>
+                </div>
+            </div>
+
+            <!-- Config taux -->
+            <div class="grid grid-2" style="margin-bottom:24px;">
+                <div class="card">
+                    <div class="card-header"><h3><i data-lucide="settings" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Taux de Conversion</h3></div>
+                    <div class="card-body">
+                        <p style="margin-bottom:12px;color:var(--muted);">Combien de points = 1 DT</p>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <input type="number" id="points-per-dt" min="1" step="1" class="form-input" style="width:120px;" placeholder="100">
+                            <span style="color:var(--muted);">points = 1 DT</span>
+                            <button class="btn btn-primary" id="btn-save-rate" onclick="savePointsRate()">Enregistrer</button>
+                        </div>
+                        <p id="rate-info" style="margin-top:8px;font-size:12px;color:var(--muted);"></p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h3><i data-lucide="plus-circle" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Ajouter des Points</h3></div>
+                    <div class="card-body">
+                        <div class="form-group" style="margin-bottom:12px;">
+                            <label>Agent</label>
+                            <select id="add-points-delegue" class="form-input"></select>
+                        </div>
+                        <div style="display:flex;align-items:center;gap:12px;">
+                            <input type="number" id="add-points-amount" min="1" class="form-input" style="width:120px;" placeholder="100">
+                            <span style="color:var(--muted);">points</span>
+                            <button class="btn btn-primary" onclick="addPointsToDelegue()">Ajouter</button>
+                        </div>
+                        <div class="form-group" style="margin-top:8px;">
+                            <input type="text" id="add-points-reason" class="form-input" placeholder="Raison (optionnel)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pénalité manuelle -->
+            <div class="card" style="margin-bottom:24px;border-left:4px solid var(--danger);">
+                <div class="card-header">
+                    <h3><i data-lucide="shield-alert" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;color:var(--danger);"></i> Pénalité Manuelle</h3>
+                </div>
+                <div class="card-body">
+                    <p style="color:var(--muted);font-size:13px;margin-bottom:12px;">Retirez des points à un agent pour fraude ou manque de travail détecté. Vous pouvez personnaliser le nombre de points.</p>
+                    <div style="display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;">
+                        <div class="form-group" style="margin-bottom:0;min-width:200px;">
+                            <label>Agent</label>
+                            <select id="penalize-delegue" class="form-input"></select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;min-width:220px;">
+                            <label>Motif</label>
+                            <select id="penalize-reason" class="form-input" onchange="updateCustomPointsHint()">
+                                <option value="GPS_ANOMALY" data-pts="10">🛰️ Anomalie GPS détectée (-10 pts)</option>
+                                <option value="SHORT_VISIT" data-pts="5">⏱️ Visite trop courte (-5 pts)</option>
+                                <option value="OUT_OF_ZONE" data-pts="20">📍 Hors zone autorisée (-20 pts)</option>
+                                <option value="INACTIVITY" data-pts="15">💤 Inactivité prolongée (-15 pts)</option>
+                                <option value="REPEAT_FRAUD" data-pts="25">🚨 Récidive de fraude (-25 pts)</option>
+                                <option value="CUSTOM" data-pts="0">✏️ Pénalité personnalisée</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;min-width:120px;">
+                            <label>Points <span style="font-size:11px;color:var(--muted);">(optionnel)</span></label>
+                            <input type="number" id="penalize-custom-points" class="form-input" placeholder="Auto" min="1" max="500" style="width:120px;">
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;">
+                        <div class="form-group" style="margin-bottom:0;flex:1;min-width:250px;">
+                            <label>Note / Raison <span style="font-size:11px;color:var(--muted);">(optionnel, envoyée à l'Agent)</span></label>
+                            <input type="text" id="penalize-note" class="form-input" placeholder="Ex: Absence non justifiée le 15/01..." maxlength="500">
+                        </div>
+                        <button class="btn btn-danger" onclick="penalizeDelegue()">
+                            <i data-lucide="minus-circle" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px;"></i>
+                            Appliquer la pénalité
+                        </button>
+                    </div>
+                    <p id="penalty-hint" style="font-size:12px;color:var(--muted);margin-top:8px;">💡 Laissez le champ "Points" vide pour appliquer la pénalité standard. L'Agent recevra une notification.</p>
+                </div>
+            </div>
+
+            <!-- Barème des points -->
+            <div class="card" style="margin-bottom:24px;">
+                <div class="card-header">
+                    <h3><i data-lucide="book-open" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Barème des Points</h3>
+                </div>
+                <div class="card-body" style="padding:0;">
+                    <table class="data-table" style="margin:0;">
+                        <thead><tr><th>Action</th><th>Points</th><th>Type</th></tr></thead>
+                        <tbody>
+                            <tr style="background:#F0FDF4;"><td><strong>✅ Commande validée</strong></td><td style="color:var(--success);font-weight:700;">+15</td><td><span class="badge badge-success">Gain</span></td></tr>
+                            <tr style="background:#FEF2F2;"><td>⏱️ Visite trop courte (&lt;2 min)</td><td style="color:var(--danger);font-weight:700;">-5</td><td><span class="badge badge-danger">Pénalité</span></td></tr>
+                            <tr style="background:#FEF2F2;"><td>🛰️ Anomalie GPS détectée</td><td style="color:var(--danger);font-weight:700;">-10</td><td><span class="badge badge-danger">Pénalité</span></td></tr>
+                            <tr style="background:#FEF2F2;"><td>💤 Inactivité prolongée (3h+)</td><td style="color:var(--danger);font-weight:700;">-15</td><td><span class="badge badge-danger">Pénalité</span></td></tr>
+                            <tr style="background:#FEF2F2;"><td>📍 Visite hors zone autorisée</td><td style="color:var(--danger);font-weight:700;">-20</td><td><span class="badge badge-danger">Pénalité</span></td></tr>
+                            <tr style="background:#FEF2F2;"><td>🚨 Récidive de fraude (3+ en 7j)</td><td style="color:var(--danger);font-weight:700;">-25</td><td><span class="badge badge-danger">Pénalité</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Demandes de conversion -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i data-lucide="arrow-right-left" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Demandes de Conversion</h3>
+                    <div style="display:flex;gap:8px;">
+                        <button class="btn btn-sm" onclick="loadConversionRequests('en_attente')" id="btn-filter-pending">En attente</button>
+                        <button class="btn btn-sm btn-outline" onclick="loadConversionRequests('approuvee')" id="btn-filter-approved">Approuvées</button>
+                        <button class="btn btn-sm btn-outline" onclick="loadConversionRequests('refusee')" id="btn-filter-refused">Refusées</button>
+                        <button class="btn btn-sm btn-outline" onclick="loadConversionRequests()" id="btn-filter-all">Toutes</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="conversion-requests-content">
+                        <p style="color:var(--muted);text-align:center;">Chargement...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ VALIDATION COMMANDES (ANTI-FRAUDE) ═══ -->
+        <section id="section-order-validation" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="shield-check" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Validation des Commandes</h1>
+                <p style="color:var(--muted);font-size:14px;">Système triple preuve anti-fraude : Photo in-app + Signature prospect + Géolocalisation</p>
+            </div>
+
+            <!-- Filtres -->
+            <div style="display:flex;gap:8px;margin-bottom:20px;">
+                <button class="btn btn-sm" onclick="loadOrderValidation('en_attente')" id="btn-ov-pending">
+                    <i data-lucide="clock" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px;"></i>
+                    En attente
+                </button>
+                <button class="btn btn-sm btn-outline" onclick="loadOrderValidation('validee')" id="btn-ov-approved">
+                    <i data-lucide="check-circle" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px;"></i>
+                    Validées
+                </button>
+                <button class="btn btn-sm btn-outline" onclick="loadOrderValidation('refusee')" id="btn-ov-refused">
+                    <i data-lucide="x-circle" style="width:14px;height:14px;display:inline;vertical-align:middle;margin-right:4px;"></i>
+                    Refusées
+                </button>
+                <button class="btn btn-sm btn-outline" onclick="loadOrderValidation()" id="btn-ov-all">Toutes</button>
+            </div>
+
+            <!-- Contenu -->
+            <div id="order-validation-content">
+                <p style="color:var(--muted);text-align:center;">Chargement...</p>
+            </div>
+
+            <!-- Modal preuve détaillée -->
+            <div id="proof-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);z-index:9999;overflow-y:auto;" onclick="if(event.target===this)closeProofModal()">
+                <div style="max-width:700px;margin:40px auto;background:var(--card);border-radius:16px;padding:32px;position:relative;">
+                    <button onclick="closeProofModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:24px;cursor:pointer;">&times;</button>
+                    <div id="proof-modal-body"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══ PARAMÈTRES ═══ -->
+        <section id="section-settings" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="settings" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Paramètres</h1>
+            </div>
+            <div id="settings-content"></div>
+        </section>
+
+        <!-- ═══════ ADMIN: INSCRIPTIONS EN ATTENTE ═══════ -->
+        <section id="section-pending" class="section admin-only">
+            <div class="section-header">
+                <h1><i data-lucide="user-check" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Inscriptions en attente</h1>
+            </div>
+            <div id="pending-content">
+                <div class="loading">Chargement...</div>
+            </div>
+        </section>
+
+        <!-- ═══════ ADMIN: SOCIÉTÉS ═══════ -->
+        <section id="section-tenants" class="section admin-only">
+            <div class="section-header">
+                <h1><i data-lucide="building-2" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Gestion des Sociétés</h1>
+                <button class="btn btn-primary" onclick="openCreateTenantModal()">+ Nouvelle Société</button>
+            </div>
+            <div id="tenants-content">
+                <div class="loading">Chargement...</div>
+            </div>
+        </section>
+
+        <!-- ═══════ ADMIN: ABONNEMENTS ═══════ -->
+        <section id="section-subscriptions" class="section admin-only">
+            <div class="section-header">
+                <h1><i data-lucide="credit-card" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Forfaits & Abonnements</h1>
+            </div>
+            <div id="subscriptions-content">
+                <div class="loading">Chargement...</div>
+            </div>
+        </section>
+
+        <!-- ═══════ ADMIN: LICENCES ═══════ -->
+        <section id="section-licenses" class="section admin-only">
+            <div class="section-header">
+                <h1><i data-lucide="key-round" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Gestion des Licences</h1>
+                <button class="btn-primary" onclick="showGenerateLicenseModal()" style="margin-left:auto;display:flex;align-items:center;gap:6px;">
+                    <i data-lucide="plus" style="width:16px;height:16px;"></i> Générer une licence
+                </button>
+            </div>
+            <p style="color:var(--text-light);font-size:14px;margin-bottom:20px;">
+                Chaque client doit acheter une licence unique (one-time) avant de s'abonner. La licence active le compte, le calibrage commence, puis l'abonnement (1 mois offert) démarre automatiquement.
+            </p>
+
+            <!-- License stats -->
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;">
+                <div class="card" style="padding:16px;text-align:center;">
+                    <div style="font-size:28px;font-weight:800;color:var(--teal);" id="lic-total">0</div>
+                    <div style="font-size:12px;color:var(--text-light);">Total licences</div>
+                </div>
+                <div class="card" style="padding:16px;text-align:center;">
+                    <div style="font-size:28px;font-weight:800;color:#10B981;" id="lic-available">0</div>
+                    <div style="font-size:12px;color:var(--text-light);">Disponibles</div>
+                </div>
+                <div class="card" style="padding:16px;text-align:center;">
+                    <div style="font-size:28px;font-weight:800;color:#F59E0B;" id="lic-activated">0</div>
+                    <div style="font-size:12px;color:var(--text-light);">Activées</div>
+                </div>
+                <div class="card" style="padding:16px;text-align:center;">
+                    <div style="font-size:28px;font-weight:800;color:#EF4444;" id="lic-revoked">0</div>
+                    <div style="font-size:12px;color:var(--text-light);">Révoquées</div>
+                </div>
+            </div>
+
+            <!-- License table -->
+            <div class="card" style="padding:0;overflow:hidden;">
+                <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                    <thead>
+                        <tr style="background:var(--bg-dark);color:#FFF;">
+                            <th style="padding:12px 16px;text-align:left;">Clé de licence</th>
+                            <th style="padding:12px 16px;text-align:left;">Plan</th>
+                            <th style="padding:12px 16px;text-align:right;">Prix</th>
+                            <th style="padding:12px 16px;text-align:center;">Statut</th>
+                            <th style="padding:12px 16px;text-align:left;">Client</th>
+                            <th style="padding:12px 16px;text-align:left;">Date</th>
+                            <th style="padding:12px 16px;text-align:center;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="licenses-table-body">
+                        <tr><td colspan="7" style="text-align:center;padding:40px;color:var(--text-light);">Chargement...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ═══════ ADMIN: PLATEFORME ═══════ -->
+        <section id="section-platform" class="section admin-only">
+            <div class="section-header">
+                <h1><i data-lucide="bar-chart-3" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Vue Plateforme</h1>
+            </div>
+            <div id="platform-content">
+                <div class="loading">Chargement...</div>
+            </div>
+        </section>
+
+        <!-- ═══════ ADMIN: DEMO / SIMULATION ═══════ -->
+        <section id="section-demo-simulation" class="section admin-only">
+            <div class="section-header">
+                <h1><i data-lucide="play-circle" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Démo / Simulation</h1>
+            </div>
+            <p style="color:var(--text-light);font-size:14px;margin-bottom:24px;">Découvrez le fonctionnement de Maydeni et lancez une simulation interactive avec des données fictives.</p>
+
+            <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;justify-content:center;">
+                <!-- Interactive Phone Simulation -->
+                <div style="flex:0 0 auto;">
+                    <div id="phone-sim" style="position:relative;width:320px;height:640px;background:#000;border-radius:40px;padding:12px;box-shadow:0 20px 60px rgba(0,0,0,.3),inset 0 0 0 2px #333;overflow:hidden;">
+                        <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);width:100px;height:22px;background:#000;border-radius:0 0 14px 14px;z-index:10;"></div>
+                        <div id="phone-screen" style="width:100%;height:100%;border-radius:30px;overflow:hidden;position:relative;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;"></div>
+                    </div>
+                    <div style="text-align:center;margin-top:12px;">
+                        <div style="background:var(--surface);border-radius:12px;padding:10px 16px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);">
+                            <i data-lucide="monitor-smartphone" style="width:14px;height:14px;color:var(--primary);"></i>
+                            <span style="font-size:12px;color:var(--text);">Simulation interactive de l'application</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activation Flow & Plans -->
+                <div style="flex:1;min-width:300px;max-width:500px;">
+                    <!-- How it works -->
+                    <div class="card" style="margin-bottom:16px;border-left:4px solid #0D6B6E;">
+                        <div class="card-header"><h3>🚀 Comment ça marche</h3></div>
+                        <div class="card-body" style="padding:16px;">
+                            <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;">
+                                <div style="flex:0 0 40px;height:40px;background:linear-gradient(135deg,#0D6B6E,#10B981);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">1</div>
+                                <div>
+                                    <div style="font-weight:600;font-size:14px;color:var(--text-primary);">Le directeur active la licence</div>
+                                    <div style="font-size:12px;color:#64748B;margin-top:2px;">Seul le directeur reçoit la clé de licence. Une seule activation suffit : la société, le dashboard et tous les accès sont configurés automatiquement.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;">
+                                <div style="flex:0 0 40px;height:40px;background:linear-gradient(135deg,#0D6B6E,#10B981);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">2</div>
+                                <div>
+                                    <div style="font-weight:600;font-size:14px;color:var(--text-primary);">Le directeur configure son équipe</div>
+                                    <div style="font-size:12px;color:#64748B;margin-top:2px;">Depuis le dashboard, il crée les comptes de ses agents commerciaux et leur communique leurs identifiants.</div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;">
+                                <div style="flex:0 0 40px;height:40px;background:linear-gradient(135deg,#0D6B6E,#10B981);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;">3</div>
+                                <div>
+                                    <div style="font-weight:600;font-size:14px;color:var(--text-primary);">Les agents téléchargent l'app et se connectent</div>
+                                    <div style="font-size:12px;color:#64748B;margin-top:2px;">Les agents n'ont rien à configurer. Ils téléchargent l'application, entrent leur identifiant et mot de passe, et c'est parti. <strong>Aucune clé de licence requise côté agent.</strong></div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:flex-start;gap:14px;">
+                                <div style="flex:0 0 40px;height:40px;background:linear-gradient(135deg,#10B981,#34D399);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;">✓</div>
+                                <div>
+                                    <div style="font-weight:600;font-size:14px;color:#10B981;">Tout est opérationnel !</div>
+                                    <div style="font-size:12px;color:#64748B;margin-top:2px;">GPS, visites, commandes, rapports — tout fonctionne immédiatement pour toute l'équipe.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Plan simulation buttons -->
+                    <div class="card">
+                        <div class="card-header"><h3>📊 Simulation avec données fictives</h3></div>
+                        <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+                            <p style="font-size:12px;color:#64748B;margin:0 0 8px;">Lancez une simulation pour voir le dashboard en action avec des données réalistes :</p>
+                            <button class="btn btn-primary btn-full" onclick="launchDemo('starter')" style="background:#6B7280;">
+                                <i data-lucide="play" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Démo Starter — 3 agents, 150 prospects
+                            </button>
+                            <button class="btn btn-primary btn-full" onclick="launchDemo('pro')" style="background:#0D6B6E;">
+                                <i data-lucide="play" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Démo Pro — 10 agents, 800 prospects
+                            </button>
+                            <button class="btn btn-primary btn-full" onclick="launchDemo('enterprise')" style="background:#8B5CF6;">
+                                <i data-lucide="play" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Démo Enterprise — 25 agents, 3000 prospects
+                            </button>
+                            <p style="font-size:11px;color:#9CA3AF;margin:8px 0 0;text-align:center;">Ces simulations lancent le dashboard directeur avec des données fictives</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ ADMIN: PAIEMENTS ═══════ -->
+        <section id="section-payments" class="section admin-only">
+            <div class="section-header">
+                <h1><i data-lucide="credit-card" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Gestion des Paiements</h1>
+            </div>
+            <!-- Compte BTE info + méthodes de paiement -->
+            <div class="card" style="margin-bottom:20px;border-left:4px solid #10B981;">
+                <div class="card-header"><h3>💰 Méthodes de Paiement Acceptées</h3></div>
+                <div class="card-body">
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+                        <div style="background:#F0FDF4;border:1px solid #BBF7D0;border-radius:10px;padding:14px;">
+                            <div style="font-weight:700;font-size:14px;margin-bottom:6px;">📱 Flouci P2P</div>
+                            <div style="font-size:13px;color:#374151;">Les clients envoient via l'app Flouci à votre numéro</div>
+                        </div>
+                        <div style="background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:14px;">
+                            <div style="font-weight:700;font-size:14px;margin-bottom:6px;">📮 D17 (La Poste)</div>
+                            <div style="font-size:13px;color:#374151;">Transfert mobile via La Poste Tunisienne</div>
+                        </div>
+                        <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:14px;">
+                            <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🏦 Virement bancaire</div>
+                            <div style="font-size:13px;color:#374151;">Vers votre compte BTE</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:16px;padding:14px;background:#F9FAFB;border-radius:8px;">
+                        <div style="font-weight:600;font-size:13px;color:#374151;margin-bottom:8px;">Coordonnées bancaires BTE :</div>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+                            <div><div style="font-size:11px;color:#888;font-weight:600;margin-bottom:4px;">IBAN</div><div style="font-family:monospace;font-weight:700;font-size:14px;">TN59 24 031 155 9222 511101 59</div></div>
+                            <div><div style="font-size:11px;color:#888;font-weight:600;margin-bottom:4px;">SWIFT</div><div style="font-family:monospace;font-weight:700;font-size:14px;">BTEXTNTT</div></div>
+                            <div><div style="font-size:11px;color:#888;font-weight:600;margin-bottom:4px;">RIB</div><div style="font-family:monospace;font-weight:700;font-size:14px;">24 031 155 9222 511101 59</div></div>
+                        </div>
+                    </div>
+                    <p style="margin-top:12px;font-size:13px;color:#6B7280;">💡 Confirmez manuellement chaque paiement reçu dans la section "Paiements en attente" ci-dessous.</p>
+                </div>
+            </div>
+            <!-- Paiements en attente de confirmation manuelle -->
+            <div class="card" style="margin-bottom:20px;">
+                <div class="card-header">
+                    <h3><i data-lucide="clock" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Paiements en attente de confirmation</h3>
+                    <button class="btn btn-sm" onclick="loadPendingPayments()"><i data-lucide="refresh-cw" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i></button>
+                </div>
+                <div class="card-body" id="pending-payments-content">
+                    <p style="color:var(--muted);text-align:center;">Chargement...</p>
+                </div>
+            </div>
+            <!-- Historique tous les paiements -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i data-lucide="history" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i> Historique des paiements reçus</h3>
+                </div>
+                <div class="card-body" id="payment-history-content">
+                    <p style="color:var(--muted);text-align:center;">Chargement...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════ DIRECTOR: SUBSCRIPTION STATUS ═══════ -->
+        <section id="section-subscription" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="credit-card" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Mon Abonnement</h1>
+            </div>
+            <div id="subscription-content">
+                <div class="loading">Chargement...</div>
+            </div>
+        </section>
+
+        <!-- ═══════ DIRECTOR: IMPORT DONNÉES ═══════ -->
+        <section id="section-import" class="section">
+            <div class="section-header">
+                <h1><i data-lucide="brain" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> <span data-i18n="section.import">Import Intelligent des Données</span></h1>
+            </div>
+
+            <!-- ═══ AI NEURAL IMPORT ENGINE ═══ -->
+            <div class="ai-import-container">
+
+                <!-- 3D Brain Hero -->
+                <div class="ai-import-hero">
+                    <div class="ai-brain-3d" id="ai-brain-3d">
+                        <div class="brain-scene">
+                            <div class="brain-model">
+                                <!-- Core sphere -->
+                                <div class="brain-core"></div>
+                                <!-- Neural layers -->
+                                <div class="brain-layer brain-layer-1"></div>
+                                <div class="brain-layer brain-layer-2"></div>
+                                <div class="brain-layer brain-layer-3"></div>
+                                <!-- Orbiting rings -->
+                                <div class="brain-ring brain-ring-x"></div>
+                                <div class="brain-ring brain-ring-y"></div>
+                                <div class="brain-ring brain-ring-z"></div>
+                                <!-- Data particles -->
+                                <div class="brain-particle p1"></div>
+                                <div class="brain-particle p2"></div>
+                                <div class="brain-particle p3"></div>
+                                <div class="brain-particle p4"></div>
+                                <div class="brain-particle p5"></div>
+                                <div class="brain-particle p6"></div>
+                                <div class="brain-particle p7"></div>
+                                <div class="brain-particle p8"></div>
+                                <!-- Pulse rings -->
+                                <div class="brain-pulse-ring bpr1"></div>
+                                <div class="brain-pulse-ring bpr2"></div>
+                                <div class="brain-pulse-ring bpr3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="ai-import-title">Import Intelligent</h2>
+                    <p class="ai-import-subtitle">Importez les données de votre client en un seul fichier Excel</p>
+                    <div class="ai-capabilities">
+                        <span class="ai-cap"><i data-lucide="users" style="width:14px;height:14px;"></i> Clients</span>
+                        <span class="ai-cap"><i data-lucide="package" style="width:14px;height:14px;"></i> Produits</span>
+                        <span class="ai-cap"><i data-lucide="user-plus" style="width:14px;height:14px;"></i> Équipe</span>
+                        <span class="ai-cap"><i data-lucide="shopping-cart" style="width:14px;height:14px;"></i> Commandes</span>
+                    </div>
+                </div>
+
+                <!-- Quick Guide -->
+                <div style="background:linear-gradient(135deg,#F0F9FF,#EFF6FF);border:1px solid #BFDBFE;border-radius:16px;padding:20px 24px;margin-bottom:24px;">
+                    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+                        <span style="font-size:20px;">📋</span>
+                        <strong style="color:#1E40AF;font-size:15px;">Format ultra-simple — tout secteur d'activité</strong>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:14px;">
+                        <div style="background:white;border-radius:12px;padding:12px;border:1px solid #E2E8F0;text-align:center;">
+                            <div style="font-size:20px;margin-bottom:4px;">👥</div>
+                            <div style="font-size:12px;font-weight:700;color:#1E293B;">Clients</div>
+                            <div style="font-size:10px;color:#64748B;">Nom + Type</div>
+                        </div>
+                        <div style="background:white;border-radius:12px;padding:12px;border:1px solid #E2E8F0;text-align:center;">
+                            <div style="font-size:20px;margin-bottom:4px;">📦</div>
+                            <div style="font-size:12px;font-weight:700;color:#1E293B;">Produits</div>
+                            <div style="font-size:10px;color:#64748B;">Nom + Prix</div>
+                        </div>
+                        <div style="background:white;border-radius:12px;padding:12px;border:1px solid #E2E8F0;text-align:center;">
+                            <div style="font-size:20px;margin-bottom:4px;">🧑‍💼</div>
+                            <div style="font-size:12px;font-weight:700;color:#1E293B;">Équipe</div>
+                            <div style="font-size:10px;color:#64748B;">Nom de l'agent</div>
+                        </div>
+                        <div style="background:white;border-radius:12px;padding:12px;border:1px solid #E2E8F0;text-align:center;">
+                            <div style="font-size:20px;margin-bottom:4px;">🧾</div>
+                            <div style="font-size:12px;font-weight:700;color:#1E293B;">Commandes</div>
+                            <div style="font-size:10px;color:#64748B;">Client + Produit + Qté</div>
+                        </div>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#64748B;">
+                        <span>📍</span>
+                        <span>Pas besoin d'adresses — les agents calibrent la position GPS en un clic sur le terrain</span>
+                    </div>
+                    <div style="margin-top:14px;text-align:center;">
+                        <a href="../Maydeni_Import_Simple.xlsx" download class="ai-import-btn" style="display:inline-flex;text-decoration:none;font-size:14px;padding:10px 24px;background:linear-gradient(135deg,#3B82F6,#2563EB);border:none;color:white;border-radius:12px;align-items:center;gap:8px;cursor:pointer;font-weight:700;">
+                            <i data-lucide="download" style="width:18px;height:18px;"></i>
+                            Télécharger le modèle Excel
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Drop Zone -->
+                <div class="ai-import-dropzone-wrap">
+                    <div id="import-dropzone" class="ai-dropzone">
+                        <div class="ai-dropzone-inner">
+                            <div class="ai-dropzone-icon">
+                                <div class="ai-upload-ring"></div>
+                                <i data-lucide="upload-cloud" style="width:42px;height:42px;color:var(--primary);position:relative;z-index:2;"></i>
+                            </div>
+                            <p class="ai-dropzone-title" data-i18n="import.drop">Cliquez ou glissez votre fichier ici</p>
+                            <p class="ai-dropzone-sub" data-i18n="import.drop_sub">N'importe quel format — l'IA comprendra</p>
+                            <div class="ai-format-tags">
+                                <span class="ai-fmt">.xlsx</span>
+                                <span class="ai-fmt">.csv</span>
+                                <span class="ai-fmt">.pdf</span>
+                                <span class="ai-fmt">.json</span>
+                                <span class="ai-fmt">.txt</span>
+                                <span class="ai-fmt">.xls</span>
+                            </div>
+                            <input type="file" id="import-smart-file" style="display:none;" accept=".xlsx,.xls,.csv,.pdf,.json,.txt,.tsv">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File Info Bar -->
+                <div id="import-file-info" class="ai-file-info" style="display:none;">
+                    <div class="ai-file-icon"><i data-lucide="file-text" style="width:20px;height:20px;color:var(--primary);"></i></div>
+                    <div class="ai-file-details">
+                        <span id="import-file-name" class="ai-file-name"></span>
+                        <span id="import-file-size" class="ai-file-size"></span>
+                    </div>
+                    <button class="ai-file-remove" id="import-file-remove" title="Retirer">&times;</button>
+                </div>
+
+                <!-- AI Processing Progress -->
+                <div id="import-progress-wrap" class="ai-progress-wrap" style="display:none;">
+                    <div class="ai-progress-header">
+                        <div class="ai-progress-brain-mini">
+                            <div class="mini-brain-core"></div>
+                            <div class="mini-brain-ring"></div>
+                        </div>
+                        <div class="ai-progress-text">
+                            <span id="import-progress-label" class="ai-progress-label">Initialisation du moteur IA...</span>
+                            <span id="import-progress-pct" class="ai-progress-pct">0%</span>
+                        </div>
+                    </div>
+                    <div class="ai-progress-track">
+                        <div id="import-progress-bar" class="ai-progress-bar"></div>
+                        <div class="ai-progress-glow"></div>
+                    </div>
+                    <div class="ai-progress-steps" id="import-progress-steps">
+                        <div class="ai-step active" data-step="1"><span class="ai-step-dot"></span><span class="ai-step-label">Lecture</span></div>
+                        <div class="ai-step" data-step="2"><span class="ai-step-dot"></span><span class="ai-step-label">Analyse</span></div>
+                        <div class="ai-step" data-step="3"><span class="ai-step-dot"></span><span class="ai-step-label">Détection</span></div>
+                        <div class="ai-step" data-step="4"><span class="ai-step-dot"></span><span class="ai-step-label">Import</span></div>
+                        <div class="ai-step" data-step="5"><span class="ai-step-dot"></span><span class="ai-step-label">Terminé</span></div>
+                    </div>
+                </div>
+
+                <!-- Analyze Button -->
+                <div class="ai-import-action">
+                    <button id="import-smart-btn" class="ai-import-btn" style="display:none;">
+                        <span class="ai-btn-glow"></span>
+                        <i data-lucide="sparkles" style="width:20px;height:20px;"></i>
+                        <span data-i18n="import.analyze">Analyser & Importer</span>
+                    </button>
+                </div>
+
+                <!-- Results Panel -->
+                <div id="import-smart-result" class="ai-result-panel" style="display:none;"></div>
+
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- ═══ MODAL CRÉATION UTILISATEUR ═══ -->
+<div id="modal-create-user" class="modal" style="display:none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Nouvel Agent</h3>
+            <button class="modal-close" onclick="closeModal('modal-create-user')">&times;</button>
+        </div>
+        <form id="create-user-form" autocomplete="off">
+            <div class="form-group">
+                <label>Nom complet</label>
+                <input type="text" id="cu-fullname" required placeholder="Ahmed Benali" autocomplete="off" data-lpignore="true" data-1p-ignore>
+            </div>
+            <div class="form-group">
+                <label>Identifiant</label>
+                <input type="text" id="cu-username" required placeholder="DEL_AHMED" autocomplete="new-username" data-lpignore="true" data-1p-ignore>
+            </div>
+            <div class="form-group">
+                <label>Email (optionnel)</label>
+                <input type="email" id="cu-email" placeholder="ahmed@example.com" autocomplete="off" data-lpignore="true" data-1p-ignore>
+            </div>
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input type="password" id="cu-password" required minlength="8" placeholder="Min. 8 caractères" autocomplete="new-password" data-lpignore="true" data-1p-ignore>
+            </div>
+            <div class="form-group">
+                <label>Rôle</label>
+                <select id="cu-role" class="input">
+                    <option value="delegue">Agent</option>
+                    <option value="directeur">Directeur</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Téléphone</label>
+                <input type="tel" id="cu-phone" placeholder="+216 XX XXX XXX">
+            </div>
+            <div id="cu-error" class="error-msg" style="display:none;"></div>
+            <button type="submit" class="btn btn-primary btn-full">Créer</button>
+        </form>
+    </div>
+</div>
+
+<!-- ═══ MODAL CRÉATION SOCIÉTÉ (ADMIN) ═══ -->
+<div id="modal-create-tenant" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width:600px;">
+        <div class="modal-header">
+            <h3>Nouvelle Société</h3>
+            <button class="modal-close" onclick="closeModal('modal-create-tenant')">&times;</button>
+        </div>
+        <form id="create-tenant-form" autocomplete="off">
+            <div class="grid-2" style="gap:16px;">
+                <div class="form-group">
+                    <label>Nom de la société *</label>
+                    <input type="text" id="ct-name" required placeholder="Ex: ABC Distribution" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Secteur d'activité</label>
+                    <input type="text" id="ct-industry" placeholder="Ex: Pharmaceutique, Agroalimentaire..." autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Ville</label>
+                    <input type="text" id="ct-city" placeholder="Tunis" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel" id="ct-phone" placeholder="+216..." autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Email société</label>
+                    <input type="email" id="ct-email" placeholder="contact@abc.tn" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Forfait *</label>
+                    <select id="ct-plan" class="form-input" required>
+                        <option value="">Choisir...</option>
+                    </select>
+                </div>
+            </div>
+            <hr style="margin:20px 0;border-color:#e5e7eb;">
+            <h4 style="margin-bottom:12px;color:var(--text);">Compte Directeur Commercial</h4>
+            <div class="grid-2" style="gap:16px;">
+                <div class="form-group">
+                    <label>Nom complet *</label>
+                    <input type="text" id="ct-dir-name" required placeholder="Nom du directeur" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Identifiant *</label>
+                    <input type="text" id="ct-dir-username" required placeholder="D_ABC" autocomplete="new-username" data-lpignore="true" data-1p-ignore>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe *</label>
+                    <input type="password" id="ct-dir-password" required minlength="6" placeholder="Min. 6 caractères" autocomplete="new-password" data-lpignore="true" data-1p-ignore>
+                </div>
+                <div class="form-group">
+                    <label>Email directeur</label>
+                    <input type="email" id="ct-dir-email" placeholder="directeur@abc.tn" autocomplete="off">
+                </div>
+            </div>
+            <div id="ct-error" class="error-msg" style="display:none;margin-top:12px;"></div>
+            <button type="submit" class="btn btn-primary btn-full" style="margin-top:16px;">Créer la Société</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script src="js/api.js?v=6"></script>
+<script src="js/i18n.js?v=6"></script>
+<script src="js/dashboard.js?v=6"></script>
+<script src="js/formations.js?v=6"></script>
+<script>lucide.createIcons();</script>
+<script>
+// ═══ AI NEURAL GENESIS — Dashboard Intro ═══
+(function(){
+  const c = document.getElementById('intro-neural');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  let W, H;
+  function resize(){ W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  const nodes = [], DATA_STREAMS = [];
+  const cx = () => W/2, cy = () => H/2;
+  function initNodes(){
+    nodes.length = 0;
+    for(let i=0;i<40;i++){const a=Math.random()*Math.PI*2,d=200+Math.random()*Math.max(W,H)*0.4;nodes.push({x:cx()+Math.cos(a)*d,y:cy()+Math.sin(a)*d,ox:Math.cos(a)*d,oy:Math.sin(a)*d,r:1+Math.random()*1.5,layer:0,brightness:0.15+Math.random()*0.3,phase:Math.random()*Math.PI*2,speed:0.3+Math.random()*0.5});}
+    for(let i=0;i<24;i++){const a=(i/24)*Math.PI*2+Math.random()*0.3,d=100+Math.random()*120;nodes.push({x:cx()+Math.cos(a)*d,y:cy()+Math.sin(a)*d,ox:Math.cos(a)*d,oy:Math.sin(a)*d,r:1.5+Math.random()*1.5,layer:1,brightness:0.3+Math.random()*0.4,phase:Math.random()*Math.PI*2,speed:0.5+Math.random()*0.5});}
+    for(let i=0;i<12;i++){const a=(i/12)*Math.PI*2,d=30+Math.random()*40;nodes.push({x:cx()+Math.cos(a)*d,y:cy()+Math.sin(a)*d,ox:Math.cos(a)*d,oy:Math.sin(a)*d,r:2+Math.random()*1,layer:2,brightness:0.6+Math.random()*0.4,phase:Math.random()*Math.PI*2,speed:0.8+Math.random()*0.4});}
+  }
+  initNodes();
+  function spawnStream(){const a=Math.random()*Math.PI*2,d=Math.max(W,H)*0.6;DATA_STREAMS.push({x:cx()+Math.cos(a)*d,y:cy()+Math.sin(a)*d,tx:cx()+(Math.random()-0.5)*60,ty:cy()+(Math.random()-0.5)*60,progress:0,speed:0.005+Math.random()*0.008,size:1+Math.random()*2,trail:[]});}
+  let time=0;const startTime=Date.now();
+  function getElapsed(){return(Date.now()-startTime)/1000;}
+  function draw(){
+    const elapsed=getElapsed();time+=0.016;ctx.clearRect(0,0,W,H);
+    const grd=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,W*0.7);
+    grd.addColorStop(0,`rgba(13,107,110,${Math.min(elapsed*0.02,0.06)})`);grd.addColorStop(0.4,'rgba(9,77,79,0.03)');grd.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+    if(elapsed>0.3){const ga=Math.min((elapsed-0.3)*0.05,0.03);ctx.strokeStyle=`rgba(27,158,161,${ga})`;ctx.lineWidth=0.5;const gs=80;for(let x=W/2%gs;x<W;x+=gs){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}for(let y=H/2%gs;y<H;y+=gs){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}}
+    let nodeAlpha=Math.min(elapsed*0.3,1),connAlpha=Math.min(Math.max(elapsed-0.8,0)*0.2,1),cf=0;
+    if(elapsed>3.0&&elapsed<5.5)cf=Math.min((elapsed-3.0)/1.5,1)*0.6;
+    if(elapsed>5.5&&elapsed<7.0)cf=0.6*(1-(elapsed-5.5)/1.5);
+    for(let i=0;i<nodes.length;i++){
+      const n=nodes[i];n.phase+=0.01*n.speed;
+      const b=Math.sin(n.phase)*5;const tx=cx()+n.ox*(1-cf)+b;const ty=cy()+n.oy*(1-cf)+Math.cos(n.phase*1.3)*3;
+      n.x+=(tx-n.x)*0.05;n.y+=(ty-n.y)*0.05;
+      const alpha=n.brightness*nodeAlpha;const pr=n.r+Math.sin(time*2+n.phase)*0.5;
+      ctx.beginPath();ctx.arc(n.x,n.y,pr*5,0,Math.PI*2);ctx.fillStyle=`rgba(27,158,161,${alpha*0.08})`;ctx.fill();
+      ctx.beginPath();ctx.arc(n.x,n.y,pr,0,Math.PI*2);
+      ctx.fillStyle=n.layer===2?`rgba(77,201,217,${alpha})`:n.layer===1?`rgba(27,158,161,${alpha*0.8})`:`rgba(13,107,110,${alpha*0.5})`;ctx.fill();
+      if(connAlpha>0){for(let j=i+1;j<nodes.length;j++){const n2=nodes[j];const dx=n.x-n2.x,dy=n.y-n2.y,dist=Math.sqrt(dx*dx+dy*dy);const md=(n.layer+n2.layer>=3)?200:(n.layer+n2.layer>=1)?160:120;if(dist<md){ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(n2.x,n2.y);ctx.strokeStyle=`rgba(77,201,217,${(1-dist/md)*connAlpha*0.12})`;ctx.lineWidth=(n.layer+n2.layer>=3)?1:0.5;ctx.stroke();}}}
+    }
+    if(elapsed>1.2&&elapsed<9){if(Math.random()<0.3)spawnStream();for(let i=DATA_STREAMS.length-1;i>=0;i--){const s=DATA_STREAMS[i];s.progress+=s.speed;s.trail.push({x:s.x,y:s.y,a:1});if(s.trail.length>15)s.trail.shift();s.x+=(s.tx-s.x)*s.speed*3;s.y+=(s.ty-s.y)*s.speed*3;for(let t=0;t<s.trail.length;t++){const tr=s.trail[t];tr.a*=0.92;ctx.beginPath();ctx.arc(tr.x,tr.y,s.size*tr.a,0,Math.PI*2);ctx.fillStyle=`rgba(77,201,217,${tr.a*0.6})`;ctx.fill();}ctx.beginPath();ctx.arc(s.x,s.y,s.size,0,Math.PI*2);ctx.fillStyle='rgba(77,201,217,0.9)';ctx.fill();if(s.progress>1)DATA_STREAMS.splice(i,1);}}
+    if(elapsed>5.0&&elapsed<6.5){const ba=Math.max(0,1-(elapsed-5.0)/1.5),br=(elapsed-5.0)*300;ctx.beginPath();ctx.arc(W/2,H/2,br,0,Math.PI*2);ctx.strokeStyle=`rgba(77,201,217,${ba*0.3})`;ctx.lineWidth=2;ctx.stroke();}
+    if(elapsed>2.0){const ha=Math.min((elapsed-2.0)*0.4,0.08);ctx.save();ctx.translate(W/2,H/2);for(let i=0;i<3;i++){const hR=180+i*80;ctx.beginPath();for(let j=0;j<6;j++){const a=(j/6)*Math.PI*2+time*0.1*(i%2?1:-1);const px=Math.cos(a)*hR,py=Math.sin(a)*hR;j===0?ctx.moveTo(px,py):ctx.lineTo(px,py);}ctx.closePath();ctx.strokeStyle=`rgba(27,158,161,${ha})`;ctx.lineWidth=0.8;ctx.stroke();}ctx.restore();}
+    requestAnimationFrame(draw);
+  }
+  draw();
+  // Note: intro removal handled by dashboard.js (shows login after)
+})();
+</script>
+
+<!-- ═══ PWA: Service Worker + Install Prompt ═══ -->
+<script>
+(function() {
+  // Force nuke ALL old caches + unregister stale SW, then re-register fresh
+  if ('serviceWorker' in navigator) {
+    // 1. Unregister ALL existing service workers
+    navigator.serviceWorker.getRegistrations().then(function(regs) {
+      var promises = regs.map(function(r) { return r.unregister(); });
+      return Promise.all(promises);
+    }).then(function() {
+      // 2. Delete ALL caches
+      return caches.keys();
+    }).then(function(names) {
+      return Promise.all(names.map(function(n) { return caches.delete(n); }));
+    }).then(function() {
+      // 3. Re-register the fresh SW
+      return navigator.serviceWorker.register('sw.js?v=4');
+    }).catch(function() {});
+  }
+
+  // PWA Install prompt
+  let deferredPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    showInstallButton();
+  });
+
+  function showInstallButton() {
+    // Create floating install button
+    var btn = document.createElement('button');
+    btn.id = 'pwa-install-btn';
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Installer l\'App';
+    btn.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:99999;padding:12px 22px;background:linear-gradient(135deg,#0D6B6E,#1B9EA1);color:#fff;border:none;border-radius:12px;font-family:Inter,sans-serif;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(13,107,110,0.4);transition:all .3s;display:flex;align-items:center;';
+    btn.onmouseenter = function(){ btn.style.transform='translateY(-2px)'; btn.style.boxShadow='0 6px 28px rgba(13,107,110,0.6)'; };
+    btn.onmouseleave = function(){ btn.style.transform='translateY(0)'; btn.style.boxShadow='0 4px 20px rgba(13,107,110,0.4)'; };
+    btn.onclick = function() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function(result) {
+          if (result.outcome === 'accepted') { btn.remove(); }
+          deferredPrompt = null;
+        });
+      }
+    };
+    document.body.appendChild(btn);
+  }
+
+  // Hide install button if already installed
+  window.addEventListener('appinstalled', function() {
+    var btn = document.getElementById('pwa-install-btn');
+    if (btn) btn.remove();
+  });
+})();
+</script>
+
+<!-- ═══════ INTERACTIVE PHONE SIMULATION ═══════ -->
+<script>
+(function() {
+  var screen = document.getElementById('phone-screen');
+  if (!screen) return;
+
+  var currentTab = 0;
+  var currentScreen = 'splash'; // splash, login, home
+
+  // ─── STYLES ───
+  var css = document.createElement('style');
+  css.textContent = `
+    #phone-screen * { box-sizing:border-box; margin:0; padding:0; }
+    #phone-screen input { font-family:inherit; }
+    .ps-fade-in { animation: psFadeIn .5s ease both; }
+    .ps-slide-up { animation: psSlideUp .5s ease both; }
+    .ps-scale-in { animation: psScaleIn .8s cubic-bezier(.34,1.56,.64,1) both; }
+    @keyframes psFadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes psSlideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes psScaleIn { from{opacity:0;transform:scale(.5)} to{opacity:1;transform:scale(1)} }
+    @keyframes psPulse { 0%,100%{box-shadow:0 0 0 0 rgba(13,107,110,.4)} 50%{box-shadow:0 0 0 12px rgba(13,107,110,0)} }
+    @keyframes psFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    .ps-nav-item { cursor:pointer; transition:all .2s; user-select:none; -webkit-user-select:none; }
+    .ps-nav-item:active { transform:scale(.9); }
+    .ps-btn { cursor:pointer; transition:all .15s; user-select:none; -webkit-user-select:none; }
+    .ps-btn:hover { filter:brightness(1.1); }
+    .ps-btn:active { transform:scale(.96); }
+    .ps-card:active { transform:scale(.98); transition:.1s; }
+  `;
+  document.head.appendChild(css);
+
+  // ─── SPLASH SCREEN ───
+  function showSplash() {
+    currentScreen = 'splash';
+    screen.innerHTML = `
+      <div style="width:100%;height:100%;background:linear-gradient(135deg,#0A1628 0%,#0D2137 50%,#0D6B6E 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div class="ps-scale-in" style="width:100px;height:100px;border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 8px 40px rgba(13,107,110,.5),0 0 60px rgba(27,158,161,.2);animation:psPulse 2s infinite;display:flex;align-items:center;justify-content:center;">
+          <img src="../img/logo-icon.png" alt="Maydeni" style="width:120%;height:120%;object-fit:cover;">
+        </div>
+        <div class="ps-fade-in" style="animation-delay:.3s;margin-top:16px;color:#fff;font-size:20px;font-weight:900;letter-spacing:4px;">MAYDENI</div>
+        <div class="ps-fade-in" style="animation-delay:.6s;margin-top:6px;color:rgba(255,255,255,.4);font-size:10px;letter-spacing:3px;">SMART FIELD OPERATIONS</div>
+        <div class="ps-fade-in" style="animation-delay:1s;margin-top:40px;">
+          <div style="width:24px;height:24px;border:2px solid rgba(255,255,255,.3);border-top-color:#1B9EA1;border-radius:50%;animation:spin .8s linear infinite;"></div>
+        </div>
+      </div>
+      <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+    `;
+    setTimeout(showLogin, 2800);
+  }
+
+  // ─── LOGIN SCREEN ───
+  function showLogin() {
+    currentScreen = 'login';
+    screen.innerHTML = `
+      <div style="width:100%;height:100%;background:linear-gradient(135deg,#0A1628 0%,#0D2137 50%,#0D6B6E 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;">
+        <div class="ps-scale-in" style="width:80px;height:80px;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 8px 40px rgba(13,107,110,.5);display:flex;align-items:center;justify-content:center;">
+          <img src="../img/logo-icon.png" alt="Maydeni" style="width:120%;height:120%;object-fit:cover;">
+        </div>
+        <div class="ps-fade-in" style="animation-delay:.2s;margin-top:10px;color:#fff;font-size:18px;font-weight:900;letter-spacing:3px;">MAYDENI</div>
+        <div class="ps-fade-in" style="animation-delay:.3s;margin-top:3px;color:rgba(255,255,255,.35);font-size:9px;letter-spacing:2px;">SMART FIELD OPERATIONS</div>
+
+        <div class="ps-slide-up" style="animation-delay:.5s;margin-top:28px;width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:24px;box-shadow:0 20px 40px rgba(0,0,0,.3);">
+          <div style="color:#fff;font-size:18px;font-weight:800;text-align:center;margin-bottom:22px;">Connexion</div>
+
+          <div style="position:relative;margin-bottom:14px;">
+            <div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <input id="ps-user" type="text" placeholder="Identifiant" value="slim.benali" style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-size:13px;font-weight:600;outline:none;" onfocus="this.style.borderColor='#1B9EA1'" onblur="this.style.borderColor='rgba(255,255,255,.15)'">
+          </div>
+
+          <div style="position:relative;margin-bottom:20px;">
+            <div style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.4);">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <input id="ps-pass" type="password" placeholder="Mot de passe" value="demo1234" style="width:100%;padding:12px 12px 12px 36px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;color:#fff;font-size:13px;font-weight:600;outline:none;" onfocus="this.style.borderColor='#1B9EA1'" onblur="this.style.borderColor='rgba(255,255,255,.15)'">
+          </div>
+
+          <div id="ps-login-btn" class="ps-btn" style="width:100%;padding:14px;background:linear-gradient(135deg,#0D6B6E,#1B9EA1);border-radius:14px;color:#fff;font-size:14px;font-weight:700;text-align:center;box-shadow:0 8px 24px rgba(13,107,110,.4);">
+            Se connecter
+          </div>
+        </div>
+
+        <div class="ps-fade-in" style="animation-delay:1s;margin-top:32px;color:rgba(255,255,255,.2);font-size:10px;letter-spacing:2px;">Powered by Maydani AI</div>
+      </div>
+    `;
+    document.getElementById('ps-login-btn').onclick = function() {
+      var btn = this;
+      btn.innerHTML = '<div style="width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;margin:0 auto;animation:spin .6s linear infinite;"></div>';
+      btn.style.pointerEvents = 'none';
+      setTimeout(function() { showHome(0); }, 1200);
+    };
+  }
+
+  // ─── HOME SCREEN ───
+  function showHome(tab) {
+    currentScreen = 'home';
+    currentTab = tab;
+    var tabs = ['Accueil','Prospects','Catalogue','Commandes','Points'];
+    var icons = ['🏠','👥','📋','📦','🏆'];
+    var content = '';
+
+    if (tab === 0) content = buildHomeTab();
+    else if (tab === 1) content = buildProspectsTab();
+    else if (tab === 2) content = buildCatalogTab();
+    else if (tab === 3) content = buildOrdersTab();
+    else if (tab === 4) content = buildPointsTab();
+
+    var navHtml = tabs.map(function(t, i) {
+      var active = i === tab;
+      return '<div class="ps-nav-item" data-tab="'+i+'" style="text-align:center;flex:1;padding:6px 0;'+(active?'color:#0D6B6E;':'color:#94A3B8;')+'">' +
+        '<div style="font-size:18px;'+(active?'transform:scale(1.15);':'')+'">'+icons[i]+'</div>' +
+        '<div style="font-size:9px;font-weight:'+(active?'700':'400')+';margin-top:1px;">'+t+'</div>' +
+      '</div>';
+    }).join('');
+
+    screen.innerHTML = `
+      <div style="width:100%;height:100%;display:flex;flex-direction:column;background:#F0F4F8;">
+        <div id="ps-content" style="flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;">${content}</div>
+        <div id="ps-navbar" style="background:#fff;display:flex;padding:6px 0 10px;border-top:1px solid #E2E8F0;flex-shrink:0;">${navHtml}</div>
+      </div>
+    `;
+
+    // Bind tab clicks
+    document.querySelectorAll('#ps-navbar .ps-nav-item').forEach(function(el) {
+      el.onclick = function() { showHome(parseInt(this.dataset.tab)); };
+    });
+
+    // Bind logout
+    if (tab === 0) {
+      var lo = document.getElementById('ps-logout');
+      if (lo) lo.onclick = function() { showLogin(); };
+    }
+  }
+
+  // ─── TAB: ACCUEIL ───
+  function buildHomeTab() {
+    return `
+      <div style="padding:16px;">
+        <!-- Header Card -->
+        <div class="ps-fade-in" style="background:linear-gradient(135deg,#0D6B6E,#1B9EA1,#0D6B6E);border-radius:22px;padding:18px;box-shadow:0 8px 24px rgba(13,107,110,.3);">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:46px;height:46px;background:rgba(255,255,255,.2);border-radius:16px;border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:16px;">SL</div>
+            <div style="flex:1;">
+              <div style="color:rgba(255,255,255,.7);font-size:12px;">Bonjour 👋</div>
+              <div style="color:#fff;font-size:18px;font-weight:800;">Slim Ben Ali</div>
+            </div>
+            <div style="display:flex;gap:5px;">
+              <div class="ps-btn" style="width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8);font-size:14px;">👤</div>
+              <div class="ps-btn" style="width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800;">EN</div>
+              <div class="ps-btn" id="ps-logout" style="width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8);font-size:14px;">↗</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:8px 12px;display:flex;align-items:center;gap:6px;">
+            <span style="font-size:12px;">⏰</span>
+            <span style="color:#fff;font-size:11px;font-weight:600;">Heures de travail — Activité comptabilisée</span>
+          </div>
+        </div>
+
+        <!-- Score Card -->
+        <div class="ps-slide-up ps-card" style="animation-delay:.1s;margin-top:12px;background:#fff;border-radius:20px;padding:18px;box-shadow:0 4px 16px rgba(0,0,0,.05);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <span style="font-size:13px;font-weight:700;color:#64748B;">🏆 Score</span>
+            <span style="background:linear-gradient(135deg,#FF6B35,#FFB347);padding:3px 10px;border-radius:20px;color:#fff;font-size:11px;font-weight:700;">🔥 x3</span>
+          </div>
+          <div style="display:flex;align-items:center;">
+            <div style="flex:1;">
+              <div style="font-size:32px;font-weight:900;color:#0D6B6E;">245</div>
+              <div style="font-size:11px;color:#94A3B8;">Score total</div>
+            </div>
+            <div style="width:1px;height:40px;background:#E2E8F0;"></div>
+            <div style="flex:1;padding-left:20px;">
+              <div style="font-size:32px;font-weight:900;color:#FFB800;">180</div>
+              <div style="font-size:11px;color:#94A3B8;">Points</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;border-top:1px solid #F1F5F9;padding-top:10px;display:flex;justify-content:center;align-items:center;gap:6px;color:#0D6B6E;font-size:12px;font-weight:600;cursor:pointer;">
+            💱 Voir la valeur en DT →
+          </div>
+        </div>
+
+        <!-- GPS Card -->
+        <div class="ps-slide-up" style="animation-delay:.2s;margin-top:10px;background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.04);">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="width:8px;height:8px;background:#10B981;border-radius:50%;box-shadow:0 0 8px rgba(16,185,129,.5);"></div>
+            <span style="font-size:12px;font-weight:600;color:#065F46;">GPS Actif</span>
+            <span style="margin-left:auto;font-size:11px;color:#94A3B8;">36.8065°N, 10.1815°E</span>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div style="margin-top:16px;font-size:15px;font-weight:800;color:#1E293B;">Actions rapides</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;">
+          <div class="ps-slide-up ps-btn" style="animation-delay:.3s;background:#fff;border-radius:18px;padding:18px 14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.04);" onclick="document.querySelector('[data-tab=\\'1\\']').click()">
+            <div style="width:40px;height:40px;background:linear-gradient(135deg,#0D6B6E,#1B9EA1);border-radius:14px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:18px;">👥</div>
+            <div style="font-size:12px;font-weight:700;color:#1E293B;">Prospects</div>
+          </div>
+          <div class="ps-slide-up ps-btn" style="animation-delay:.38s;background:#fff;border-radius:18px;padding:18px 14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.04);">
+            <div style="width:40px;height:40px;background:linear-gradient(135deg,#10B981,#34D399);border-radius:14px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:18px;">▶</div>
+            <div style="font-size:12px;font-weight:700;color:#1E293B;">Nouvelle visite</div>
+          </div>
+          <div class="ps-slide-up ps-btn" style="animation-delay:.46s;background:#fff;border-radius:18px;padding:18px 14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.04);">
+            <div style="width:40px;height:40px;background:linear-gradient(135deg,#8B5CF6,#A78BFA);border-radius:14px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:18px;">📜</div>
+            <div style="font-size:12px;font-weight:700;color:#1E293B;">Historique</div>
+          </div>
+          <div class="ps-slide-up ps-btn" style="animation-delay:.54s;background:#fff;border-radius:18px;padding:18px 14px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.04);" onclick="document.querySelector('[data-tab=\\'2\\']').click()">
+            <div style="width:40px;height:40px;background:linear-gradient(135deg,#F59E0B,#FBBF24);border-radius:14px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:18px;">🏪</div>
+            <div style="font-size:12px;font-weight:700;color:#1E293B;">Catalogue</div>
+          </div>
+        </div>
+        <div style="height:16px;"></div>
+      </div>
+    `;
+  }
+
+  // ─── TAB: PROSPECTS ───
+  function buildProspectsTab() {
+    var prospects = [
+      {name:'Pharmacie Ibn Sina',addr:'Rue Ibn Sina, Tunis',status:'visited',color:'#10B981'},
+      {name:'Dépôt MediPharm',addr:'Zone Ind. Ariana',status:'visited',color:'#3B82F6'},
+      {name:'Clinique El Manar',addr:'Av. Louis Braille',status:'planned',color:'#F59E0B'},
+      {name:'Para Plus Ennasr',addr:'Centre Ennasr II',status:'new',color:'#8B5CF6'},
+      {name:'Grossiste Santé+',addr:'Rue de la Liberté, Bardo',status:'new',color:'#EF4444'},
+      {name:'Pharmacie Pasteur',addr:'Av. Pasteur, Centre',status:'planned',color:'#0D6B6E'},
+    ];
+    return `
+      <div style="padding:16px;">
+        <div class="ps-fade-in" style="font-size:18px;font-weight:800;color:#1E293B;margin-bottom:4px;">Prospects</div>
+        <div style="color:#94A3B8;font-size:12px;margin-bottom:14px;">${prospects.length} prospects dans votre zone</div>
+        <div style="position:relative;margin-bottom:14px;">
+          <input type="text" placeholder="🔍 Rechercher un prospect..." style="width:100%;padding:10px 14px;background:#fff;border:1px solid #E2E8F0;border-radius:12px;font-size:12px;color:#1E293B;outline:none;">
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          ${prospects.map(function(p, i) {
+            var badge = p.status === 'visited' ? '<span style="background:#ECFDF5;color:#065F46;padding:2px 8px;border-radius:8px;font-size:9px;font-weight:700;">Visité</span>' :
+                        p.status === 'planned' ? '<span style="background:#FEF3C7;color:#92400E;padding:2px 8px;border-radius:8px;font-size:9px;font-weight:700;">Planifié</span>' :
+                        '<span style="background:#EDE9FE;color:#5B21B6;padding:2px 8px;border-radius:8px;font-size:9px;font-weight:700;">Nouveau</span>';
+            return '<div class="ps-slide-up ps-card" style="animation-delay:'+(.1+i*.08)+'s;background:#fff;border-radius:14px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.04);display:flex;align-items:center;gap:10px;cursor:pointer;">' +
+              '<div style="width:38px;height:38px;background:'+p.color+'15;border-radius:12px;display:flex;align-items:center;justify-content:center;"><div style="width:10px;height:10px;background:'+p.color+';border-radius:50%;"></div></div>' +
+              '<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:#1E293B;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+p.name+'</div><div style="font-size:10px;color:#94A3B8;">'+p.addr+'</div></div>' +
+              badge +
+            '</div>';
+          }).join('')}
+        </div>
+        <div style="height:12px;"></div>
+      </div>
+    `;
+  }
+
+  // ─── TAB: CATALOGUE ───
+  function buildCatalogTab() {
+    var products = [
+      {name:'Doliprane 500mg',cat:'Antalgique',price:'3.200 DT',stock:142,img:'💊'},
+      {name:'Amoxicilline 1g',cat:'Antibiotique',price:'8.500 DT',stock:67,img:'💉'},
+      {name:'Voltarène Gel',cat:'Anti-inflammatoire',price:'12.800 DT',stock:89,img:'🧴'},
+      {name:'Smecta Sachets',cat:'Gastro-entérologie',price:'6.400 DT',stock:234,img:'📦'},
+      {name:'Ventoline Spray',cat:'Pneumologie',price:'15.200 DT',stock:45,img:'🫁'},
+      {name:'Augmentin 500mg',cat:'Antibiotique',price:'11.900 DT',stock:78,img:'💊'},
+    ];
+    return `
+      <div style="padding:16px;">
+        <div class="ps-fade-in" style="font-size:18px;font-weight:800;color:#1E293B;margin-bottom:4px;">Catalogue</div>
+        <div style="color:#94A3B8;font-size:12px;margin-bottom:14px;">${products.length} produits disponibles</div>
+        <div style="display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;">
+          <span style="padding:6px 12px;background:#0D6B6E;color:#fff;border-radius:20px;font-size:10px;font-weight:700;white-space:nowrap;">Tous</span>
+          <span style="padding:6px 12px;background:#fff;color:#64748B;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap;border:1px solid #E2E8F0;">Antalgique</span>
+          <span style="padding:6px 12px;background:#fff;color:#64748B;border-radius:20px;font-size:10px;font-weight:600;white-space:nowrap;border:1px solid #E2E8F0;">Antibiotique</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          ${products.map(function(p, i) {
+            return '<div class="ps-slide-up ps-card" style="animation-delay:'+(.1+i*.07)+'s;background:#fff;border-radius:14px;padding:12px;box-shadow:0 2px 8px rgba(0,0,0,.04);display:flex;align-items:center;gap:10px;cursor:pointer;">' +
+              '<div style="width:40px;height:40px;background:#F0F4F8;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;">'+p.img+'</div>' +
+              '<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:#1E293B;">'+p.name+'</div><div style="font-size:10px;color:#94A3B8;">'+p.cat+'</div></div>' +
+              '<div style="text-align:right;"><div style="font-size:12px;font-weight:800;color:#0D6B6E;">'+p.price+'</div><div style="font-size:9px;color:#94A3B8;">Stock: '+p.stock+'</div></div>' +
+            '</div>';
+          }).join('')}
+        </div>
+        <div style="height:12px;"></div>
+      </div>
+    `;
+  }
+
+  // ─── TAB: COMMANDES ───
+  function buildOrdersTab() {
+    var orders = [
+      {id:'CMD-2024-087',client:'Pharmacie Ibn Sina',total:'245.600 DT',status:'Livrée',sc:'#10B981',bg:'#ECFDF5'},
+      {id:'CMD-2024-086',client:'Dépôt MediPharm',total:'189.200 DT',status:'En cours',sc:'#3B82F6',bg:'#EFF6FF'},
+      {id:'CMD-2024-085',client:'Clinique El Manar',total:'312.800 DT',status:'En attente',sc:'#F59E0B',bg:'#FEF3C7'},
+      {id:'CMD-2024-084',client:'Para Plus Ennasr',total:'78.400 DT',status:'Livrée',sc:'#10B981',bg:'#ECFDF5'},
+    ];
+    return `
+      <div style="padding:16px;">
+        <div class="ps-fade-in" style="font-size:18px;font-weight:800;color:#1E293B;margin-bottom:4px;">Commandes</div>
+        <div style="color:#94A3B8;font-size:12px;margin-bottom:14px;">${orders.length} commandes récentes</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${orders.map(function(o, i) {
+            return '<div class="ps-slide-up" style="animation-delay:'+(.1+i*.1)+'s;background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.04);">' +
+              '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">' +
+                '<span style="font-size:11px;font-weight:700;color:#64748B;">'+o.id+'</span>' +
+                '<span style="background:'+o.bg+';color:'+o.sc+';padding:3px 10px;border-radius:10px;font-size:10px;font-weight:700;">'+o.status+'</span>' +
+              '</div>' +
+              '<div style="font-size:13px;font-weight:700;color:#1E293B;">'+o.client+'</div>' +
+              '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:6px;">' +
+                '<span style="font-size:14px;font-weight:800;color:#0D6B6E;">'+o.total+'</span>' +
+                '<span style="font-size:10px;color:#94A3B8;">3 articles</span>' +
+              '</div>' +
+            '</div>';
+          }).join('')}
+        </div>
+        <div style="margin-top:14px;">
+          <div class="ps-btn" style="width:100%;padding:12px;background:linear-gradient(135deg,#0D6B6E,#1B9EA1);border-radius:14px;color:#fff;font-size:13px;font-weight:700;text-align:center;box-shadow:0 4px 16px rgba(13,107,110,.3);">
+            + Nouvelle commande
+          </div>
+        </div>
+        <div style="height:12px;"></div>
+      </div>
+    `;
+  }
+
+  // ─── TAB: POINTS ───
+  function buildPointsTab() {
+    var history = [
+      {label:'Visite Pharmacie Ibn Sina',pts:'+45',color:'#10B981',time:'09:50'},
+      {label:'Commande validée — MediPharm',pts:'+38',color:'#3B82F6',time:'10:52'},
+      {label:'Bonus Combo x3 🔥',pts:'+15',color:'#FF6B35',time:'10:52'},
+      {label:'Nouveau prospect ajouté',pts:'+10',color:'#8B5CF6',time:'08:30'},
+      {label:'Check-in GPS matinal',pts:'+5',color:'#0D6B6E',time:'08:01'},
+    ];
+    return `
+      <div style="padding:16px;">
+        <div class="ps-fade-in" style="font-size:18px;font-weight:800;color:#1E293B;margin-bottom:14px;">Points & Classement</div>
+
+        <div class="ps-slide-up" style="background:linear-gradient(135deg,#FFB800,#FF8C00);border-radius:20px;padding:20px;text-align:center;box-shadow:0 8px 24px rgba(255,184,0,.3);">
+          <div style="font-size:36px;animation:psFloat 3s ease-in-out infinite;">🏆</div>
+          <div style="color:#fff;font-size:28px;font-weight:900;margin-top:4px;">180</div>
+          <div style="color:rgba(255,255,255,.7);font-size:12px;font-weight:600;">Points accumulés</div>
+          <div style="margin-top:10px;background:rgba(255,255,255,.2);border-radius:12px;padding:8px;color:#fff;font-size:11px;font-weight:700;">#2 dans le classement régional</div>
+        </div>
+
+        <div style="margin-top:16px;font-size:14px;font-weight:800;color:#1E293B;margin-bottom:10px;">Historique des points</div>
+        <div style="display:flex;flex-direction:column;gap:6px;">
+          ${history.map(function(h, i) {
+            return '<div class="ps-slide-up" style="animation-delay:'+(.2+i*.08)+'s;background:#fff;border-radius:12px;padding:11px 12px;box-shadow:0 1px 6px rgba(0,0,0,.03);display:flex;align-items:center;gap:10px;">' +
+              '<div style="width:34px;height:34px;background:'+h.color+'12;border-radius:10px;display:flex;align-items:center;justify-content:center;color:'+h.color+';font-size:12px;font-weight:900;">'+h.pts+'</div>' +
+              '<div style="flex:1;"><div style="font-size:11px;font-weight:600;color:#1E293B;">'+h.label+'</div><div style="font-size:10px;color:#94A3B8;">Aujourd\'hui à '+h.time+'</div></div>' +
+            '</div>';
+          }).join('')}
+        </div>
+
+        <div style="margin-top:14px;background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px rgba(0,0,0,.04);">
+          <div style="font-size:12px;font-weight:700;color:#64748B;margin-bottom:10px;">💱 Conversion</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;color:#94A3B8;">180 points =</span>
+            <span style="font-size:18px;font-weight:900;color:#0D6B6E;">18.000 DT</span>
+          </div>
+        </div>
+        <div style="height:12px;"></div>
+      </div>
+    `;
+  }
+
+  // ─── START ───
+  showSplash();
+})();
+</script>
+</body>
+</html>
