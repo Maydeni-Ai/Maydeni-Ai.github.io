@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Elyesio Core Intelligence - Révolution du commerce terrain avec l'IA - Maydeni AI">
+    <meta name="keywords" content="IA, commerce terrain, supervision, Maydeni AI, Elyesio, intelligence artificielle">
+    <meta name="author" content="Dr Slim Lamouchi - Elyesio AI">
+    <meta property="og:title" content="Elyesio Core Intelligence - Maydeni AI">
+    <meta property="og:description" content="L'avenir du commerce terrain révolutionné par l'intelligence artificielle">
+    <meta property="og:image" content="dashboard_web/img/logo.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Elyesio Core Intelligence">
+    <meta name="twitter:description" content="IA révolutionnant le commerce terrain">
+    <title>Elyesio Core Intelligence - Maydeni AI</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            background:#000;
+            overflow:hidden;
+            cursor: none;
+        }
+
+        #container{
+            width:1920px;
+            height:1080px;
+            margin:auto;
+            position:relative;
+            background:linear-gradient(135deg,#0a0a1f 0%,#1a1a3a 50%,#0a0a1f 100%);
+            overflow:hidden;
+        }
+
+        /* Intro Modal - High Tech Futuristic */
+        .intro-modal{
+            position:fixed;
+            inset:0;
+            background:radial-gradient(circle at center, rgba(10,10,31,0.95) 0%, rgba(0,0,0,0.98) 100%);
+            backdrop-filter:blur(20px);
+            z-index:9999;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            opacity:0;
+            transform:scale(0.8);
+            transition:all 1.2s cubic-bezier(0.34,1.56,0.64,1);
+            animation: modalEntry 1.5s ease-out forwards;
+        }
+
+        .intro-modal.show{
+            opacity:1;
+            transform:scale(1);
+        }
+
+        .intro-modal.hide{
+            opacity:0;
+            transform:scale(0.9);
+            pointer-events:none;
+        }
+
+        @keyframes modalEntry {
+            0% {
+                opacity:0;
+                transform:scale(0.5) rotate(-5deg);
+                filter:blur(10px);
+            }
+            50% {
+                transform:scale(1.05) rotate(1deg);
+                filter:blur(2px);
+            }
+            100% {
+                opacity:1;
+                transform:scale(1) rotate(0deg);
+                filter:blur(0px);
+            }
+        }
+
+        .intro-content{
+            position:relative;
+            max-width:800px;
+            padding:60px;
+            text-align:center;
+            background:linear-gradient(135deg, rgba(13,107,110,0.1), rgba(0,212,170,0.05));
+            border-radius:30px;
+            border:2px solid transparent;
+            background-clip:padding-box;
+            animation: borderGlow 3s ease-in-out infinite alternate;
+        }
+
+        .intro-content::before {
+            content:'';
+            position:absolute;
+            inset:-2px;
+            padding:2px;
+            background:linear-gradient(45deg,
+                #0D6B6E,
+                #00D4AA,
+                #4A90E2,
+                #0D6B6E,
+                #00D4AA
+            );
+            border-radius:32px;
+            mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite:exclude;
+            animation: borderRotate 4s linear infinite;
+            z-index:-1;
+        }
+
+        @keyframes borderGlow {
+            from { box-shadow: 0 0 30px rgba(13,107,110,0.3); }
+            to { box-shadow: 0 0 60px rgba(13,107,110,0.6), 0 0 120px rgba(0,212,170,0.2); }
+        }
+
+        @keyframes borderRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .intro-logo{
+            width:200px;
+            height:auto;
+            margin-bottom:30px;
+            filter:drop-shadow(0 0 30px rgba(13,107,110,0.5));
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform:translateY(0); }
+            50% { transform:translateY(-10px); }
+        }
+
+        .intro-title{
+            font-size:48px;
+            font-weight:900;
+            background:linear-gradient(45deg,#0D6B6E,#00D4AA,#4A90E2);
+            background-clip:text;
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            margin-bottom:20px;
+            text-shadow: 0 0 40px rgba(13,107,110,0.3);
+            animation: titleShimmer 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleShimmer {
+            from { filter:brightness(1); }
+            to { filter:brightness(1.3); }
+        }
+
+        .intro-subtitle{
+            font-size:24px;
+            color:#E2E8F0;
+            margin-bottom:40px;
+            line-height:1.4;
+            opacity:0;
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+        }
+
+        .intro-description{
+            font-size:18px;
+            color:#A1A1AA;
+            margin-bottom:50px;
+            line-height:1.6;
+            opacity:0;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity:0;
+                transform:translateY(30px);
+            }
+            to {
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        .intro-button{
+            background:linear-gradient(135deg,#0D6B6E,#00D4AA);
+            color:#fff;
+            border:none;
+            padding:20px 50px;
+            font-size:20px;
+            font-weight:700;
+            border-radius:50px;
+            cursor:pointer;
+            transition:all 0.3s ease;
+            box-shadow:0 8px 32px rgba(13,107,110,0.4);
+            text-transform:uppercase;
+            letter-spacing:2px;
+            position:relative;
+            overflow:hidden;
+            opacity:0;
+            animation: buttonSlideIn 1s ease-out 1.2s forwards;
+        }
+
+        .intro-button::before {
+            content:'';
+            position:absolute;
+            top:0;
+            left:-100%;
+            width:100%;
+            height:100%;
+            background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .intro-button:hover {
+            transform:translateY(-3px);
+            box-shadow:0 12px 40px rgba(13,107,110,0.6);
+        }
+
+        .intro-button:hover::before {
+            left:100%;
+        }
+
+        .intro-button:active {
+            transform:translateY(-1px);
+        }
+
+        @keyframes buttonSlideIn {
+            from {
+                opacity:0;
+                transform:translateY(50px) scale(0.9);
+            }
+            to {
+                opacity:1;
+                transform:translateY(0) scale(1);
+            }
+        }
+
+        /* Logo and Branding */
+        .logo{
+            position:absolute;
+            top:80px;
+            left:80px;
+            width:480px;
+            filter:drop-shadow(0 20px 40px rgba(13,107,110,0.4));
+            transition: all 0.8s ease;
+        }
+
+        .logo:hover{
+            transform: scale(1.05);
+            filter:drop-shadow(0 25px 50px rgba(13,107,110,0.6));
+        }
+
+        .maydeni-logo{
+            position:absolute;
+            bottom:140px;
+            right:140px;
+            width:320px;
+            opacity:0.9;
+            filter:drop-shadow(0 15px 30px rgba(13,107,110,0.3));
+            transition: all 0.6s ease;
+        }
+
+        .maydeni-logo:hover{
+            opacity:1;
+            transform: scale(1.05);
+        }
+
+        /* Typography */
+        .title{
+            position:absolute;
+            top:280px;
+            left:50%;
+            transform:translateX(-50%);
+            font-size:140px;
+            font-weight:900;
+            background:linear-gradient(45deg,#0D6B6E,#00D4AA,#4A90E2);
+            background-clip:text;
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            text-align:center;
+            letter-spacing:-2px;
+            text-shadow: 0 0 40px rgba(13,107,110,0.3);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.2); }
+        }
+
+        .subtitle{
+            position:absolute;
+            top:460px;
+            left:50%;
+            transform:translateX(-50%);
+            font-size:52px;
+            color:#E2E8F0;
+            font-weight:600;
+            letter-spacing:1px;
+            text-align:center;
+            max-width:1400px;
+            line-height:1.3;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Stats and Info */
+        .stats{
+            position:absolute;
+            right:120px;
+            top:500px;
+            color:#00D4AA;
+            font-size:64px;
+            font-weight:800;
+            line-height:1.3;
+            text-align:right;
+            text-shadow: 0 0 20px rgba(0,212,170,0.3);
+            animation: statsPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes statsPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .contact{
+            position:absolute;
+            bottom:120px;
+            left:120px;
+            color:#A1A1AA;
+            font-size:44px;
+            font-weight:600;
+            line-height:1.4;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Avatar placeholder */
+        .avatar{
+            position:absolute;
+            top:120px;
+            right:120px;
+            width:380px;
+            height:380px;
+            border-radius:50%;
+            background: linear-gradient(135deg, rgba(13,107,110,0.2), rgba(0,212,170,0.1));
+            border: 3px solid rgba(13,107,110,0.3);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:#00D4AA;
+            font-size:18px;
+            text-align:center;
+            font-weight:600;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Progress indicator */
+        .progress-bar{
+            position:fixed;
+            bottom:20px;
+            left:50%;
+            transform:translateX(-50%);
+            width:400px;
+            height:4px;
+            background:rgba(255,255,255,0.2);
+            border-radius:2px;
+            overflow:hidden;
+            z-index:1000;
+        }
+
+        .progress-fill{
+            height:100%;
+            background:linear-gradient(90deg,#0D6B6E,#00D4AA);
+            border-radius:2px;
+            transition:width 0.3s ease;
+            box-shadow: 0 0 10px rgba(13,107,110,0.5);
+        }
+
+        /* Scene counter */
+        .scene-counter{
+            position:fixed;
+            top:20px;
+            right:20px;
+            background:rgba(0,0,0,0.7);
+            color:#00D4AA;
+            padding:10px 20px;
+            border-radius:20px;
+            font-size:14px;
+            font-weight:600;
+            backdrop-filter: blur(10px);
+            border:1px solid rgba(13,107,110,0.3);
+            z-index:1000;
+        }
+
+        /* Controls hint */
+        .controls-hint{
+            position:fixed;
+            bottom:60px;
+            left:50%;
+            transform:translateX(-50%);
+            background:rgba(0,0,0,0.8);
+            color:#A1A1AA;
+            padding:8px 16px;
+            border-radius:20px;
+            font-size:12px;
+            backdrop-filter: blur(10px);
+            border:1px solid rgba(13,107,110,0.2);
+            opacity:0;
+            transition:opacity 0.3s ease;
+            z-index:1000;
+        }
+
+        body:hover .controls-hint{
+            opacity:1;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1920px) {
+            #container { width: 100vw; height: 100vh; }
+            .title { font-size: 100px; }
+            .subtitle { font-size: 36px; }
+            .stats { font-size: 48px; }
+            .contact { font-size: 32px; }
+        }
+
+        @media (max-width: 1024px) {
+            .intro-content {
+                max-width:90%;
+                padding:40px;
+            }
+            .intro-title { font-size:36px; }
+            .intro-subtitle { font-size:20px; }
+            .intro-description { font-size:16px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <!-- Intro Modal - High Tech Futuristic -->
+        <div class="intro-modal" id="introModal">
+            <div class="intro-content">
+                <img src="dashboard_web/img/logo.png" alt="Elyesio AI" class="intro-logo" onerror="this.src='https://via.placeholder.com/200x80/0D6B6E/FFFFFF?text=Elyesio+AI'">
+                <h1 class="intro-title">ELYESIO CORE INTELLIGENCE</h1>
+                <p class="intro-subtitle">Révolution du Commerce Terrain par l'Intelligence Artificielle</p>
+                <p class="intro-description">
+                    Découvrez comment Maydeni AI transforme la supervision terrain avec des technologies
+                    d'intelligence artificielle de pointe. Optimisez vos opérations, prédisez les tendances
+                    et maximisez vos performances commerciales.
+                </p>
+                <button class="intro-button" onclick="startPresentation()">COMMENCER LA PRÉSENTATION</button>
+            </div>
+        </div>
+        <!-- SCENE 0: INTRO - L'AVENIR DU COMMERCE TERRAIN -->
+        <div class="scene active" data-start="0">
+            <div class="title" style="top:200px;font-size:120px;">L'AVENIR</div>
+            <div class="subtitle" style="top:380px;font-size:48px;">DU COMMERCE TERRAIN</div>
+            <div class="subtitle" style="top:480px;font-size:36px;color:#00D4AA;">Révolutionné par l'Intelligence Artificielle</div>
+        </div>
+
+        <!-- SCENE 1: LOGO ELYESIO -->
+        <div class="scene" data-start="8">
+            <img src="dashboard_web/img/logo.png" class="logo" onerror="this.src='https://via.placeholder.com/480x200/0D6B6E/FFFFFF?text=Elyesio'">
+            <div class="avatar"><!-- Placez votre avatar ici --></div>
+            <div class="title">CORE INTELLIGENCE</div>
+            <div class="subtitle">2026 - L'IA révolutionne le commerce terrain</div>
+        </div>
+
+        <!-- SCENE 2: Dr Slim Lamouchi -->
+        <div class="scene" data-start="20">
+            <img src="dashboard_web/img/logo.png" class="logo">
+            <div class="title">Dr Slim Lamouchi</div>
+            <div class="subtitle">Pharmacien • Full-Stack Expert • Spécialiste IA</div>
+            <div class="stats">Fondateur<br>Elyesio AI</div>
+        </div>
+
+        <!-- SCENE 3: Maydeni AI -->
+        <div class="scene" data-start="32">
+            <img src="dashboard_web/img/logo.png" class="logo">
+            <div class="title">MAYDENI AI</div>
+            <div class="subtitle">Plateforme de Supervision Terrain Intelligente</div>
+            <div class="stats">Smart Field<br>Operations</div>
+            <div class="contact">Contact: contact@maydeni.ai<br>Site: maydeni-ai.github.io</div>
+            <img src="dashboard_web/img/logo-icon.png" class="maydeni-logo" onerror="this.src='https://via.placeholder.com/320x120/0D6B6E/FFFFFF?text=Maydeni+AI'">
+        </div>
+    </div>
+
+    <!-- UI Elements -->
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="scene-counter" id="scene-counter">1 / 4</div>
+
+    <div class="controls-hint">
+        🖱️ Clic pour pause • ⌨️ Flèches pour navigation • 🏠 Début • ⏭️ Espace pour pause
+    </div>
+
+    <script>
+        // Video Presentation Controller
+        class VideoPresentation {
+            constructor() {
+                this.scenes = document.querySelectorAll('.scene');
+                this.currentScene = 0;
+                this.isPlaying = true;
+                this.progressBar = document.getElementById('progress-fill');
+                this.sceneCounter = document.getElementById('scene-counter');
+                this.init();
+            }
+
+            init() {
+                // Start with first scene
+                this.showScene(0);
+                this.updateUI();
+
+                // Auto-play scenes
+                this.startAutoPlay();
+
+                // Keyboard controls
+                document.addEventListener('keydown', (e) => {
+                    switch(e.key) {
+                        case ' ': // Spacebar
+                            e.preventDefault();
+                            this.togglePlayPause();
+                            break;
+                        case 'ArrowRight':
+                        case 'ArrowDown':
+                            e.preventDefault();
+                            this.nextScene();
+                            break;
+                        case 'ArrowLeft':
+                        case 'ArrowUp':
+                            e.preventDefault();
+                            this.prevScene();
+                            break;
+                        case 'Home':
+                            e.preventDefault();
+                            this.goToScene(0);
+                            break;
+                        case 'End':
+                            e.preventDefault();
+                            this.goToScene(this.scenes.length - 1);
+                            break;
+                    }
+                });
+
+                // Click to pause/play
+                document.addEventListener('click', () => {
+                    this.togglePlayPause();
+                });
+            }
+
+            showScene(index) {
+                // Hide all scenes
+                this.scenes.forEach(scene => scene.classList.remove('active'));
+
+                // Show target scene
+                if (this.scenes[index]) {
+                    this.scenes[index].classList.add('active');
+                    this.currentScene = index;
+                    this.updateUI();
+                }
+            }
+
+            updateUI() {
+                // Update scene counter
+                this.sceneCounter.textContent = `${this.currentScene + 1} / ${this.scenes.length}`;
+
+                // Update progress bar
+                const progress = ((this.currentScene + 1) / this.scenes.length) * 100;
+                this.progressBar.style.width = `${progress}%`;
+            }
+
+            nextScene() {
+                const nextIndex = (this.currentScene + 1) % this.scenes.length;
+                this.goToScene(nextIndex);
+            }
+
+            prevScene() {
+                const prevIndex = this.currentScene > 0 ? this.currentScene - 1 : this.scenes.length - 1;
+                this.goToScene(prevIndex);
+            }
+
+            goToScene(index) {
+                this.showScene(index);
+                this.resetAutoPlay();
+            }
+
+            startAutoPlay() {
+                this.autoPlayInterval = setInterval(() => {
+                    if (this.isPlaying) {
+                        const currentSceneEl = this.scenes[this.currentScene];
+                        const duration = parseInt(currentSceneEl.dataset.duration) || 8; // Default 8 seconds
+
+                        // Check if scene has been active for its duration
+                        if (!currentSceneEl.dataset.startTime) {
+                            currentSceneEl.dataset.startTime = Date.now();
+                        }
+
+                        const elapsed = (Date.now() - currentSceneEl.dataset.startTime) / 1000;
+                        if (elapsed >= duration) {
+                            this.nextScene();
+                        }
+
+                        // Update progress bar within scene
+                        const sceneProgress = Math.min((elapsed / duration) * 100, 100);
+                        const overallProgress = ((this.currentScene + sceneProgress / 100) / this.scenes.length) * 100;
+                        this.progressBar.style.width = `${overallProgress}%`;
+                    }
+                }, 100);
+            }
+
+            resetAutoPlay() {
+                // Reset start time for current scene
+                const currentSceneEl = this.scenes[this.currentScene];
+                currentSceneEl.dataset.startTime = Date.now();
+            }
+
+            togglePlayPause() {
+                this.isPlaying = !this.isPlaying;
+                if (this.isPlaying) {
+                    this.resetAutoPlay();
+                }
+            }
+
+            stop() {
+                this.isPlaying = false;
+                if (this.autoPlayInterval) {
+                    clearInterval(this.autoPlayInterval);
+                }
+            }
+        }
+
+        // Scene durations (in seconds)
+        document.querySelector('[data-start="0"]').dataset.duration = "6";  // Intro
+        document.querySelector('[data-start="8"]').dataset.duration = "8";  // Elyesio Logo
+        document.querySelector('[data-start="20"]').dataset.duration = "8"; // Dr Slim
+        document.querySelector('[data-start="32"]').dataset.duration = "10"; // Maydeni AI
+
+        // Initialize presentation when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if intro was already shown in this session
+            const introShown = sessionStorage.getItem('elyesio-intro-shown');
+
+            if (!introShown) {
+                // Show intro modal
+                setTimeout(() => {
+                    document.getElementById('introModal').classList.add('show');
+                }, 500);
+            } else {
+                // Start presentation directly
+                startPresentation();
+            }
+
+            // Add loading animation for images
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.5s ease';
+            });
+
+            // Hide cursor after 3 seconds of inactivity
+            let cursorTimeout;
+            const hideCursor = () => {
+                document.body.style.cursor = 'none';
+            };
+            const showCursor = () => {
+                document.body.style.cursor = 'default';
+                clearTimeout(cursorTimeout);
+                cursorTimeout = setTimeout(hideCursor, 3000);
+            };
+
+            document.addEventListener('mousemove', showCursor);
+            document.addEventListener('keydown', showCursor);
+            showCursor(); // Start with cursor visible
+        });
+
+        // Start presentation function
+        function startPresentation() {
+            // Mark intro as shown
+            sessionStorage.setItem('elyesio-intro-shown', 'true');
+
+            // Hide intro modal with animation
+            const modal = document.getElementById('introModal');
+            modal.classList.remove('show');
+            modal.classList.add('hide');
+
+            // Start video presentation after modal hides
+            setTimeout(() => {
+                modal.style.display = 'none';
+                window.presentation = new VideoPresentation();
+            }, 1200);
+        }
+
+        // Fullscreen support
+        document.addEventListener('dblclick', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(console.error);
+            } else {
+                document.exitFullscreen().catch(console.error);
+            }
+        });
+
+        // Prevent context menu and text selection
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('selectstart', e => e.preventDefault());
+    </script>
+</body>
+</html>

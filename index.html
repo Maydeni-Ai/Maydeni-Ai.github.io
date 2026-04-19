@@ -3,65 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maydeni AI | Smart Field Operations</title>
-    <meta name="description" content="Maydeni AI — Plateforme SaaS de supervision terrain intelligente. GPS temps réel, anti-fraude, gamification, IA prédictive pour les équipes commerciales en Tunisie.">
-    <meta name="theme-color" content="#0D6B6E">
-    <link rel="icon" type="image/png" sizes="48x48" href="img/logo-icon-48.png">
-    <link rel="apple-touch-icon" href="img/logo-icon.png">
-    <meta property="og:title" content="Maydeni AI — Supervision Terrain Intelligente">
-    <meta property="og:description" content="Plateforme SaaS de supervision terrain : GPS temps réel, anti-fraude, IA prédictive, gamification. Pour les équipes commerciales en Tunisie.">
-    <meta property="og:image" content="https://neolamcha.github.io/Mega-Supervision/img/og-preview.png">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:url" content="https://neolamcha.github.io/Mega-Supervision/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="Maydeni AI">
-    <meta property="og:locale" content="fr_FR">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Maydeni AI — Supervision Terrain Intelligente">
-    <meta name="twitter:description" content="GPS temps réel, anti-fraude, IA prédictive, gamification. SaaS pour les équipes commerciales.">
-    <meta name="twitter:image" content="https://neolamcha.github.io/Mega-Supervision/img/og-preview.png">
+    <title>MAYDENI-AI | Maydeni AI</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="css/site.css">
-    <script src="js/i18n.js"></script>
 </head>
 <body>
 
-<!-- ════════════ INTRO — AI NEURAL GENESIS ════════════ -->
+<!-- ════════════ INTRO CINÉMATOGRAPHIQUE ════════════ -->
 <div id="intro-overlay">
-    <canvas id="intro-neural"></canvas>
     <div class="intro-content">
-        <!-- Phase 1: AI Brain materializes -->
-        <div class="ai-brain-container" id="aiBrain">
-            <div class="ai-orbit ai-orbit-1"></div>
-            <div class="ai-orbit ai-orbit-2"></div>
-            <div class="ai-orbit ai-orbit-3"></div>
-            <div class="ai-core">
-                <div class="ai-core-inner">AI</div>
-            </div>
-            <div class="ai-pulse-ring"></div>
-            <div class="ai-pulse-ring r2"></div>
-            <div class="ai-pulse-ring r3"></div>
+        <div class="intro-logo-container">
+            <img src="img/logo.png" alt="Maydeni AI" class="intro-logo-img" style="max-width:300px;height:auto;">
         </div>
-        <!-- Phase 2: "Powered by AI" text -->
-        <div class="ai-powered-text" id="aiPoweredText">
-            <span class="ai-p-word">Powered</span>
-            <span class="ai-p-by">by</span>
-            <span class="ai-p-ai">Artificial Intelligence</span>
-        </div>
-        <!-- Phase 3: Brand name reveal -->
-        <div class="intro-logo-wrap" id="logoReveal">
-            <div class="intro-brand-name">MAYDENI</div>
-            <div class="intro-brand-ai">AI</div>
-        </div>
-        <!-- Phase 4: Tagline + loader -->
-        <div class="intro-sub-wrap" id="introSub">
-            <div class="intro-tagline-new">SMART FIELD OPERATIONS</div>
-            <div class="intro-loader"><div class="intro-loader-bar"></div></div>
-            <div class="intro-dev-credit" data-i18n="intro_dev_credit" data-i18n-html="true">Développé par le <strong>Dr. Slim Lamouchi</strong> fondateur d'Elyesio</div>
-        </div>
+        <div class="intro-loader"><div class="intro-loader-bar"></div></div>
     </div>
 </div>
 
@@ -69,23 +25,16 @@
 <nav class="navbar" id="navbar">
     <div class="nav-container">
         <a href="#" class="nav-logo">
-            <img src="img/logo-icon.png" alt="Maydeni AI" style="height:64px;width:auto;">
+            <img src="img/logo.png" alt="Maydeni AI" style="max-height:40px;width:auto;">
         </a>
         <ul class="nav-links">
-            <li><a href="#features" data-i18n="nav_features">Fonctionnalités</a></li>
-            <li><a href="#ai" data-i18n="nav_ai">IA</a></li>
-            <li><a href="#pricing" data-i18n="nav_pricing">Tarifs</a></li>
-            <li><a href="#formation" data-i18n="nav_training">Formation</a></li>
-            <li><a href="#download" data-i18n="nav_download">Télécharger</a></li>
-            <li><a href="#securite" data-i18n="nav_security">Sécurité</a></li>
-            <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+            <li><a href="#features">Fonctionnalités</a></li>
+            <li><a href="presentation.html">Présentation</a></li>
+            <li><a href="#download">Télécharger</a></li>
+            <li><a href="#securite">Sécurité</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
-        <a href="register.html" class="nav-btn nav-btn-green" data-i18n="nav_register">Inscription</a>
-        <a href="#download" class="nav-btn" data-i18n="nav_download_btn">Télécharger</a>
-        <div class="lang-toggle" style="display:flex;gap:4px;margin-left:8px;">
-            <button class="lang-btn active" data-lang="fr" onclick="switchLang('fr')" style="background:none;border:1px solid rgba(255,255,255,0.2);color:#F3F4F6;padding:4px 8px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600;">FR</button>
-            <button class="lang-btn" data-lang="en" onclick="switchLang('en')" style="background:none;border:1px solid rgba(255,255,255,0.2);color:#9CA3AF;padding:4px 8px;border-radius:6px;font-size:12px;cursor:pointer;font-weight:600;">EN</button>
-        </div>
+        <a href="dashboard/" class="nav-btn">Dashboard Directeur</a>
         <button class="nav-burger" id="burger-btn"><i data-lucide="menu" style="width:24px;height:24px;"></i></button>
     </div>
 </nav>
@@ -99,44 +48,43 @@
     </div>
     <div class="hero-container">
         <div class="hero-content">
-            <div class="hero-badge"><i data-lucide="brain" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="hero_badge">Propulsé par l'Intelligence Artificielle</span></div>
+            <div class="hero-badge"><i data-lucide="rocket" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Plateforme de supervision terrain</div>
             <h1>
-                <span class="hero-title-line" data-i18n="hero_title_1">Pilotez votre</span>
-                <span class="hero-title-highlight" data-i18n="hero_title_2">force de vente</span>
-                <span class="hero-title-line" data-i18n="hero_title_3">avec l'IA</span>
+                <span class="hero-title-line">Supervisez vos</span>
+                <span class="hero-title-highlight">agents terrain</span>
+                <span class="hero-title-line">en temps réel</span>
             </h1>
-            <p class="hero-desc" data-i18n="hero_desc" data-i18n-html="true">
-                Maydeni AI est la plateforme propulsée par l'<strong>Intelligence Artificielle</strong> pour piloter votre force de vente terrain.
-                Applications <strong>100% natives</strong> (Windows, macOS, Android, iOS) — chaque entreprise dispose de son <strong>propre serveur dédié</strong>.
-                GPS intelligent, anti-fraude IA, gamification, import Excel, mises à jour automatiques et rapports en temps réel.
+            <p class="hero-desc">
+                MAYDENI-AI est la solution SaaS complète pour piloter votre force de vente médicale.
+                GPS intelligent, anti-fraude, gamification et rapports automatisés.
             </p>
             <div class="hero-actions">
                 <a href="#download" class="btn btn-primary btn-lg">
-                    <i data-lucide="download" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="hero_download_app">Télécharger l'application</span>
+                    <i data-lucide="download" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Télécharger l'application
                 </a>
-                <a href="#download" class="btn btn-outline btn-lg">
-                    <i data-lucide="download" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="hero_download_dash">Télécharger le Dashboard</span>
+                <a href="dashboard/" class="btn btn-outline btn-lg">
+                    <i data-lucide="layout-dashboard" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Accès Dashboard
                 </a>
             </div>
             <div class="hero-stats">
                 <div class="hero-stat">
-                    <div class="hero-stat-value"><i data-lucide="brain" style="width:28px;height:28px;"></i></div>
-                    <div class="hero-stat-label" data-i18n="hero_stat_ai">IA Prédictive</div>
-                </div>
-                <div class="hero-stat-divider"></div>
-                <div class="hero-stat">
                     <div class="hero-stat-value">GPS</div>
-                    <div class="hero-stat-label" data-i18n="hero_stat_realtime">Temps réel</div>
+                    <div class="hero-stat-label">Temps réel</div>
                 </div>
                 <div class="hero-stat-divider"></div>
                 <div class="hero-stat">
                     <div class="hero-stat-value"><i data-lucide="shield" style="width:28px;height:28px;"></i></div>
-                    <div class="hero-stat-label" data-i18n="hero_stat_fraud">Anti-fraude IA</div>
+                    <div class="hero-stat-label">Anti-fraude</div>
                 </div>
                 <div class="hero-stat-divider"></div>
                 <div class="hero-stat">
                     <div class="hero-stat-value"><i data-lucide="trophy" style="width:28px;height:28px;"></i></div>
-                    <div class="hero-stat-label" data-i18n="hero_stat_game">Gamification</div>
+                    <div class="hero-stat-label">Gamification</div>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value"><i data-lucide="bar-chart-3" style="width:28px;height:28px;"></i></div>
+                    <div class="hero-stat-label">Rapports</div>
                 </div>
             </div>
         </div>
@@ -144,50 +92,23 @@
             <div class="phone-mockup">
                 <div class="phone-screen">
                     <div class="phone-header">
-                        <div class="phone-dynamic-island"></div>
+                        <div class="phone-notch"></div>
                     </div>
                     <div class="phone-app">
-                        <div class="pa-logo-wrap">
-                            <img src="img/logo-icon.png" alt="Maydeni AI" class="pa-logo-img">
+                        <div class="pa-logo">MEGA</div>
+                        <div class="pa-sub">Smart Field Operations</div>
+                        <div class="pa-card">
+                            <div class="pa-card-title"><i data-lucide="trophy" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> Score</div>
+                            <div class="pa-card-value">1,250</div>
                         </div>
-                        <div class="pa-status-bar">
-                            <span class="pa-status-dot pa-online"></span>
-                            <span class="pa-status-text" data-i18n="phone_status">En ligne — GPS actif</span>
+                        <div class="pa-card pa-card-green">
+                            <div class="pa-card-title"><i data-lucide="map-pin" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> Visite en cours</div>
+                            <div class="pa-card-desc">Pharmacie El-Amir</div>
+                            <div class="pa-timer"><i data-lucide="clock" style="width:12px;height:12px;display:inline-block;vertical-align:middle;"></i> 12:34</div>
                         </div>
-                        <div class="pa-card pa-card-score">
-                            <div class="pa-card-icon-wrap" style="background:linear-gradient(135deg,#F59E0B,#D97706);">
-                                <i data-lucide="trophy" style="width:18px;height:18px;color:#FFF;"></i>
-                            </div>
-                            <div>
-                                <div class="pa-card-title" data-i18n="phone_score_title">Score du jour</div>
-                                <div class="pa-card-value">1,250 <span class="pa-card-unit">pts</span></div>
-                            </div>
-                        </div>
-                        <div class="pa-card pa-card-visit">
-                            <div class="pa-card-icon-wrap" style="background:linear-gradient(135deg,#10B981,#059669);">
-                                <i data-lucide="map-pin" style="width:18px;height:18px;color:#FFF;"></i>
-                            </div>
-                            <div style="flex:1;">
-                                <div class="pa-card-title" data-i18n="phone_visit_title">Visite en cours</div>
-                                <div class="pa-card-desc">Pharmacie El-Amir</div>
-                            </div>
-                            <div class="pa-timer-badge">12:34</div>
-                        </div>
-                        <div class="pa-card pa-card-gps">
-                            <div class="pa-card-icon-wrap" style="background:linear-gradient(135deg,#3B82F6,#2563EB);">
-                                <i data-lucide="navigation" style="width:18px;height:18px;color:#FFF;"></i>
-                            </div>
-                            <div style="flex:1;">
-                                <div class="pa-card-title" data-i18n="phone_gps_title">Localisation GPS</div>
-                                <div class="pa-card-desc" style="font-size:11px;">36.8065° N, 10.1815° E</div>
-                            </div>
+                        <div class="pa-card">
+                            <div class="pa-card-title"><i data-lucide="radio" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> GPS Actif</div>
                             <div class="pa-gps-dot"></div>
-                        </div>
-                        <div class="pa-nav-bar">
-                            <div class="pa-nav-item pa-nav-active"><i data-lucide="home" style="width:18px;height:18px;"></i></div>
-                            <div class="pa-nav-item"><i data-lucide="map" style="width:18px;height:18px;"></i></div>
-                            <div class="pa-nav-item"><i data-lucide="clipboard-list" style="width:18px;height:18px;"></i></div>
-                            <div class="pa-nav-item"><i data-lucide="user" style="width:18px;height:18px;"></i></div>
                         </div>
                     </div>
                 </div>
@@ -200,534 +121,246 @@
 <section class="features" id="features">
     <div class="section-container">
         <div class="section-header">
-            <div class="section-badge" data-i18n="section_features">Fonctionnalités</div>
-            <h2 data-i18n="features_title">Tout ce dont vous avez besoin</h2>
-            <p data-i18n="features_subtitle">Une suite complète d'outils pour optimiser votre force de vente terrain</p>
+            <div class="section-badge">Fonctionnalités</div>
+            <h2>Tout ce dont vous avez besoin</h2>
+            <p>Une suite complète d'outils pour optimiser votre force de vente terrain</p>
         </div>
 
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon" style="background:linear-gradient(135deg,#0D6B6E,#1B9EA1)"><i data-lucide="map-pin" style="width:28px;height:28px;color:#FFF;"></i></div>
-                <h3 data-i18n="feat_gps_title">Géolocalisation GPS</h3>
-                <p data-i18n="feat_gps_desc">Suivi en temps réel des agents terrain. Geofencing intelligent adapté au type de prospect (officine, dépôt, clinique).</p>
+                <div class="feature-icon" style="background:linear-gradient(135deg,#0055A4,#0088FF)"><i data-lucide="map-pin" style="width:28px;height:28px;color:#FFF;"></i></div>
+                <h3>Géolocalisation GPS</h3>
+                <p>Suivi en temps réel des agents. Geofencing intelligent adapté au type de prospect (officine, dépôt, clinique).</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background:linear-gradient(135deg,#EF4444,#F87171)"><i data-lucide="shield" style="width:28px;height:28px;color:#FFF;"></i></div>
-                <h3 data-i18n="feat_fraud_title">Anti-fraude avancé</h3>
-                <p data-i18n="feat_fraud_desc">Détection de faux GPS, vitesse incohérente, trajets impossibles. Photo obligatoire en cas d'anomalie.</p>
+                <h3>Anti-fraude avancé</h3>
+                <p>Détection de faux GPS, vitesse incohérente, trajets impossibles. Photo obligatoire en cas d'anomalie.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background:linear-gradient(135deg,#F59E0B,#FBBF24)"><i data-lucide="trophy" style="width:28px;height:28px;color:#FFF;"></i></div>
-                <h3 data-i18n="feat_gamif_title">Gamification & Scoring</h3>
-                <p data-i18n="feat_gamif_desc">Système de points, classement live, combos, bonus journée parfaite. Motivation maximale des équipes.</p>
+                <h3>Gamification & Scoring</h3>
+                <p>Système de points, classement live, combos, bonus journée parfaite. Motivation maximale des équipes.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background:linear-gradient(135deg,#10B981,#34D399)"><i data-lucide="timer" style="width:28px;height:28px;color:#FFF;"></i></div>
-                <h3 data-i18n="feat_visits_title">Visites automatisées</h3>
-                <p data-i18n="feat_visits_desc">Début et fin automatiques basés sur la zone GPS. Chronomètre précis, contraintes horaires respectées.</p>
+                <h3>Visites automatisées</h3>
+                <p>Début et fin automatiques basés sur la zone GPS. Chronomètre précis, contraintes horaires respectées.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background:linear-gradient(135deg,#8B5CF6,#A78BFA)"><i data-lucide="bar-chart-3" style="width:28px;height:28px;color:#FFF;"></i></div>
-                <h3 data-i18n="feat_dash_title">Dashboard directeur propulsé par l'IA</h3>
-                <p data-i18n="feat_dash_desc">Carte live, heatmap, alertes IA, classement, prédictions de vente et rapports automatisés en temps réel.</p>
+                <h3>Dashboard directeur</h3>
+                <p>Carte live, heatmap, alertes, classement, statistiques et rapports intelligents en temps réel.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon" style="background:linear-gradient(135deg,#14B8A6,#2DD4BF)"><i data-lucide="wifi-off" style="width:28px;height:28px;color:#FFF;"></i></div>
-                <h3 data-i18n="feat_offline_title">Mode offline</h3>
-                <p data-i18n="feat_offline_desc">L'application fonctionne sans réseau. Toutes les données se synchronisent automatiquement au retour du signal.</p>
+                <h3>Mode offline</h3>
+                <p>L'application fonctionne sans réseau. Toutes les données se synchronisent automatiquement au retour du signal.</p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ════════════ INTELLIGENCE ARTIFICIELLE ════════════ -->
-<section class="ai-section" id="ai">
-    <div class="section-container">
-        <div class="section-header">
-            <div class="section-badge" style="background:linear-gradient(135deg,#3B82F6,#8B5CF6);color:#FFF;"><i data-lucide="brain" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="section_ai_badge">Intelligence Artificielle</span></div>
-            <h2 data-i18n="ai_title">Pourquoi l'IA dans votre Dashboard ?</h2>
-            <p data-i18n="ai_subtitle">Votre directeur commercial ne se base plus sur des intuitions — il utilise l'IA pour piloter ses équipes</p>
-        </div>
-
-        <div class="ai-grid">
-            <div class="ai-card">
-                <div class="ai-card-icon" style="background:linear-gradient(135deg,#3B82F6,#6366F1);box-shadow:0 8px 24px rgba(59,130,246,0.3);">
-                    <i data-lucide="trending-up" style="width:28px;height:28px;color:#FFF;stroke-width:2;"></i>
-                </div>
-                <h3 data-i18n="ai_prediction_title">Prédiction du Chiffre d'Affaires</h3>
-                <p data-i18n="ai_prediction_desc" data-i18n-html="true">L'IA analyse l'historique des ventes, la saisonnalité et les performances individuelles pour <strong>prédire le CA</strong> à venir et anticiper les besoins en stock.</p>
-            </div>
-            <div class="ai-card">
-                <div class="ai-card-icon" style="background:linear-gradient(135deg,#8B5CF6,#A855F7);box-shadow:0 8px 24px rgba(139,92,246,0.3);">
-                    <i data-lucide="scan-search" style="width:28px;height:28px;color:#FFF;stroke-width:2;"></i>
-                </div>
-                <h3 data-i18n="ai_zones_title">Zones sous-exploitées</h3>
-                <p data-i18n="ai_zones_desc" data-i18n-html="true">L'IA identifie automatiquement les <strong>zones géographiques sous-visitées</strong> et recommande des actions correctives pour maximiser la couverture terrain.</p>
-            </div>
-            <div class="ai-card">
-                <div class="ai-card-icon" style="background:linear-gradient(135deg,#10B981,#059669);box-shadow:0 8px 24px rgba(16,185,129,0.3);">
-                    <i data-lucide="target" style="width:28px;height:28px;color:#FFF;stroke-width:2;"></i>
-                </div>
-                <h3 data-i18n="ai_probability_title">Probabilité de commande</h3>
-                <p data-i18n="ai_probability_desc" data-i18n-html="true">Pour chaque prospect, l'IA calcule une <strong>probabilité de conversion</strong> basée sur l'historique, la fréquence de visite et le comportement d'achat.</p>
-            </div>
-            <div class="ai-card">
-                <div class="ai-card-icon" style="background:linear-gradient(135deg,#EF4444,#DC2626);box-shadow:0 8px 24px rgba(239,68,68,0.3);">
-                    <i data-lucide="shield-alert" style="width:28px;height:28px;color:#FFF;stroke-width:2;"></i>
-                </div>
-                <h3 data-i18n="ai_anomaly_title">Détection d'anomalies IA</h3>
-                <p data-i18n="ai_anomaly_desc" data-i18n-html="true">L'IA détecte en temps réel les <strong>comportements suspects</strong> : faux GPS, trajets impossibles, baisses de performance subites, avec un scoring de fiabilité.</p>
-            </div>
-            <div class="ai-card">
-                <div class="ai-card-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706);box-shadow:0 8px 24px rgba(245,158,11,0.3);">
-                    <i data-lucide="bar-chart-4" style="width:28px;height:28px;color:#FFF;stroke-width:2;"></i>
-                </div>
-                <h3 data-i18n="ai_trends_title">Tendances automatiques</h3>
-                <p data-i18n="ai_trends_desc" data-i18n-html="true">Analyse des <strong>tendances de vente</strong> sur 7/30/90 jours avec détection automatique des hausses et baisses significatives par agent, zone ou produit.</p>
-            </div>
-            <div class="ai-card">
-                <div class="ai-card-icon" style="background:linear-gradient(135deg,#14B8A6,#0D9488);box-shadow:0 8px 24px rgba(20,184,166,0.3);">
-                    <i data-lucide="lightbulb" style="width:28px;height:28px;color:#FFF;stroke-width:2;"></i>
-                </div>
-                <h3 data-i18n="ai_reco_title">Recommandations intelligentes</h3>
-                <p data-i18n="ai_reco_desc" data-i18n-html="true">L'IA génère des <strong>recommandations concrètes</strong> : réaffecter un agent, prioriser un prospect, ajuster la fréquence de visite — basées sur les données terrain.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════ BUSINESS ANALYTICS (Intro Marketing) ════════════ -->
-<section style="padding:80px 0;background:linear-gradient(135deg,#0D1117 0%,#1B2028 100%);color:#FFF;overflow:hidden;" id="business-analytics">
-    <div class="section-container">
-        <div class="section-header" style="margin-bottom:48px;">
-            <div class="section-badge" style="background:rgba(139,92,246,.15);color:#A78BFA;border-color:rgba(139,92,246,.3);"><i data-lucide="bar-chart-big" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="ba_badge">Exclusif Enterprise</span></div>
-            <h2 style="color:#FFF;font-size:32px;" data-i18n="ba_title">Business Analytics Révolutionnaire</h2>
-            <p style="color:#9CA3AF;max-width:700px;margin:0 auto;font-size:17px;" data-i18n="ba_subtitle">Transformez vos données terrain en décisions stratégiques. Un clic suffit pour générer une analyse commerciale complète — sans expertise technique, sans configuration.</p>
-        </div>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-bottom:40px;">
-            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;">
-                <div style="width:48px;height:48px;border-radius:12px;background:rgba(16,185,129,.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-                    <i data-lucide="zap" style="width:24px;height:24px;color:#10B981;"></i>
-                </div>
-                <h3 style="color:#FFF;font-size:18px;margin-bottom:8px;" data-i18n="ba_activation_title">Activation en un clic</h3>
-                <p style="color:#9CA3AF;font-size:14px;line-height:1.6;" data-i18n="ba_activation_desc">Générez automatiquement KPI, prévisions IA, segmentation RFM, analyse Pareto et classement des zones — instantanément.</p>
-            </div>
-            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;">
-                <div style="width:48px;height:48px;border-radius:12px;background:rgba(139,92,246,.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-                    <i data-lucide="brain" style="width:24px;height:24px;color:#A78BFA;"></i>
-                </div>
-                <h3 style="color:#FFF;font-size:18px;margin-bottom:8px;" data-i18n="ba_predictive_title">Intelligence Prédictive</h3>
-                <p style="color:#9CA3AF;font-size:14px;line-height:1.6;" data-i18n="ba_predictive_desc">Prévisions de CA avec régression linéaire, détection de clients à risque, scoring de conversion et recommandations automatiques.</p>
-            </div>
-            <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:28px;">
-                <div style="width:48px;height:48px;border-radius:12px;background:rgba(245,158,11,.15);display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
-                    <i data-lucide="crown" style="width:24px;height:24px;color:#F59E0B;"></i>
-                </div>
-                <h3 style="color:#FFF;font-size:18px;margin-bottom:8px;" data-i18n="ba_vision_title">Vision Directeur Commercial</h3>
-                <p style="color:#9CA3AF;font-size:14px;line-height:1.6;" data-i18n="ba_vision_desc">Tableau de bord conçu pour le directeur commercial : performance agent, efficacité, Pareto produits, zones sous-exploitées et clients champions.</p>
-            </div>
-        </div>
-
-        <div style="text-align:center;">
-            <a href="register.html?plan=enterprise" class="btn" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9);color:#FFF;padding:14px 36px;font-size:16px;font-weight:600;border-radius:12px;border:0;" data-i18n="ba_cta">Démarrer avec Enterprise</a>
-            <p style="color:#6B7280;font-size:13px;margin-top:12px;" data-i18n="ba_cta_sub">Essai inclus • Activation sous 24h • Annulation possible à tout moment</p>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════ TARIFS & ABONNEMENT ════════════ -->
-<section class="pricing" id="pricing">
-    <div class="section-container">
-        <div class="section-header">
-            <div class="section-badge"><i data-lucide="credit-card" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="section_pricing">Tarifs</span></div>
-            <h2 data-i18n="pricing_title">Choisissez votre forfait</h2>
-            <p data-i18n="pricing_desc" data-i18n-html="true">Paiement sécurisé — Économisez jusqu'à <strong>30%</strong> avec un engagement plus long</p>
-        </div>
-
-        <!-- Billing period toggle -->
-        <div style="display:flex;justify-content:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;" id="billing-toggle">
-            <button class="billing-btn active" onclick="switchBilling(1,this)" data-i18n="billing_1">1 mois</button>
-            <button class="billing-btn" onclick="switchBilling(3,this)"><span data-i18n="billing_3">3 mois</span> <span class="billing-discount">-10%</span></button>
-            <button class="billing-btn" onclick="switchBilling(6,this)"><span data-i18n="billing_6">6 mois</span> <span class="billing-discount">-20%</span></button>
-            <button class="billing-btn" onclick="switchBilling(12,this)"><span data-i18n="billing_12">12 mois</span> <span class="billing-discount">-30%</span></button>
-        </div>
-        <!-- Currency selector -->
-        <div style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:28px;">
-            <span style="font-size:13px;color:#9CA3AF;" data-i18n="pricing_currency_label">Devise :</span>
-            <select id="currency-select" onchange="switchCurrency(this.value)" style="background:#1F2937;color:#F3F4F6;border:1px solid #374151;border-radius:8px;padding:6px 12px;font-size:13px;cursor:pointer;">
-                <option value="TND" selected>🇹🇳 DT (Dinar Tunisien)</option>
-                <optgroup label="Devises Majeures">
-                    <option value="EUR">🇪🇺 EUR (Euro)</option>
-                    <option value="USD">🇺🇸 USD (Dollar US)</option>
-                    <option value="GBP">🇬🇧 GBP (Livre Sterling)</option>
-                    <option value="CHF">🇨🇭 CHF (Franc Suisse)</option>
-                    <option value="CAD">🇨🇦 CAD (Dollar Canadien)</option>
-                </optgroup>
-                <optgroup label="Afrique Francophone">
-                    <option value="XOF">🇸🇳 XOF (Franc CFA BCEAO)</option>
-                    <option value="XAF">🇨🇲 XAF (Franc CFA BEAC)</option>
-                    <option value="MAD">🇲🇦 MAD (Dirham Marocain)</option>
-                    <option value="DZD">🇩🇿 DZD (Dinar Algérien)</option>
-                    <option value="MRU">🇲🇷 MRU (Ouguiya)</option>
-                    <option value="CDF">🇨🇩 CDF (Franc Congolais)</option>
-                    <option value="GNF">🇬🇳 GNF (Franc Guinéen)</option>
-                    <option value="KMF">🇰🇲 KMF (Franc Comorien)</option>
-                    <option value="DJF">🇩🇯 DJF (Franc Djiboutien)</option>
-                    <option value="HTG">🇭🇹 HTG (Gourde Haïtienne)</option>
-                </optgroup>
-                <optgroup label="Pays Arabes">
-                    <option value="SAR">🇸🇦 SAR (Riyal Saoudien)</option>
-                    <option value="AED">🇦🇪 AED (Dirham Émirati)</option>
-                    <option value="QAR">🇶🇦 QAR (Riyal Qatari)</option>
-                    <option value="KWD">🇰🇼 KWD (Dinar Koweïtien)</option>
-                    <option value="BHD">🇧🇭 BHD (Dinar Bahreïni)</option>
-                    <option value="OMR">🇴🇲 OMR (Rial Omanais)</option>
-                    <option value="JOD">🇯🇴 JOD (Dinar Jordanien)</option>
-                    <option value="EGP">🇪🇬 EGP (Livre Égyptienne)</option>
-                    <option value="IQD">🇮🇶 IQD (Dinar Irakien)</option>
-                    <option value="LYD">🇱🇾 LYD (Dinar Libyen)</option>
-                    <option value="SDG">🇸🇩 SDG (Livre Soudanaise)</option>
-                    <option value="LBP">🇱🇧 LBP (Livre Libanaise)</option>
-                </optgroup>
-            </select>
-        </div>
-
-        <div class="pricing-grid" id="pricing-plans">
-            <!-- Starter -->
-            <div class="pricing-card">
-                <div class="pricing-name">Starter</div>
-                <div class="pricing-price">
-                    <span class="pricing-amount" data-monthly="99">99</span> <span class="pricing-currency">DT<small style="font-size:.6em;opacity:.65;margin-left:1px">HT</small><span class="pricing-period">/mois</span></span>
-                </div>
-                <div class="pricing-total" style="display:none;font-size:12px;color:#6B7280;margin-top:-4px;"></div>
-                <div class="pricing-saving" style="display:none;font-size:13px;font-weight:700;color:#10B981;margin:4px 0;"></div>
-                <div class="pricing-delegates" data-i18n="_delegates_starter" data-i18n-html="true">Jusqu'à <strong>3</strong> agents terrain</div>
-                <ul class="pricing-features">
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_gps">GPS temps réel & geofencing</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_fraud">Anti-fraude avancé</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_gamif">Gamification & scoring</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_dash">Dashboard directeur</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_mobile">App mobile native</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_reports">Rapports & export</span></li>
-                    <li style="color:#9CA3AF;"><i data-lucide="x" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#D1D5DB;margin-right:6px;"></i> <span data-i18n="pf_analytics">Analytiques avancées</span></li>
-                    <li style="color:#9CA3AF;"><i data-lucide="x" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#D1D5DB;margin-right:6px;"></i> <span data-i18n="pf_ai">IA Prédictive</span></li>
-                </ul>
-                <a href="register.html?plan=starter" class="btn btn-outline btn-full" style="margin-top:auto;" data-i18n="pricing_cta_starter">Commencer</a>
-            </div>
-            <!-- Pro -->
-            <div class="pricing-card pricing-popular">
-                <div class="pricing-badge-pop" data-i18n="pricing_badge_popular">⭐ POPULAIRE</div>
-                <div class="pricing-name">Pro</div>
-                <div class="pricing-price">
-                    <span class="pricing-amount" data-monthly="249">249</span> <span class="pricing-currency">DT<small style="font-size:.6em;opacity:.65;margin-left:1px">HT</small><span class="pricing-period">/mois</span></span>
-                </div>
-                <div class="pricing-total" style="display:none;font-size:12px;color:#6B7280;margin-top:-4px;"></div>
-                <div class="pricing-saving" style="display:none;font-size:13px;font-weight:700;color:#10B981;margin:4px 0;"></div>
-                <div class="pricing-delegates" data-i18n="_delegates_pro" data-i18n-html="true">Jusqu'à <strong>10</strong> agents terrain</div>
-                <ul class="pricing-features">
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_all_starter">Tout du Starter</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_analytics">Analytiques avancées</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_import">Import Excel prospects & produits</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_drops">Détection des baisses</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_trends">Tendances & rapports PDF</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_heatmap">Heatmap activité</span></li>
-                    <li style="color:#9CA3AF;"><i data-lucide="x" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#D1D5DB;margin-right:6px;"></i> <span data-i18n="pf_ai">IA Prédictive</span></li>
-                </ul>
-                <a href="register.html?plan=pro" class="btn btn-primary btn-full" style="margin-top:auto;" data-i18n="pricing_cta_pro">Choisir Pro</a>
-            </div>
-            <!-- Enterprise -->
-            <div class="pricing-card" style="border:2px solid #8B5CF6;position:relative;">
-                <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#8B5CF6,#6D28D9);color:#FFF;padding:4px 16px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;" data-i18n="pricing_badge_ai">🧠 INTELLIGENCE AVANCÉE</div>
-                <div class="pricing-name">Enterprise</div>
-                <div class="pricing-price">
-                    <span class="pricing-amount" data-monthly="499">499</span> <span class="pricing-currency">DT<small style="font-size:.6em;opacity:.65;margin-left:1px">HT</small><span class="pricing-period">/mois</span></span>
-                </div>
-                <div class="pricing-total" style="display:none;font-size:12px;color:#6B7280;margin-top:-4px;"></div>
-                <div class="pricing-saving" style="display:none;font-size:13px;font-weight:700;color:#10B981;margin:4px 0;"></div>
-                <div class="pricing-delegates" data-i18n="_delegates_enterprise" data-i18n-html="true"><strong>11 et +</strong> agents terrain</div>
-                <ul class="pricing-features">
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_all_pro">Tout du Pro</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_ai_full">IA Prédictive complète</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_forecast">Prévision de CA & stocks</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_scoring">Scoring probabilité commande</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_zones">Zones sous-exploitées</span></li>
-                    <li style="font-weight:700;color:#8B5CF6;"><i data-lucide="sparkles" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#8B5CF6;margin-right:6px;"></i> <span data-i18n="pf_ba">Business Analytics avancée</span></li>
-                    <li style="font-weight:700;color:#8B5CF6;"><i data-lucide="sparkles" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#8B5CF6;margin-right:6px;"></i> <span data-i18n="pf_rfm">Segmentation RFM clients</span></li>
-                    <li style="font-weight:700;color:#8B5CF6;"><i data-lucide="sparkles" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#8B5CF6;margin-right:6px;"></i> <span data-i18n="pf_pareto">Analyse Pareto produits</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_export">Export données enrichies</span></li>
-                    <li><i data-lucide="check" style="width:16px;height:16px;display:inline-block;vertical-align:middle;color:#10B981;margin-right:6px;"></i> <span data-i18n="pf_support">Support prioritaire</span></li>
-                </ul>
-                <a href="register.html?plan=enterprise" class="btn btn-full" style="margin-top:auto;background:linear-gradient(135deg,#8B5CF6,#6D28D9);color:#FFF;border:0;" data-i18n="pricing_cta_enterprise">Choisir Enterprise</a>
-            </div>
-        </div>
-        <p style="text-align:center;font-size:11.5px;color:#9CA3AF;margin:10px 0 0;letter-spacing:.3px;" data-i18n="pricing_tax_note">* Tous les prix affichés sont hors taxe (HT)</p>
-
-        <!-- ═══ Concept : Licence + Calibrage + Abonnement ═══ -->
-        <div style="background:linear-gradient(135deg,#F0FDFA,#ECFDF5);border:1px solid #99F6E4;border-radius:16px;padding:24px 28px;margin:32px 0 24px;">
-            <h3 style="color:#0D6B6E;margin:0 0 16px;font-size:18px;text-align:center;"><i data-lucide="info" style="width:20px;height:20px;display:inline;vertical-align:middle;margin-right:8px;"></i> <span data-i18n="how_pricing_title">Comment ça marche ?</span></h3>
-            <div style="display:flex;align-items:flex-start;gap:24px;flex-wrap:wrap;justify-content:center;">
-                <div style="flex:1;min-width:220px;max-width:320px;">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-                        <span style="background:#0D6B6E;color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">1</span>
-                        <strong style="color:#134E4A;font-size:15px;" data-i18n="how_step1_title">Achat de licence (une seule fois)</strong>
-                    </div>
-                    <p style="color:#6B7280;font-size:13px;margin:0 0 0 40px;" data-i18n="how_step1_desc" data-i18n-html="true">Le client achète une <strong>licence unique</strong> correspondant à son forfait. C'est un paiement one-time qui active son compte.</p>
-                </div>
-                <div style="flex:1;min-width:220px;max-width:320px;">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-                        <span style="background:#0D6B6E;color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">2</span>
-                        <strong style="color:#134E4A;font-size:15px;" data-i18n="how_step2_title">Phase de calibrage (gratuit)</strong>
-                    </div>
-                    <p style="color:#6B7280;font-size:13px;margin:0 0 0 40px;" data-i18n="how_step2_desc" data-i18n-html="true">L'IA calibre les données du client (prospects, produits, secteurs). Cette phase est <strong>100% gratuite</strong> — aucune facturation ne démarre.</p>
-                </div>
-                <div style="flex:1;min-width:220px;max-width:320px;">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-                        <span style="background:#0D6B6E;color:white;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0;">3</span>
-                        <strong style="color:#134E4A;font-size:15px;" data-i18n="how_step3_title">1 mois offert + abonnement</strong>
-                    </div>
-                    <p style="color:#6B7280;font-size:13px;margin:0 0 0 40px;" data-i18n="how_step3_desc" data-i18n-html="true">Une fois le calibrage terminé, le client bénéficie d'<strong>1 mois gratuit</strong>. Ensuite, l'abonnement mensuel démarre automatiquement.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ═══ Prix des licences ═══ -->
-        <div style="display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:32px;">
-            <div style="background:linear-gradient(135deg,#0F172A,#1E293B);border:1px solid #334155;border-radius:14px;padding:20px 30px;text-align:center;min-width:200px;box-shadow:0 4px 20px rgba(0,0,0,0.15);">
-                <div style="font-size:11px;color:#2DD4BF;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:6px;" data-i18n="license_starter">Licence Starter</div>
-                <div style="font-size:36px;font-weight:900;color:#FFFFFF;">1 500 <span style="font-size:16px;font-weight:600;color:#94A3B8;">DT<small style="font-size:.65em;opacity:.5;margin-left:1px">HT</small></span></div>
-                <div style="font-size:12px;color:#64748B;margin-top:2px;" data-i18n="license_one_time">paiement unique</div>
-            </div>
-            <div style="background:linear-gradient(135deg,#0F172A,#1E293B);border:2px solid #0D6B6E;border-radius:14px;padding:20px 30px;text-align:center;min-width:200px;position:relative;box-shadow:0 4px 20px rgba(13,107,110,0.3);">
-                <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#0D6B6E,#0D9488);color:white;padding:3px 16px;border-radius:12px;font-size:10px;font-weight:700;letter-spacing:0.5px;" data-i18n="pricing_badge_popular">⭐ POPULAIRE</div>
-                <div style="font-size:11px;color:#2DD4BF;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:6px;" data-i18n="license_pro">Licence Pro</div>
-                <div style="font-size:36px;font-weight:900;color:#FFFFFF;">3 500 <span style="font-size:16px;font-weight:600;color:#94A3B8;">DT<small style="font-size:.65em;opacity:.5;margin-left:1px">HT</small></span></div>
-                <div style="font-size:12px;color:#64748B;margin-top:2px;" data-i18n="license_one_time">paiement unique</div>
-            </div>
-            <div style="background:linear-gradient(135deg,#0F172A,#1E293B);border:2px solid #8B5CF6;border-radius:14px;padding:20px 30px;text-align:center;min-width:200px;box-shadow:0 4px 20px rgba(139,92,246,0.2);">
-                <div style="font-size:11px;color:#A78BFA;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:6px;" data-i18n="license_enterprise">Licence Enterprise</div>
-                <div style="font-size:36px;font-weight:900;color:#FFFFFF;">6 000 <span style="font-size:16px;font-weight:600;color:#94A3B8;">DT<small style="font-size:.65em;opacity:.5;margin-left:1px">HT</small></span></div>
-                <div style="font-size:12px;color:#64748B;margin-top:2px;" data-i18n="license_one_time">paiement unique</div>
-            </div>
-        </div>
-
-        <!-- ═══════ PAYMENT METHODS — FULL WIDTH, ULTRA VISIBLE ═══════ -->
-        </div>
-
-        <div class="pricing-info">
-            <div class="pricing-info-card">
-                <h4 data-i18n="pricing_secure_title"><i data-lucide="shield-check" style="width:20px;height:20px;display:inline-block;vertical-align:middle;color:#0D6B6E;margin-right:6px;"></i> Paiement sécurisé</h4>
-                <p data-i18n="pricing_secure_desc" data-i18n-html="true">Économisez jusqu'à 30% en choisissant un engagement de 12 mois. Les coordonnées de paiement vous seront communiquées après inscription.</p>
-            </div>
-
-            <div class="pricing-info-card">
-                <h4 data-i18n="pricing_activation_title"><i data-lucide="clock" style="width:20px;height:20px;display:inline-block;vertical-align:middle;color:#0D6B6E;margin-right:6px;"></i> Activation instantanée</h4>
-                <p data-i18n="pricing_activation_desc" data-i18n-html="true">Dès réception et confirmation de votre paiement, votre espace est <strong>activé immédiatement</strong>. Vous recevez vos accès par email et pouvez commencer à utiliser Maydeni AI sans délai.</p>
-            </div>
-            <div class="pricing-info-card">
-                <h4 data-i18n="pricing_reminders_title"><i data-lucide="bell" style="width:20px;height:20px;display:inline-block;vertical-align:middle;color:#0D6B6E;margin-right:6px;"></i> Rappels automatiques</h4>
-                <p data-i18n="pricing_reminders_desc" data-i18n-html="true">5 jours avant l'échéance de votre abonnement, un rappel de renouvellement vous est envoyé chaque jour. En cas de non-paiement à la date d'échéance, l'accès est <strong>provisoirement suspendu</strong> jusqu'au règlement. Le service reprend instantanément après paiement.</p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════ FORMATION GRATUITE ════════════ -->
-<section class="training" id="formation">
-    <div class="section-container">
-        <div class="section-header">
-            <div class="section-badge section-badge-green"><i data-lucide="graduation-cap" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="training_badge">Formation incluse</span></div>
-            <h2 data-i18n="training_title">Formation gratuite & personnalisée</h2>
-            <p data-i18n="training_subtitle">Offerte par le développeur en personne à chaque nouveau client</p>
-        </div>
-
-        <div class="training-content">
-            <div class="training-main">
-                <div class="training-highlight">
-                    <div class="training-icon"><i data-lucide="video" style="width:48px;height:48px;color:#0D6B6E;"></i></div>
-                    <h3 data-i18n="training_main_title">Formation 100% gratuite, en direct</h3>
-                    <p data-i18n="training_main_desc" data-i18n-html="true">À chaque nouvelle inscription, <strong>je vous accompagne personnellement</strong> : moi, le développeur de Maydeni AI. La formation est réalisée en visioconférence en direct (Google Meet, Zoom ou autre), à l'heure qui vous convient.</p>
-                </div>
-
-                <div class="training-steps">
-                    <div class="training-step">
-                        <div class="training-step-num">1</div>
-                        <div class="training-step-content">
-                            <h4 data-i18n="training_step1_title">Installation guidée</h4>
-                            <p data-i18n="training_step1_desc">Je vous guide pas à pas pour installer le Dashboard natif sur votre ordinateur (Windows, Mac) et l'application mobile sur les téléphones de vos agents terrain (Android, iOS).</p>
-                        </div>
-                    </div>
-                    <div class="training-step">
-                        <div class="training-step-num">2</div>
-                        <div class="training-step-content">
-                            <h4 data-i18n="training_step2_title">Configuration de votre espace</h4>
-                            <p data-i18n="training_step2_desc">Import de vos prospects depuis Excel, création des comptes agents terrain, paramétrage du geofencing, configuration de la gamification et des rapports.</p>
-                        </div>
-                    </div>
-                    <div class="training-step">
-                        <div class="training-step-num">3</div>
-                        <div class="training-step-content">
-                            <h4 data-i18n="training_step3_title">Prise en main complète</h4>
-                            <p data-i18n="training_step3_desc">Je vous montre toutes les fonctionnalités : suivi GPS, lecture du dashboard, rapports, classement, anti-fraude, IA prédictive. Je réponds à toutes vos questions en direct.</p>
-                        </div>
-                    </div>
-                    <div class="training-step">
-                        <div class="training-step-num">4</div>
-                        <div class="training-step-content">
-                            <h4 data-i18n="training_step4_title">Vous êtes opérationnel !</h4>
-                            <p data-i18n="training_step4_desc">À la fin de la formation, tout est prêt. Vos agents n'ont plus qu'à ouvrir l'app et commencer à travailler. Le dashboard se met à jour en temps réel dès la première visite !</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="training-cta">
-                    <p data-i18n="training_cta_text" data-i18n-html="true"><strong>La formation est incluse dans tous les forfaits</strong>, sans frais supplémentaire. Après la formation, un <strong>système d'assistance intégré</strong> est disponible directement dans votre dashboard : planifiez un <strong>meeting live</strong> en visioconférence avec le développeur, ou soumettez votre problème pour recevoir une <strong>solution détaillée par email</strong> — sans délai, sans intermédiaire.</p>
-                    <a href="register.html" class="btn btn-primary btn-lg">
-                        <i data-lucide="rocket" style="width:18px;height:18px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="training_cta_btn">S'inscrire et réserver ma formation</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ════════════ DOWNLOAD — TOUTES PLATEFORMES ════════════ -->
+<!-- ════════════ DOWNLOAD ════════════ -->
 <section class="download" id="download">
     <div class="section-container">
         <div class="section-header">
-            <div class="section-badge section-badge-white"><i data-lucide="download" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="download_badge">Téléchargements</span></div>
-            <h2 style="color:#FFF" data-i18n="download_title">Téléchargez Maydeni AI</h2>
-            <p style="color:rgba(255,255,255,0.8)" data-i18n="download_subtitle" data-i18n-html="true">Applications natives pour toutes les plateformes. Chaque entreprise utilise son propre serveur sécurisé.<br>Les mises à jour sont notifiées automatiquement dans l'application.</p>
+            <div class="section-badge section-badge-white"><i data-lucide="download" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Téléchargement</div>
+            <h2 style="color:#FFF">Téléchargez MAYDENI-AI</h2>
+            <p style="color:rgba(255,255,255,0.8)">Disponible sur Android et iOS. Installation directe depuis cette page.</p>
         </div>
 
-        <!-- ─── Dashboard Directeur (Apps natives) ─── -->
-        <div style="margin-bottom:32px;">
-            <h3 style="color:#FFF;text-align:center;font-size:20px;margin-bottom:8px;letter-spacing:1px;"><i data-lucide="layout-dashboard" style="width:22px;height:22px;display:inline-block;vertical-align:middle;margin-right:8px;"></i> <span data-i18n="download_dash_heading">Dashboard Directeur Commercial</span></h3>
-            <p style="text-align:center;color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:20px;" data-i18n="download_dash_sub">Accédez au dashboard depuis n'importe quel navigateur</p>
-            <div class="download-grid">
-                <div class="download-card">
-                    <div class="download-os-icon"><i data-lucide="globe" style="width:36px;height:36px;color:#9CA3AF;"></i></div>
-                    <h3 data-i18n="download_web_title">Dashboard Web</h3>
-                    <p class="download-version" data-i18n="download_web_version">Accès instantané — Aucune installation</p>
-                    <ul class="download-reqs">
-                        <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> <span data-i18n="download_web_f1">Windows, macOS, Linux</span></li>
-                        <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> <span data-i18n="download_web_f2">Chrome, Safari, Firefox, Edge</span></li>
-                        <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> <span data-i18n="download_web_f3">Connexion internet requise</span></li>
-                    </ul>
-                    <a href="dashboard/" class="btn btn-download btn-windows" target="_blank" rel="noopener">
-                        <span class="download-icon"><i data-lucide="external-link" style="width:18px;height:18px;"></i></span>
-                        <span>
-                            <small data-i18n="download_web_cta_small">Ouvrir le</small>
-                            <strong data-i18n="download_web_cta">Dashboard Directeur</strong>
-                        </span>
-                    </a>
+        <div class="download-grid">
+            <!-- ANDROID -->
+            <div class="download-card">
+                <div class="download-os-icon"><i data-lucide="smartphone" style="width:36px;height:36px;"></i></div>
+                <h3>Android</h3>
+                <p class="download-version">Version 1.0.0 — APK</p>
+                <ul class="download-reqs">
+                    <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> Android 8.0 ou supérieur</li>
+                    <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> GPS requis</li>
+                    <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> ~45 Mo</li>
+                </ul>
+                <div class="download-steps">
+                    <h4>Comment installer :</h4>
+                    <ol>
+                        <li>Téléchargez le fichier APK ci-dessous</li>
+                        <li>Ouvrez le fichier téléchargé</li>
+                        <li>Autorisez l'installation depuis "Sources inconnues"</li>
+                        <li>Installez et lancez MAYDENI-AI</li>
+                    </ol>
                 </div>
+                <a href="downloads/maydeni-ai.apk" class="btn btn-download btn-android" id="btn-download-android">
+                    <span class="download-icon"><i data-lucide="play" style="width:18px;height:18px;"></i></span>
+                    <span>
+                        <small>Télécharger pour</small>
+                        <strong>Android (APK)</strong>
+                    </span>
+                </a>
+                <div class="download-note">
+                    Téléchargement direct — 23 Mo
+                </div>
+            </div>
 
-                <div class="download-card">
-                    <div class="download-os-icon"><i data-lucide="key-round" style="width:36px;height:36px;color:#9CA3AF;"></i></div>
-                    <h3 data-i18n="download_activation_title">Activation</h3>
-                    <p class="download-version" data-i18n="download_activation_version">Clé de licence fournie à l'achat</p>
-                    <ul class="download-reqs">
-                        <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> <span data-i18n="download_activation_f1">1 licence = 1 société</span></li>
-                        <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> <span data-i18n="download_activation_f2">Activation une seule fois</span></li>
-                        <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> <span data-i18n="download_activation_f3">Identifiants envoyés par email</span></li>
-                    </ul>
-                    <a href="#pricing" class="btn btn-download btn-macos">
-                        <span class="download-icon"><i data-lucide="shopping-cart" style="width:18px;height:18px;"></i></span>
-                        <span>
-                            <small data-i18n="download_activation_cta_small">Demander une</small>
-                            <strong data-i18n="download_activation_cta">Licence d'activation</strong>
-                        </span>
-                    </a>
+            <!-- iOS PWA -->
+            <div class="download-card">
+                <div class="download-os-icon"><i data-lucide="tablet-smartphone" style="width:36px;height:36px;"></i></div>
+                <h3>iOS (iPhone / iPad)</h3>
+                <p class="download-version">Version 1.0.0 — Application Web</p>
+                <ul class="download-reqs">
+                    <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> iOS 12.0 ou supérieur</li>
+                    <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> Safari requis</li>
+                    <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> Aucun téléchargement</li>
+                </ul>
+                <div class="download-steps">
+                    <h4>Comment installer :</h4>
+                    <ol>
+                        <li>Ouvrez le lien ci-dessous dans <strong>Safari</strong></li>
+                        <li>Appuyez sur <strong>Partager</strong> (icône ↑)</li>
+                        <li>Sélectionnez <strong>« Sur l'écran d'accueil »</strong></li>
+                        <li>L'app MEGA s'installe avec l'icône bleue !</li>
+                    </ol>
+                </div>
+                <a href="app/" class="btn btn-download btn-ios" id="btn-download-ios">
+                    <span class="download-icon"><i data-lucide="tablet-smartphone" style="width:18px;height:18px;"></i></span>
+                    <span>
+                        <small>Installer sur</small>
+                        <strong>iOS (Safari)</strong>
+                    </span>
+                </a>
+                <div class="download-note">
+                    Installation directe — Aucun fichier à télécharger
                 </div>
             </div>
         </div>
-
-        <!-- ─── Applications Agents Terrain ─── -->
-        <div>
-            <h3 style="color:#FFF;text-align:center;font-size:20px;margin-bottom:8px;letter-spacing:1px;"><i data-lucide="smartphone" style="width:22px;height:22px;display:inline-block;vertical-align:middle;margin-right:8px;"></i> <span data-i18n="download_agent_heading">Application Agent Terrain</span></h3>
-            <p style="text-align:center;color:rgba(255,255,255,0.5);font-size:13px;margin-bottom:20px;" data-i18n="download_agent_sub">Application mobile pour vos agents commerciaux sur le terrain</p>
-            <div class="download-grid">
-                <div class="download-card">
-                    <div class="download-os-icon"><i data-lucide="smartphone" style="width:36px;height:36px;color:#9CA3AF;"></i></div>
-                    <h3>Android</h3>
-                    <p class="download-version" style="color:#10B981;font-weight:600;">Application Native (APK)</p>
-                    <ul class="download-reqs" style="margin-bottom:12px;">
-                        <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> Android 8.0 et supérieur</li>
-                        <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> GPS requis en arrière-plan</li>
-                        <li><i data-lucide="check" style="width:14px;height:14px;display:inline-block;vertical-align:middle;color:#10B981;"></i> Fonctionne 100% hors-ligne</li>
-                    </ul>
-                    <a href="https://github.com/neolamcha/Mega-Supervision/releases/latest" class="btn btn-download btn-android" id="btn-download-android" target="_blank" rel="noopener" style="background:#10B981;border-color:#059669;">
-                        <span class="download-icon"><i data-lucide="download" style="width:18px;height:18px;"></i></span>
-                        <span>
-                            <small style="color:rgba(255,255,255,0.8);">Télécharger le fichier APK</small>
-                            <strong>Pour Android</strong>
-                        </span>
-                    </a>
-                </div>
-
-                <div class="download-card" style="opacity: 0.8; border-color: #4B5563;">
-                    <div class="download-os-icon"><i data-lucide="apple" style="width:36px;height:36px;color:#9CA3AF;"></i></div>
-                    <h3 style="color:#D1D5DB;">Apple iOS</h3>
-                    <p class="download-version" style="color:#F59E0B;font-weight:700;">En construction 🚧</p>
-                    <ul class="download-reqs" style="margin-bottom:12px;">
-                        <li style="color:#6B7280;"><i data-lucide="clock" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> Sera construit prochainement</li>
-                        <li style="color:#6B7280;"><i data-lucide="shield" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> App Store TestFlight VIP</li>
-                    </ul>
-                    <button class="btn btn-download btn-ios" disabled style="background:#1F2937; border-color:#374151; cursor:not-allowed; box-shadow:none;">
-                        <span class="download-icon"><i data-lucide="lock" style="width:18px;height:18px;color:#6B7280;"></i></span>
-                        <span>
-                            <small style="color:#6B7280;">Indisponible pour le moment</small>
-                            <strong style="color:#9CA3AF;">Bientôt sur l'App Store</strong>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
 
 
     </div>
 </section>
+
+<!-- ════════════ MASTERCLASS & TRAINING ════════════ -->
+<section class="masterclass" id="masterclass" style="background: linear-gradient(135deg, #0A1628, #0D6B6E); padding: 90px 0; color: white; position: relative; overflow: hidden;">
+    <div class="hero-bg-shapes">
+        <div class="shape shape-1" style="opacity: 0.1;"></div>
+        <div class="shape shape-3" style="opacity: 0.1;"></div>
+    </div>
+    <div class="section-container" style="position: relative; z-index: 2;">
+        <div class="section-header" style="text-align: center; margin-bottom: 60px;">
+            <div class="section-badge" style="background: rgba(77, 201, 217, 0.2); color: #4DC9D9; border: 1px solid rgba(77, 201, 217, 0.3); padding: 6px 16px; border-radius: 30px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Formation & Onboarding</div>
+            <h2 style="font-size: 42px; font-weight: 900; margin: 20px 0; line-height: 1.2;">On vous accompagne pour<br><span style="color: #4DC9D9;">devenir un pro de Maydeni AI</span></h2>
+            <p style="color: rgba(255, 255, 255, 0.8); max-width: 650px; margin: 0 auto; font-size: 18px; line-height: 1.6;">Pas besoin d'être un expert technique. Notre ambassadrice vous guide pas à pas dans une présentation immersive, conviviale et ultra-efficace.</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: center;">
+            <div class="masterclass-player" style="position: relative;">
+                <div style="background: #000; border-radius: 24px; padding: 12px; box-shadow: 0 30px 60px rgba(0,0,0,0.5); border: 2px solid rgba(77, 201, 217, 0.3);">
+                    <div style="position: relative; padding-top: 56.25%; border-radius: 12px; overflow: hidden; background: #1a1a1a;">
+                        <img src="img/avatar_preview.png" alt="Maydeni AI Intro" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(13,107,110,0.4) 0%, transparent 70%);">
+                            <div style="width: 90px; height: 90px; background: #4DC9D9; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.3s ease; box-shadow: 0 0 40px rgba(77, 201, 217, 0.6);" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                                <i data-lucide="play" style="width: 38px; height: 38px; color: white; fill: white; margin-left: 4px;"></i>
+                            </div>
+                            <span style="margin-top: 20px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-size: 14px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Aperçu Gratuit : L'Introduction</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 15px; margin-top: 20px; background: rgba(255, 255, 255, 0.05); padding: 12px 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);">
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #4DC9D9; display: flex; align-items: center; justify-content: center;">
+                        <i data-lucide="unlock" style="width: 20px; height: 20px; color: white;"></i>
+                    </div>
+                    <p style="margin: 0; font-size: 15px; font-weight: 500; color: #4DC9D9;">La formation technique complète sera débloquée automatiquement dès validation de votre achat.</p>
+                </div>
+            </div>
+            
+            <div class="masterclass-details">
+                <div style="margin-bottom: 30px;">
+                    <h3 style="font-size: 24px; font-weight: 800; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                        <i data-lucide="graduation-cap" style="color: #4DC9D9;"></i> Au programme :
+                    </h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 20px; display: flex; gap: 14px;">
+                            <div style="width: 24px; height: 24px; background: rgba(77, 201, 217, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="check" style="width: 14px; height: 14px; color: #4DC9D9;"></i>
+                            </div>
+                            <div>
+                                <strong style="display: block; font-size: 16px; margin-bottom: 4px;">Vision du Dr. Slim Lamouchi</strong>
+                                <span style="font-size: 14px; color: rgba(255,255,255,0.6);">Pourquoi Maydeni AI est la solution de demain.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 20px; display: flex; gap: 14px;">
+                            <div style="width: 24px; height: 24px; background: rgba(77, 201, 217, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="check" style="width: 14px; height: 14px; color: #4DC9D9;"></i>
+                            </div>
+                            <div>
+                                <strong style="display: block; font-size: 16px; margin-bottom: 4px;">Le Dashboard complet (19 sections)</strong>
+                                <span style="font-size: 14px; color: rgba(255,255,255,0.6);">Apprenez à piloter vos KPIs comme un pro.</span>
+                            </div>
+                        </li>
+                        <li style="margin-bottom: 20px; display: flex; gap: 14px;">
+                            <div style="width: 24px; height: 24px; background: rgba(77, 201, 217, 0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px;">
+                                <i data-lucide="check" style="width: 14px; height: 14px; color: #4DC9D9;"></i>
+                            </div>
+                            <div>
+                                <strong style="display: block; font-size: 16px; margin-bottom: 4px;">Portail Notion & Support direct</strong>
+                                <span style="font-size: 14px; color: rgba(255,255,255,0.6);">Posez vos questions au développeur en temps réel.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="background: white; color: #0A1628; border-radius: 20px; padding: 30px; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.2);">
+                    <div style="font-size: 12px; font-weight: 800; color: #64748B; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px;">Offre Onboarding</div>
+                    <div style="font-size: 48px; font-weight: 950; margin-bottom: 10px; color: #0D6B6E;">Gratuit</div>
+                    <p style="font-size: 14px; color: #64748B; margin-bottom: 24px;">Inclus avec votre abonnement Maydeni AI</p>
+                    <a href="payment_success.html" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 18px; font-size: 18px; border-radius: 14px; background: linear-gradient(135deg, #0D6B6E, #1B9EA1);">
+                        <i data-lucide="shopping-cart" style="width: 20px; height: 20px; margin-right: 10px;"></i> Commander l'accès complet
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
 
 <!-- ════════════ SÉCURITÉ ════════════ -->
 <section class="security" id="securite">
     <div class="section-container">
         <div class="section-header">
-            <div class="section-badge"><i data-lucide="lock" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="section_security_badge">Sécurité</span></div>
-            <h2 data-i18n="security_title">Sécurité de niveau entreprise</h2>
-            <p data-i18n="security_subtitle">Vos données sont protégées à chaque étape</p>
+            <div class="section-badge"><i data-lucide="lock" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Sécurité</div>
+            <h2>Sécurité de niveau entreprise</h2>
+            <p>Vos données sont protégées à chaque étape</p>
         </div>
         <div class="security-grid">
             <div class="security-item">
                 <div class="security-icon"><i data-lucide="key-round" style="width:28px;height:28px;"></i></div>
-                <h4 data-i18n="sec_jwt_title">Authentification JWT</h4>
-                <p data-i18n="sec_jwt_desc">Sessions sécurisées avec tokens signés et expiration automatique</p>
+                <h4>Authentification JWT</h4>
+                <p>Sessions sécurisées avec tokens signés et expiration automatique</p>
             </div>
             <div class="security-item">
                 <div class="security-icon"><i data-lucide="lock" style="width:28px;height:28px;"></i></div>
-                <h4 data-i18n="sec_bcrypt_title">Mots de passe bcrypt</h4>
-                <p data-i18n="sec_bcrypt_desc">Hachage bcrypt avec 12 tours de salage</p>
+                <h4>Mots de passe bcrypt</h4>
+                <p>Hachage bcrypt avec 12 tours de salage</p>
             </div>
             <div class="security-item">
                 <div class="security-icon"><i data-lucide="shield" style="width:28px;height:28px;"></i></div>
-                <h4 data-i18n="sec_gps_title">Anti-fraude GPS</h4>
-                <p data-i18n="sec_gps_desc">Détection mock location, vitesse incohérente, logs invisibles</p>
+                <h4>Anti-fraude GPS</h4>
+                <p>Détection mock location, vitesse incohérente, logs invisibles</p>
             </div>
             <div class="security-item">
                 <div class="security-icon"><i data-lucide="radio" style="width:28px;height:28px;"></i></div>
-                <h4 data-i18n="sec_https_title">HTTPS / Rate Limiting</h4>
-                <p data-i18n="sec_https_desc">Communications chiffrées et protection contre les attaques par force brute</p>
+                <h4>HTTPS / Rate Limiting</h4>
+                <p>Communications chiffrées et protection contre les attaques par force brute</p>
             </div>
             <div class="security-item">
                 <div class="security-icon"><i data-lucide="clipboard-list" style="width:28px;height:28px;"></i></div>
-                <h4 data-i18n="sec_log_title">Journal de sécurité</h4>
-                <p data-i18n="sec_log_desc">Chaque anomalie est enregistrée avec horodatage et métadonnées</p>
+                <h4>Journal de sécurité</h4>
+                <p>Chaque anomalie est enregistrée avec horodatage et métadonnées</p>
             </div>
             <div class="security-item">
                 <div class="security-icon"><i data-lucide="eye" style="width:28px;height:28px;"></i></div>
-                <h4 data-i18n="sec_roles_title">Rôles & permissions</h4>
-                <p data-i18n="sec_roles_desc">Admin, Directeur, Agent terrain — accès contrôlé à chaque niveau</p>
+                <h4>Rôles & permissions</h4>
+                <p>Admin, Directeur, Agent — accès contrôlé à chaque niveau</p>
             </div>
         </div>
     </div>
@@ -737,32 +370,32 @@
 <section class="how-it-works">
     <div class="section-container">
         <div class="section-header">
-            <div class="section-badge"><i data-lucide="lightbulb" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="howit_badge">Fonctionnement</span></div>
-            <h2 data-i18n="howit_title">Comment ça marche ?</h2>
+            <div class="section-badge"><i data-lucide="lightbulb" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Fonctionnement</div>
+            <h2>Comment ça marche ?</h2>
         </div>
         <div class="steps-grid">
             <div class="step-card">
                 <div class="step-number">1</div>
-                <h4 data-i18n="howit_step1_title">Téléchargez les apps</h4>
-                <p data-i18n="howit_step1_desc">Le directeur installe le Dashboard natif (Windows/Mac) et les agents terrain installent l'app mobile (Android/iOS).</p>
+                <h4>Téléchargez l'app</h4>
+                <p>L'agent installe l'app depuis cette page et se connecte avec son identifiant.</p>
             </div>
             <div class="step-arrow">→</div>
             <div class="step-card">
                 <div class="step-number">2</div>
-                <h4 data-i18n="howit_step2_title">Votre propre serveur</h4>
-                <p data-i18n="howit_step2_desc">Vos données restent chez vous. Chaque entreprise dispose de son serveur dédié, sécurisé et indépendant.</p>
+                <h4>Visitez vos prospects</h4>
+                <p>Le GPS détecte automatiquement l'entrée/sortie de zone. La visite se chronomètre.</p>
             </div>
             <div class="step-arrow">→</div>
             <div class="step-card">
                 <div class="step-number">3</div>
-                <h4 data-i18n="howit_step3_title">Vos agents sur le terrain</h4>
-                <p data-i18n="howit_step3_desc">GPS automatique, visites chronométrées, commandes en temps réel. L'IA détecte les anomalies.</p>
+                <h4>Passez des commandes</h4>
+                <p>Saisissez les commandes et notes directement depuis l'app pendant la visite.</p>
             </div>
             <div class="step-arrow">→</div>
             <div class="step-card">
                 <div class="step-number">4</div>
-                <h4 data-i18n="howit_step4_title">Mises à jour automatiques</h4>
-                <p data-i18n="howit_step4_desc">Une notification apparaît quand une mise à jour est disponible. Un clic pour mettre à jour — c'est tout !</p>
+                <h4>Le directeur supervise</h4>
+                <p>Carte live, classement, alertes fraude, rapports — tout en temps réel sur le dashboard.</p>
             </div>
         </div>
     </div>
@@ -774,499 +407,36 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <div class="footer-logo">
-                    <img src="img/logo-full.png" alt="Maydeni AI" style="height:50px;width:auto;filter:brightness(0) invert(1);">
+                    <span class="footer-mega">MEGA</span>
+                    <span class="footer-sup">Smart Field Operations</span>
                 </div>
-                <p style="margin-top:8px;" data-i18n="footer_desc">Plateforme de supervision terrain intelligente</p>
-                <p class="footer-company" data-i18n="footer_rights">© 2026 Maydeni AI — Tous droits réservés</p>
+                <p>Plateforme de supervision terrain intelligente</p>
+                <p class="footer-company">© 2026 Maydeni AI — Tous droits réservés</p>
+                <p class="footer-credit">Conçu & développé par <strong>Maydeni AI</strong></p>
             </div>
             <div class="footer-links">
-                <h4 data-i18n="footer_nav_heading">Navigation</h4>
-                <a href="#features" data-i18n="nav_features">Fonctionnalités</a>
-                <a href="#download" data-i18n="nav_download">Télécharger</a>
-                <a href="#securite" data-i18n="nav_security">Sécurité</a>
-                <a href="#contact" data-i18n="nav_contact">Contact</a>
+                <h4>Navigation</h4>
+                <a href="#features">Fonctionnalités</a>
+                <a href="#download">Télécharger</a>
+                <a href="#securite">Sécurité</a>
+                <a href="dashboard/">Dashboard</a>
             </div>
             <div class="footer-links">
-                <h4 data-i18n="footer_access_heading">Accès</h4>
-                <a href="register.html"><i data-lucide="user-plus" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="footer_signup">S'inscrire</span></a>
-                <a href="dashboard/"><i data-lucide="layout-dashboard" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Dashboard</a>
+                <h4>Téléchargements</h4>
+                <a href="downloads/maydeni-ai.apk"><i data-lucide="smartphone" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Android (APK)</a>
+                <a href="app/"><i data-lucide="tablet-smartphone" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> iOS (App Web)</a>
             </div>
             <div class="footer-links">
-                <h4 data-i18n="footer_contact_heading">Contact</h4>
+                <h4>Contact</h4>
                 <p><i data-lucide="mail" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <a href="mailto:Maydeni@outlook.fr" style="color:inherit;text-decoration:none;">Maydeni@outlook.fr</a></p>
-                <p><i data-lucide="map-pin" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="footer_location">Tunis, Tunisie</span></p>
+                <p><i data-lucide="phone" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> +216 71 XXX XXX</p>
+                <p><i data-lucide="map-pin" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> Tunis, Tunisie</p>
             </div>
-        </div>
-        <!-- Admin subtle link -->
-        <div class="footer-admin-line">
-            <button class="footer-admin-btn" onclick="document.getElementById('adminLoginModal').style.display='flex'">
-                <i data-lucide="lock" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="footer_admin">Administration</span>
-            </button>
         </div>
     </div>
 </footer>
 
-<!-- ════════════ ADMIN LOGIN MODAL ════════════ -->
-<div id="adminLoginModal" class="admin-modal-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
-    <div class="admin-modal">
-        <button class="admin-modal-close" aria-label="Fermer" onclick="document.getElementById('adminLoginModal').style.display='none'">&times;</button>
-        <div class="admin-modal-icon"><i data-lucide="shield-check" style="width:32px;height:32px;color:#0D6B6E;"></i></div>
-        <h3 id="adminTitle" data-i18n="admin_title">Accès Administration</h3>
-        <p class="admin-modal-sub" data-i18n="admin_subtitle">Réservé aux administrateurs Maydeni AI</p>
-        <form id="adminLoginForm" onsubmit="return handleAdminLogin(event)">
-            <div class="admin-field">
-                <label for="adminUser" data-i18n="admin_user_label">Identifiant</label>
-                <input type="text" id="adminUser" placeholder="Entrez votre identifiant" data-i18n="admin_user_placeholder" autocomplete="username" required>
-            </div>
-            <div class="admin-field">
-                <label for="adminPass" data-i18n="admin_pass_label">Mot de passe</label>
-                <input type="password" id="adminPass" placeholder="Entrez votre mot de passe" data-i18n="admin_pass_placeholder" autocomplete="current-password" required>
-            </div>
-            <div id="adminError" class="admin-error" style="display:none" data-i18n="admin_error">Identifiants incorrects</div>
-            <button type="submit" class="admin-submit-btn">
-                <i data-lucide="log-in" style="width:16px;height:16px;display:inline-block;vertical-align:middle;margin-right:6px;"></i> <span data-i18n="admin_submit">Se connecter</span>
-            </button>
-        </form>
-    </div>
-</div>
-
 <script src="js/site.js"></script>
-<script>
-// ═══ AI NEURAL GENESIS — Cinematic Intro Engine ═══
-(function(){
-  const c = document.getElementById('intro-neural');
-  if(!c) return;
-  const ctx = c.getContext('2d');
-  let W, H;
-  function resize(){ W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
-  resize(); window.addEventListener('resize', resize);
-
-  // Neural network nodes
-  const nodes = [];
-  const DATA_STREAMS = [];
-  const centerX = () => W/2;
-  const centerY = () => H/2;
-
-  // Create neural nodes in layered clusters (like a real neural network)
-  function initNodes(){
-    nodes.length = 0;
-    // Layer 1: outer scattered
-    for(let i=0; i<40; i++){
-      const angle = Math.random()*Math.PI*2;
-      const dist = 200 + Math.random()*Math.max(W,H)*0.4;
-      nodes.push({
-        x: centerX() + Math.cos(angle)*dist,
-        y: centerY() + Math.sin(angle)*dist,
-        ox: Math.cos(angle)*dist,
-        oy: Math.sin(angle)*dist,
-        r: 1 + Math.random()*1.5,
-        layer: 0,
-        brightness: 0.15 + Math.random()*0.3,
-        phase: Math.random()*Math.PI*2,
-        speed: 0.3 + Math.random()*0.5
-      });
-    }
-    // Layer 2: mid ring
-    for(let i=0; i<24; i++){
-      const angle = (i/24)*Math.PI*2 + Math.random()*0.3;
-      const dist = 100 + Math.random()*120;
-      nodes.push({
-        x: centerX() + Math.cos(angle)*dist,
-        y: centerY() + Math.sin(angle)*dist,
-        ox: Math.cos(angle)*dist,
-        oy: Math.sin(angle)*dist,
-        r: 1.5 + Math.random()*1.5,
-        layer: 1,
-        brightness: 0.3 + Math.random()*0.4,
-        phase: Math.random()*Math.PI*2,
-        speed: 0.5 + Math.random()*0.5
-      });
-    }
-    // Layer 3: inner core ring
-    for(let i=0; i<12; i++){
-      const angle = (i/12)*Math.PI*2;
-      const dist = 30 + Math.random()*40;
-      nodes.push({
-        x: centerX() + Math.cos(angle)*dist,
-        y: centerY() + Math.sin(angle)*dist,
-        ox: Math.cos(angle)*dist,
-        oy: Math.sin(angle)*dist,
-        r: 2 + Math.random()*1,
-        layer: 2,
-        brightness: 0.6 + Math.random()*0.4,
-        phase: Math.random()*Math.PI*2,
-        speed: 0.8 + Math.random()*0.4
-      });
-    }
-  }
-  initNodes();
-
-  // Data stream particles (flowing toward center = AI processing)
-  function spawnStream(){
-    const angle = Math.random()*Math.PI*2;
-    const dist = Math.max(W,H)*0.6;
-    DATA_STREAMS.push({
-      x: centerX() + Math.cos(angle)*dist,
-      y: centerY() + Math.sin(angle)*dist,
-      tx: centerX() + (Math.random()-0.5)*60,
-      ty: centerY() + (Math.random()-0.5)*60,
-      progress: 0,
-      speed: 0.005 + Math.random()*0.008,
-      size: 1 + Math.random()*2,
-      trail: []
-    });
-  }
-
-  let time = 0;
-  let phase = 0; // 0=neural build, 1=convergence, 2=explosion, 3=settle
-  let phaseTime = 0;
-  const startTime = Date.now();
-
-  function getElapsed(){ return (Date.now() - startTime) / 1000; }
-
-  function draw(){
-    const elapsed = getElapsed();
-    time += 0.016;
-    ctx.clearRect(0,0,W,H);
-
-    // Deep dark background with subtle teal radial
-    const grd = ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,W*0.7);
-    grd.addColorStop(0, `rgba(13,107,110,${Math.min(elapsed*0.02, 0.06)})`);
-    grd.addColorStop(0.4, 'rgba(9,77,79,0.03)');
-    grd.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = grd;
-    ctx.fillRect(0,0,W,H);
-
-    // Scanning grid lines (subtle)
-    if(elapsed > 0.3){
-      const gridAlpha = Math.min((elapsed-0.3)*0.05, 0.03);
-      ctx.strokeStyle = `rgba(27,158,161,${gridAlpha})`;
-      ctx.lineWidth = 0.5;
-      const gridSize = 80;
-      for(let x = W/2 % gridSize; x < W; x += gridSize){
-        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
-      }
-      for(let y = H/2 % gridSize; y < H; y += gridSize){
-        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
-      }
-    }
-
-    // Phase-based intensity
-    let nodeAlpha = Math.min(elapsed * 0.3, 1);
-    let connectionAlpha = Math.min(Math.max(elapsed - 0.8, 0) * 0.2, 1);
-    let convergeFactor = 0;
-
-    // Phase: convergence toward center (3s - 5.5s) — AI "thinking"
-    if(elapsed > 3.0 && elapsed < 5.5){
-      convergeFactor = Math.min((elapsed - 3.0) / 1.5, 1) * 0.6;
-    }
-    // Phase: expand back (5.5s - 7s) — AI "activated"
-    if(elapsed > 5.5 && elapsed < 7.0){
-      convergeFactor = 0.6 * (1 - (elapsed - 5.5) / 1.5);
-    }
-
-    // Draw & update neural nodes
-    for(let i=0; i<nodes.length; i++){
-      const n = nodes[i];
-      n.phase += 0.01 * n.speed;
-
-      // Breathing motion + convergence
-      const breathe = Math.sin(n.phase) * 5;
-      const tx = centerX() + n.ox * (1 - convergeFactor) + breathe;
-      const ty = centerY() + n.oy * (1 - convergeFactor) + Math.cos(n.phase*1.3)*3;
-      n.x += (tx - n.x) * 0.05;
-      n.y += (ty - n.y) * 0.05;
-
-      const alpha = n.brightness * nodeAlpha;
-      const pulseR = n.r + Math.sin(time*2 + n.phase)*0.5;
-
-      // Outer glow
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, pulseR * 5, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(27,158,161,${alpha*0.08})`;
-      ctx.fill();
-
-      // Core dot
-      ctx.beginPath();
-      ctx.arc(n.x, n.y, pulseR, 0, Math.PI*2);
-      ctx.fillStyle = n.layer === 2
-        ? `rgba(77,201,217,${alpha})`
-        : n.layer === 1
-          ? `rgba(27,158,161,${alpha*0.8})`
-          : `rgba(13,107,110,${alpha*0.5})`;
-      ctx.fill();
-
-      // Neural connections (layer-aware)
-      if(connectionAlpha > 0){
-        for(let j=i+1; j<nodes.length; j++){
-          const n2 = nodes[j];
-          const dx = n.x-n2.x, dy = n.y-n2.y;
-          const dist = Math.sqrt(dx*dx+dy*dy);
-          const maxDist = (n.layer + n2.layer >= 3) ? 200 : (n.layer + n2.layer >= 1) ? 160 : 120;
-          if(dist < maxDist){
-            const strength = (1 - dist/maxDist) * connectionAlpha * 0.12;
-            ctx.beginPath();
-            ctx.moveTo(n.x, n.y);
-            ctx.lineTo(n2.x, n2.y);
-            ctx.strokeStyle = `rgba(77,201,217,${strength})`;
-            ctx.lineWidth = (n.layer + n2.layer >= 3) ? 1 : 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-    }
-
-    // Data streams flowing toward AI core
-    if(elapsed > 1.2 && elapsed < 9){
-      if(Math.random() < 0.3) spawnStream();
-      for(let i = DATA_STREAMS.length-1; i >= 0; i--){
-        const s = DATA_STREAMS[i];
-        s.progress += s.speed;
-        s.trail.push({x: s.x, y: s.y, a: 1});
-        if(s.trail.length > 15) s.trail.shift();
-
-        s.x += (s.tx - s.x) * s.speed * 3;
-        s.y += (s.ty - s.y) * s.speed * 3;
-
-        // Draw trail
-        for(let t=0; t<s.trail.length; t++){
-          const tr = s.trail[t];
-          tr.a *= 0.92;
-          ctx.beginPath();
-          ctx.arc(tr.x, tr.y, s.size * tr.a, 0, Math.PI*2);
-          ctx.fillStyle = `rgba(77,201,217,${tr.a * 0.6})`;
-          ctx.fill();
-        }
-
-        // Core particle
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
-        ctx.fillStyle = 'rgba(77,201,217,0.9)';
-        ctx.fill();
-
-        if(s.progress > 1) DATA_STREAMS.splice(i, 1);
-      }
-    }
-
-    // Center energy burst at phase transition (5s)
-    if(elapsed > 5.0 && elapsed < 6.5){
-      const burstAlpha = Math.max(0, 1 - (elapsed - 5.0) / 1.5);
-      const burstR = (elapsed - 5.0) * 300;
-      ctx.beginPath();
-      ctx.arc(W/2, H/2, burstR, 0, Math.PI*2);
-      ctx.strokeStyle = `rgba(77,201,217,${burstAlpha * 0.3})`;
-      ctx.lineWidth = 2;
-      ctx.stroke();
-    }
-
-    // Hexagonal HUD elements (AI interface feel)
-    if(elapsed > 2.0){
-      const hudAlpha = Math.min((elapsed - 1.0) * 0.4, 0.08);
-      ctx.save();
-      ctx.translate(W/2, H/2);
-      for(let i=0; i<3; i++){
-        const hR = 180 + i*80;
-        ctx.beginPath();
-        for(let j=0; j<6; j++){
-          const a = (j/6)*Math.PI*2 + time*0.1*(i%2?1:-1);
-          const px = Math.cos(a)*hR, py = Math.sin(a)*hR;
-          j===0 ? ctx.moveTo(px,py) : ctx.lineTo(px,py);
-        }
-        ctx.closePath();
-        ctx.strokeStyle = `rgba(27,158,161,${hudAlpha})`;
-        ctx.lineWidth = 0.8;
-        ctx.stroke();
-      }
-      ctx.restore();
-    }
-
-    requestAnimationFrame(draw);
-  }
-  draw();
-
-  // Remove overlay after animation
-  setTimeout(()=>{ const o=document.getElementById('intro-overlay'); if(o) o.remove(); }, 13500);
-})();
-</script>
-<script>
-lucide.createIcons();
-
-// ─── Fetch live prices from API (with retry) ────────────────
-(async function loadLivePrices(attempt) {
-  attempt = attempt || 1;
-  try {
-    const res = await fetch('https://mega-supervision-api.onrender.com/api/plans');
-    if (!res.ok) throw new Error('API ' + res.status);
-    const data = await res.json();
-    const plans = data.plans || [];
-    if (plans.length === 0) throw new Error('No plans');
-    const priceMap = {};
-    plans.forEach(function(p) {
-      priceMap[p.name] = { price: Math.round(parseFloat(p.price_dt)), max: parseInt(p.max_delegates), display: p.display_name };
-    });
-    // Update landing page pricing cards
-    document.querySelectorAll('.pricing-amount[data-monthly]').forEach(function(el) {
-      var card = el.closest('.pricing-card');
-      var link = card.querySelector('a[href*="register.html"]');
-      if (!link) return;
-      var planName = (link.href.match(/plan=(\w+)/)||[])[1];
-      if (planName && priceMap[planName]) {
-        el.dataset.monthly = priceMap[planName].price;
-        el.textContent = priceMap[planName].price;
-      }
-    });
-    // Update max delegates display
-    document.querySelectorAll('.pricing-delegates').forEach(function(el) {
-      var card = el.closest('.pricing-card');
-      var link = card.querySelector('a[href*="register.html"]');
-      if (!link) return;
-      var planName = (link.href.match(/plan=(\w+)/)||[])[1];
-      if (planName && priceMap[planName]) {
-        var max = priceMap[planName].max;
-        el.innerHTML = (planName === 'enterprise' ? '<strong>' + t('pricing_enterprise_agents') + '</strong>' : t('pricing_up_to') + ' <strong>' + (max < 0 ? '∞' : max) + '</strong>') + ' ' + t('pricing_agents');
-      }
-    });
-    // Re-apply current billing toggle
-    var activeBtn = document.querySelector('.billing-btn.active');
-    if (activeBtn && activeBtn.onclick) activeBtn.click();
-    console.log('[Maydeni] Prix chargés depuis API ✓');
-  } catch (e) {
-    // Retry up to 3 times with increasing delay (Render cold start)
-    if (attempt < 3) {
-      setTimeout(function() { loadLivePrices(attempt + 1); }, attempt * 3000);
-    } else {
-      console.warn('[Maydeni] Prix API indisponible, fallback HTML');
-    }
-  }
-})();
-
-// ─── Billing period toggle ─────────────────────
-const discounts = { 1: 0, 3: 10, 6: 20, 12: 30 };
-const periodLabels = { 1: '/mois', 3: '/trim.', 6: '/sem.', 12: '/an' };
-// ─── Admin Login Handler (via API — no hardcoded credentials) ───
-async function handleAdminLogin(e) {
-  e.preventDefault();
-  var u = document.getElementById('adminUser').value.trim();
-  var p = document.getElementById('adminPass').value;
-  var errEl = document.getElementById('adminError');
-  var submitBtn = e.target.querySelector('button[type="submit"]');
-  if (submitBtn) submitBtn.disabled = true;
-  errEl.style.display = 'none';
-  try {
-    var resp = await fetch('https://mega-supervision-api.onrender.com/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: u, password: p })
-    });
-    var data = await resp.json();
-    if (resp.ok && data.token && data.user && (data.user.role === 'admin' || data.user.role === 'directeur')) {
-      localStorage.setItem('fp_token', data.token);
-      localStorage.setItem('fp_user', JSON.stringify(data.user));
-      window.location.href = 'dashboard/';
-    } else {
-      errEl.style.display = 'block';
-      document.getElementById('adminPass').value = '';
-    }
-  } catch (ex) {
-    errEl.textContent = t('admin_server_error');
-    errEl.style.display = 'block';
-  } finally {
-    if (submitBtn) submitBtn.disabled = false;
-  }
-  return false;
-}
-
-function switchBilling(months, btn) {
-  document.querySelectorAll('.billing-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const d = discounts[months];
-  const cur = CURRENCY_RATES[currentCurrency] || CURRENCY_RATES.TND;
-  document.querySelectorAll('.pricing-amount[data-monthly]').forEach(el => {
-    const mp = parseInt(el.dataset.monthly);
-    const card = el.closest('.pricing-card');
-    const totalEl = card.querySelector('.pricing-total');
-    const savingEl = card.querySelector('.pricing-saving');
-    const periodEl = card.querySelector('.pricing-period');
-    if (months === 1) {
-      el.textContent = Math.round(mp * cur.rate);
-      if (periodEl) periodEl.textContent = t('pricing_month');
-      totalEl.style.display = 'none';
-      savingEl.style.display = 'none';
-    } else {
-      const total = Math.round(mp * months * (1 - d / 100) * cur.rate);
-      const perMonth = Math.round(total / months);
-      el.textContent = perMonth;
-      if (periodEl) periodEl.textContent = t('pricing_month');
-      totalEl.textContent = `${t('pricing_total_text')} ${total.toLocaleString()} ${cur.symbol} ${t('pricing_ht_for')} ${months} ${t('pricing_months')}`;
-      totalEl.style.display = 'block';
-      const saved = Math.round(mp * months * cur.rate) - total;
-      savingEl.textContent = `${t('pricing_you_save')} ${saved.toLocaleString()} ${cur.symbol} (-${d}%)`;
-      savingEl.style.display = 'block';
-    }
-  });
-  // Update CTA links to include billing period
-  document.querySelectorAll('.pricing-card a[href*="register.html"]').forEach(a => {
-    const base = a.href.split('?')[0];
-    const plan = a.href.match(/plan=(\w+)/)?.[1] || '';
-    a.href = `${base}?plan=${plan}&billing=${months}`;
-  });
-}
-
-// ─── Currency conversion rates (same as backend CURRENCIES) ─────
-const CURRENCY_RATES = {
-  TND: { rate: 1, symbol: 'DT' }, EUR: { rate: 0.29, symbol: '€' }, USD: { rate: 0.32, symbol: '$' },
-  GBP: { rate: 0.25, symbol: '£' }, CHF: { rate: 0.28, symbol: 'CHF' }, CAD: { rate: 0.44, symbol: 'CAD' },
-  XOF: { rate: 190.5, symbol: 'FCFA' }, XAF: { rate: 190.5, symbol: 'FCFA' }, MAD: { rate: 3.20, symbol: 'MAD' },
-  DZD: { rate: 43.5, symbol: 'DA' }, SAR: { rate: 1.21, symbol: 'SAR' }, AED: { rate: 1.18, symbol: 'AED' },
-  QAR: { rate: 1.17, symbol: 'QAR' }, KWD: { rate: 0.099, symbol: 'KWD' }, BHD: { rate: 0.12, symbol: 'BHD' },
-  OMR: { rate: 0.12, symbol: 'OMR' }, JOD: { rate: 0.23, symbol: 'JOD' }, EGP: { rate: 15.8, symbol: 'EGP' },
-  IQD: { rate: 422, symbol: 'IQD' }, LYD: { rate: 1.55, symbol: 'LYD' }, SDG: { rate: 192, symbol: 'SDG' },
-  LBP: { rate: 28800, symbol: 'LBP' }, MRU: { rate: 12.8, symbol: 'MRU' }, CDF: { rate: 870, symbol: 'FC' },
-  GNF: { rate: 2780, symbol: 'GNF' }, KMF: { rate: 143, symbol: 'KMF' }, DJF: { rate: 57.4, symbol: 'DJF' },
-  HTG: { rate: 42.6, symbol: 'HTG' },
-};
-let currentCurrency = 'TND';
-
-function switchCurrency(code) {
-  currentCurrency = code;
-  const cur = CURRENCY_RATES[code] || CURRENCY_RATES.TND;
-  // Update currency labels
-  document.querySelectorAll('.pricing-currency').forEach(el => {
-    const periodEl = el.querySelector('.pricing-period');
-    el.textContent = cur.symbol;
-    if (periodEl) el.appendChild(periodEl);
-  });
-  // Recalculate displayed prices
-  document.querySelectorAll('.pricing-amount[data-monthly]').forEach(el => {
-    const baseDT = parseInt(el.dataset.monthly);
-    const converted = Math.round(baseDT * cur.rate);
-    // Get current billing period
-    const activeBtn = document.querySelector('.billing-btn.active');
-    const months = activeBtn ? parseInt(activeBtn.textContent) || 1 : 1;
-    const d = discounts[months] || 0;
-    const card = el.closest('.pricing-card');
-    const totalEl = card.querySelector('.pricing-total');
-    const savingEl = card.querySelector('.pricing-saving');
-    if (months === 1) {
-      el.textContent = converted;
-      if (totalEl) totalEl.style.display = 'none';
-      if (savingEl) savingEl.style.display = 'none';
-    } else {
-      const total = Math.round(baseDT * months * (1 - d / 100) * cur.rate);
-      const perMonth = Math.round(total / months);
-      el.textContent = perMonth;
-      if (totalEl) {
-        totalEl.textContent = `${t('pricing_total_text')} ${total.toLocaleString()} ${cur.symbol} ${t('pricing_ht_for')} ${months} ${t('pricing_months')}`;
-        totalEl.style.display = 'block';
-      }
-      const saved = Math.round(baseDT * months * cur.rate) - total;
-      if (savingEl) {
-        savingEl.textContent = `${t('pricing_you_save')} ${saved.toLocaleString()} ${cur.symbol} (-${d}%)`;
-        savingEl.style.display = 'block';
-      }
-    }
-  });
-}
-</script>
+<script>lucide.createIcons();</script>
 </body>
 </html>

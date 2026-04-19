@@ -1,13 +1,13 @@
 /**
- * Maydeni AI — Site Web JS
+ * MAYDENI-AI — Site Web JS
  */
 
-// ─── Intro → disparition après 13s ─────────────────────
+// ─── Intro → disparition après 3.2s ─────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
     const intro = document.getElementById('intro-overlay');
     if (intro) intro.style.display = 'none';
-  }, 13500);
+  }, 3800);
 
   setupNavbar();
   setupSmoothScroll();
@@ -17,38 +17,28 @@ document.addEventListener('DOMContentLoaded', () => {
 // ─── Navbar scroll effect ────────────────────────────────
 function setupNavbar() {
   const navbar = document.getElementById('navbar');
-  let ticking = false;
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        if (window.scrollY > 50) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
-        ticking = false;
-      });
-      ticking = true;
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
     }
-  }, { passive: true });
+  });
 
   // Mobile burger
   const burger = document.getElementById('burger-btn');
   if (burger) {
-    burger.setAttribute('aria-label', 'Menu');
-    burger.setAttribute('aria-expanded', 'false');
     burger.addEventListener('click', () => {
       const links = document.querySelector('.nav-links');
-      const isOpen = links.classList.toggle('mobile-open');
-      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-    // Close menu when clicking a nav link
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        const links = document.querySelector('.nav-links');
-        links.classList.remove('mobile-open');
-        burger.setAttribute('aria-expanded', 'false');
-      });
+      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+      links.style.flexDirection = 'column';
+      links.style.position = 'absolute';
+      links.style.top = '72px';
+      links.style.left = '0';
+      links.style.right = '0';
+      links.style.background = '#FFF';
+      links.style.padding = '20px';
+      links.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
     });
   }
 }
@@ -72,7 +62,6 @@ function setupAnimations() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
