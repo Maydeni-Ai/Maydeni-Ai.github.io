@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenue chez Elyesio — Votre Onboarding</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0B0E14;
+      --bg-card: rgba(25, 30, 40, 0.6);
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --accent: #10b981;
+      --text: #ffffff;
+      --text-muted: #9ca3af;
+      --border: rgba(255, 255, 255, 0.08);
+      --glass: rgba(15, 20, 25, 0.7);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+    body {
+      background: var(--bg-dark);
+      background-image: radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(16, 185, 129, 0.08), transparent 25%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+
+    /* HEADER */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--accent);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .header h1 {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* VIDEO SECTION */
+    .video-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+    .video-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    }
+    .video-player {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .video-thumbnail {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      transition: all 0.5s ease;
+    }
+    .video-player:hover .video-thumbnail {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: rgba(59, 130, 246, 0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+      border: 2px solid rgba(255,255,255,0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .play-btn::after {
+      content: '';
+      width: 0; 
+      height: 0; 
+      border-top: 14px solid transparent;
+      border-bottom: 14px solid transparent;
+      border-left: 22px solid #fff;
+      margin-left: 6px;
+    }
+    .video-player:hover .play-btn {
+      transform: translate(-50%, -50%) scale(1.1);
+      background: rgba(59, 130, 246, 1);
+      box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+    }
+
+    /* SCRIPT CONTENT */
+    .script-box {
+      margin-top: 32px;
+      padding: 24px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      border-left: 4px solid var(--primary);
+    }
+    .script-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .script-text {
+      font-size: 15px;
+      color: #cbd5e1;
+      font-style: italic;
+      white-space: pre-line;
+    }
+
+    /* PRÉPARATION FORMATION */
+    .checklist-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 768px) { .checklist-section { grid-template-columns: 1fr; } }
+
+    .checklist-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      transition: transform 0.3s;
+    }
+    .checklist-card:hover { transform: translateY(-5px); border-color: rgba(59,130,246,0.3); }
+
+    .checklist-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: slideIn 0.5s ease forwards;
+    }
+    .checklist-item:nth-child(2) { animation-delay: 0.1s; }
+    .checklist-item:nth-child(3) { animation-delay: 0.2s; }
+    
+    .check-icon {
+      width: 28px;
+      height: 28px;
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-weight: bold;
+    }
+    .checklist-item div h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; color: #fff; }
+    .checklist-item div p { font-size: 14px; color: var(--text-muted); }
+
+    /* CTA */
+    .cta-container {
+      text-align: center;
+      margin-top: 20px;
+      padding-bottom: 60px;
+    }
+    .btn-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+      color: #fff;
+      text-decoration: none;
+      padding: 18px 40px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+      transition: all 0.3s;
+    }
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(59, 130, 246, 0.5);
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <div class="header">
+      <div class="badge">🔥 Paiement Confirmé</div>
+      <h1>Bienvenue chez Elyesio</h1>
+      <p>Votre compte est désormais actif. Visionnez ce message important d'<strong style="color:#fff;">Elyesio</strong> avant de commencer.</p>
+    </div>
+
+    <!-- VIDEO SECTION -->
+    <div class="video-card">
+      <!-- ⚠️ REMPLACER CETTE IMAGE PAR LE CODE DE LA VRAIE VIDEO (HEYGEN / VIMEO / YOUTUBE) -->
+      <div class="video-player">
+        <!-- Mockup Image (Generated via AI) -->
+        <img src="./img/avatar_elyesio_femme.png" alt="Elyesio Presenter" class="video-thumbnail" id="avatar-image">
+        <div class="play-btn"></div>
+      </div>
+
+      <!-- SCRIPT TEXT (Provided for the user to copy/paste to HeyGen) -->
+      <div class="script-box">
+        <div class="script-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+          Script pour votre Avatar Vidéo (HeyGen / Synthesia)
+        </div>
+        <div class="script-text">
+          "Bonjour et félicitations pour votre choix. Je suis Sarah, votre experte dédiée au succès chez Elyesio. En validant votre compte aujourd'hui, vous venez de franchir une étape décisive pour décupler les performances de votre force de vente terrain. L'Intelligence Artificielle de Maydeni est maintenant déployée à votre service. 
+
+          Avant de plonger dans votre nouveau tableau de bord, j'ai une excellente nouvelle pour vous : votre souscription inclut une session de formation gratuite et entièrement personnalisée avec nos développeurs experts. 
+
+          Mais pour que cette formation soit un succès total, nous avons préparé une petite checklist d'étapes que vous trouverez juste en dessous de cette vidéo. Téléchargez l'application, invitez vos premiers commerciaux, et laissez l'IA commencer à calibrer vos données GPS.
+
+          Préparez-vous, car l'avenir de vos opérations de vente s'annonce passionnant. Cliquez sur le bouton ci-dessous pour accéder à votre interface et planifier votre rendez-vous de formation dès maintenant. À très vite !"
+        </div>
+      </div>
+    </div>
+
+    <!-- CHECKLIST SECTION -->
+    <div class="checklist-section">
+      <div class="checklist-card">
+        <h3 class="checklist-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--primary);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          Préparez votre Formation Gratuite
+        </h3>
+        
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <div>
+            <h4>1. Accédez à votre Dashboard</h4>
+            <p>Connectez-vous à votre espace personnel et familiarisez-vous avec la carte en temps réel.</p>
+          </div>
+        </div>
+        
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <div>
+            <h4>2. Créez un agent</h4>
+            <p>Allez dans la section "Équipes", ajoutez au moins un commercial et générez son compte.</p>
+          </div>
+        </div>
+
+        <div class="checklist-item">
+          <div class="check-icon">✓</div>
+          <div>
+            <h4>3. Réservez votre créneau</h4>
+            <p>Ouvrez l'onglet "Formation" et choisissez la date de votre session live avec le développeur.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="checklist-card" style="background: linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(16,185,129,0.1) 100%);">
+        <h3 class="checklist-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--accent);"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Que va-t-on aborder ?
+        </h3>
+        <p style="color:#d1d5db; margin-bottom:16px;">Lors de notre visio d'une heure 100% offerte, nous verrons ensemble :</p>
+        <ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+          <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:#fff;">
+            <span style="color:var(--accent);">⭐</span> Le paramétrage de l'Anti-Fraude IA
+          </li>
+          <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:#fff;">
+            <span style="color:var(--accent);">⭐</span> L'import de vos catalogues Excel
+          </li>
+          <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:#fff;">
+            <span style="color:var(--accent);">⭐</span> L'optimisation algorithmique des tournées
+          </li>
+          <li style="display:flex; align-items:center; gap:10px; font-size:14px; color:#fff;">
+            <span style="color:var(--accent);">⭐</span> La gestion des pénalités automatisées
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CTA ACTION -->
+    <div class="cta-container">
+      <a href="./dashboard/" class="btn-main">
+        Accéder au Dashboard Maydeni AI
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+      <p style="margin-top:16px; font-size:13px; color:var(--text-muted);">
+        Vous allez être redirigé vers l'interface de connexion sécurisée.
+      </p>
+    </div>
+
+  </div>
+
+</body>
+</html>
