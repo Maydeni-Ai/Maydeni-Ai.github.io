@@ -5,7 +5,7 @@
 const TRANSLATIONS = {
   fr: {
     nav_features:'Fonctionnalités',nav_ai:'IA',nav_pricing:'Tarifs',nav_training:'Formation',nav_download:'Télécharger',nav_security:'Sécurité',nav_contact:'Contact',nav_register:'Inscription',nav_download_btn:'Télécharger',
-    intro_dev_credit:'Développé par le <strong>Dr. Slim Lamouchi</strong> fondateur d\\'Elyesio',
+    intro_dev_credit: "Développé par le <strong>Dr. Slim Lamouchi</strong> fondateur d'Elyesio",
     hero_badge:"Propulsé par l'Intelligence Artificielle",hero_title_1:'Pilotez votre',hero_title_2:'force de vente',hero_title_3:"avec l'IA",
     hero_desc:"Maydeni AI est la plateforme propulsée par l'<strong>Intelligence Artificielle</strong> pour piloter votre force de vente terrain. Applications <strong>100% natives</strong> (Windows, macOS, Android, iOS) — chaque entreprise dispose de son <strong>propre serveur dédié</strong>. GPS intelligent, anti-fraude IA, gamification, import Excel, mises à jour automatiques et rapports en temps réel.",
     hero_download_app:"Télécharger l'application",hero_download_dash:'Télécharger le Dashboard',

@@ -280,7 +280,7 @@ const LANG = {
     'charts.orders': 'commandes',
 
     // ─── Intro ───────────────────────────────────
-    'intro.author': 'Développé par le Dr. Slim Lamouchi fondateur d\\'Elyesio',
+    'intro.author': "Développé par le Dr. Slim Lamouchi fondateur d'Elyesio",
     'intro.tagline': 'SMART FIELD OPERATIONS',
     'footer.credit': 'Développé par Maydeni AI',
   },
