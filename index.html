@@ -11,6 +11,79 @@
 </head>
 <body>
 
+<!-- ════════════ VIDÉO D'OUVERTURE PLEIN ÉCRAN (1 seule fois par session) ════════════ -->
+<div id="video-intro-overlay" aria-hidden="false">
+    <video
+        id="video-intro"
+        src="video/intro.mp4"
+        autoplay
+        muted
+        playsinline
+        preload="auto"
+        disablepictureinpicture
+        controlslist="nodownload noplaybackrate noremoteplayback"
+    ></video>
+    <button id="video-intro-skip" type="button" aria-label="Passer l'intro">Passer</button>
+</div>
+
+<!-- ════════════ VIDÉO DE PRÉSENTATION (après intro, cadre futuriste) ════════════ -->
+<div id="presentation-overlay" class="pres-pending" aria-hidden="true">
+    <div class="pres-bg"></div>
+    <div class="pres-grid"></div>
+    <div class="pres-orbs">
+        <span class="pres-orb pres-orb-1"></span>
+        <span class="pres-orb pres-orb-2"></span>
+        <span class="pres-orb pres-orb-3"></span>
+    </div>
+    <div class="pres-stage">
+        <div class="pres-frame">
+            <div class="pres-frame-ring"></div>
+            <div class="pres-frame-ring pres-frame-ring-2"></div>
+            <span class="pres-corner pres-corner-tl"></span>
+            <span class="pres-corner pres-corner-tr"></span>
+            <span class="pres-corner pres-corner-bl"></span>
+            <span class="pres-corner pres-corner-br"></span>
+            <video
+                id="presentation-video"
+                playsinline
+                preload="metadata"
+                muted
+                crossorigin="anonymous"
+                disablepictureinpicture
+                controlslist="nodownload noplaybackrate noremoteplayback"
+            >
+                <source src="video/presentation.mp4" type="video/mp4">
+                <track
+                    id="presentation-subs-en"
+                    kind="subtitles"
+                    src="video/presentation.en.vtt"
+                    srclang="en"
+                    label="English"
+                    default>
+            </video>
+            <div class="pres-subtitle" id="pres-subtitle" aria-live="polite"></div>
+            <div class="pres-controls">
+                <button id="presentation-sound" type="button" aria-label="Activer le son">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+                    <span>Activer le son</span>
+                </button>
+                <button id="presentation-cc" type="button" class="is-on" aria-label="Afficher ou masquer les sous-titres anglais" aria-pressed="true">
+                    <span class="pres-cc-badge">CC</span>
+                    <span>EN</span>
+                </button>
+            </div>
+        </div>
+        <div class="pres-caption">
+            <span class="pres-caption-kicker">MAYDENI · AI</span>
+            <h2 class="pres-caption-title">La supervision terrain, réinventée.</h2>
+        </div>
+    </div>
+    <button id="presentation-skip" type="button" aria-label="Passer la présentation">
+        <span>Suivant</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+</div>
+
 <!-- ════════════ INTRO CINÉMATOGRAPHIQUE ════════════ -->
 <div id="intro-overlay">
     <div class="intro-content">
