@@ -16,7 +16,7 @@ function setupOpeningVideo() {
 
   if (alreadyShown) {
     overlay.remove();
-    setupPresentationVideo();
+    runAiIntroThenPresentation();
     return;
   }
 
@@ -26,7 +26,7 @@ function setupOpeningVideo() {
     try { sessionStorage.setItem('intro_played', '1'); } catch (e) { /* ignore */ }
     setTimeout(() => {
       overlay.remove();
-      setupPresentationVideo();
+      runAiIntroThenPresentation();
     }, 800);
   };
 
@@ -133,14 +133,26 @@ function setupPresentationVideo() {
   }
 }
 
-// ─── Intro → disparition après 13s ─────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  setupOpeningVideo();
+// ─── Orchestration : vidéo intro → AI Neural Genesis → présentation ──
+// On met l'AI Neural Genesis EN PAUSE tant que la vidéo d'ouverture joue,
+// pour qu'elle puisse être visible ENSUITE en entier.
+function runAiIntroThenPresentation() {
+  const intro = document.getElementById('intro-overlay');
+  if (intro) intro.classList.remove('is-paused');
 
+  // 16 s = durée de l'AI Neural Genesis (15 s delay + 1.2 s fade + marge)
   setTimeout(() => {
-    const intro = document.getElementById('intro-overlay');
     if (intro) intro.style.display = 'none';
-  }, 13500);
+    setupPresentationVideo();
+  }, 16500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Au démarrage, on fige l'AI Neural Genesis derrière la vidéo d'ouverture
+  const intro = document.getElementById('intro-overlay');
+  if (intro) intro.classList.add('is-paused');
+
+  setupOpeningVideo();
 
   setupNavbar();
   setupSmoothScroll();
