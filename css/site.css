@@ -681,6 +681,97 @@ body {
 
 .btn-lg { padding: 16px 32px; font-size: 16px; }
 
+/* ════════════════════════════════════════════════════════
+   PROGRAMME FONDATEUR — bannière premium teal + doré
+   Créée la rareté commerciale sur la landing
+═══════════════════════════════════════════════════════════ */
+.founder-banner {
+  position: relative;
+  background: linear-gradient(135deg, #0D6B6E 0%, #134E4A 55%, #0F172A 100%);
+  border: 1px solid rgba(232, 169, 60, 0.35);
+  border-radius: 18px;
+  padding: 22px 28px;
+  margin: 10px 0 22px;
+  overflow: hidden;
+  box-shadow: 0 12px 38px rgba(13, 107, 110, 0.35), 0 0 0 1px rgba(232,169,60,0.08) inset;
+}
+.founder-banner-glow {
+  position: absolute; inset: -50%;
+  background: radial-gradient(circle at 30% 50%, rgba(232,169,60,0.22), transparent 45%);
+  animation: founderGlow 8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes founderGlow {
+  0%,100% { transform: translate(0,0); opacity: 0.8; }
+  50%     { transform: translate(6%, -3%); opacity: 1; }
+}
+.founder-banner-inner {
+  position: relative;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+}
+.founder-banner-left { flex: 1; min-width: 280px; }
+.founder-banner-pill {
+  display: inline-flex; align-items: center;
+  background: linear-gradient(135deg, #E8A93C, #F4C26B);
+  color: #2B1B00;
+  padding: 5px 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 14px rgba(232,169,60,0.4);
+}
+.founder-banner-title {
+  color: #FFFFFF; font-size: 19px; font-weight: 800; line-height: 1.35;
+  margin-bottom: 10px;
+}
+.founder-banner-perks {
+  display: flex; flex-wrap: wrap; gap: 14px 22px;
+  color: #D1FAE5; font-size: 13px; font-weight: 500;
+}
+.founder-banner-perks i { color: #34D399; }
+.founder-banner-right {
+  display: flex; align-items: center; gap: 20px;
+  flex-wrap: wrap;
+}
+.founder-banner-counter {
+  text-align: center;
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(232,169,60,0.25);
+  border-radius: 12px;
+  padding: 10px 18px;
+  min-width: 120px;
+}
+.founder-counter-num {
+  font-size: 34px; font-weight: 900; color: #E8A93C;
+  line-height: 1; margin-bottom: 2px;
+  text-shadow: 0 2px 12px rgba(232,169,60,0.4);
+}
+.founder-counter-label {
+  font-size: 10.5px; color: #CBD5E1;
+  text-transform: uppercase; letter-spacing: 0.8px;
+}
+.founder-banner-cta {
+  display: inline-flex; align-items: center;
+  background: linear-gradient(135deg, #E8A93C 0%, #F4C26B 100%);
+  color: #2B1B00;
+  padding: 14px 24px; border-radius: 12px;
+  font-size: 14px; font-weight: 800;
+  box-shadow: 0 8px 22px rgba(232,169,60,0.4);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  text-decoration: none;
+}
+.founder-banner-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(232,169,60,0.55);
+  color: #2B1B00;
+}
+@media (max-width: 720px) {
+  .founder-banner { padding: 18px 20px; }
+  .founder-banner-title { font-size: 17px; }
+  .founder-banner-inner { flex-direction: column; align-items: flex-start; }
+  .founder-banner-right { width: 100%; justify-content: space-between; }
+}
+
 .hero-stats {
   display: flex; align-items: center; gap: 24px;
 }

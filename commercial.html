@@ -201,6 +201,23 @@
   .plan-price { font-size: 16px; font-weight: 800; }
   .plan-price small { font-size: 9px; font-weight: 500; opacity: 0.7; display: block; margin-top: 2px; }
 
+  /* Programme Fondateur (rareté commerciale pour le PDF) */
+  .founder-box {
+    margin-top: 10px;
+    background: linear-gradient(135deg, rgba(232,169,60,0.18), rgba(232,169,60,0.08));
+    border: 1px solid rgba(232,169,60,0.55);
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+  .founder-box-title {
+    font-size: 11px; font-weight: 800; color: var(--gold);
+    letter-spacing: 0.6px; margin-bottom: 4px;
+  }
+  .founder-box-perks {
+    display: flex; flex-wrap: wrap; gap: 4px 14px;
+    font-size: 10px; color: rgba(255,255,255,0.92); font-weight: 500;
+  }
+
   /* Value props (3 cards) */
   .value-props {
     display: grid;
@@ -334,18 +351,28 @@
       <div class="plan">
         <div class="plan-name">Starter</div>
         <div class="plan-agents">1 à 3 agents</div>
-        <div class="plan-price">99 DT<small>/mois HT · licence 1 500 DT</small></div>
+        <div class="plan-price">99 DT<small>/mois HT · licence 1 500 DT HT</small></div>
       </div>
       <div class="plan popular">
         <div class="plan-tag">POPULAIRE</div>
         <div class="plan-name">Pro</div>
         <div class="plan-agents">1 à 5 agents</div>
-        <div class="plan-price">249 DT<small>/mois HT · licence 3 500 DT</small></div>
+        <div class="plan-price">249 DT<small>/mois HT · licence 2 990 DT HT</small></div>
       </div>
       <div class="plan">
         <div class="plan-name">Enterprise</div>
-        <div class="plan-agents">6 agents et + (11 et plus illimité)</div>
-        <div class="plan-price">499 DT<small>/mois HT · licence 6 000 DT ou sur devis</small></div>
+        <div class="plan-agents">6 agents et + (illimité)</div>
+        <div class="plan-price">499 DT<small>/mois HT · licence 5 990 DT HT ou sur devis</small></div>
+      </div>
+    </div>
+    <div class="founder-box">
+      <div class="founder-box-title">🏆 PROGRAMME FONDATEUR — 10 premières entreprises</div>
+      <div class="founder-box-perks">
+        <span>✓ Licence offerte</span>
+        <span>✓ 1<sup>er</sup> mois gratuit</span>
+        <span>✓ Setup &amp; formation inclus</span>
+        <span>✓ Tarif bloqué à vie</span>
+        <span>✓ Satisfait ou remboursé 60 jours</span>
       </div>
     </div>
   </section>
