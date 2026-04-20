@@ -1,10 +1,10 @@
 /**
- * MAYDENI-AI — Site Web JS
+ * Maydeni AI — Site Web JS
  */
 
-// ─── Vidéo d'ouverture (1 fois par session) ──────────────
-// Joue la vidéo plein écran avant l'intro. Se ferme à la fin,
-// sur clic "Passer", ou après 20 s max de sécurité.
+// ─── Vidéo d'ouverture plein écran (1 fois par session) ──
+// Joue la vidéo plein écran AVANT l'intro AI Neural Genesis.
+// Se ferme à la fin, sur clic "Passer", ou après 20 s max.
 function setupOpeningVideo() {
   const overlay = document.getElementById('video-intro-overlay');
   const video   = document.getElementById('video-intro');
@@ -33,20 +33,15 @@ function setupOpeningVideo() {
   video.addEventListener('ended', hide, { once: true });
   video.addEventListener('error', hide, { once: true });
   skipBtn?.addEventListener('click', hide);
-  // Filet de sécurité : si la vidéo ne démarre pas (politique navigateur),
-  // on cache l'overlay après 20 s pour ne jamais bloquer l'utilisateur.
   setTimeout(hide, 20000);
 
-  // Certains navigateurs bloquent l'autoplay avec son. Comme la vidéo est
-  // muette (muted + playsinline), autoplay passe partout. On tente play()
-  // explicitement quand même pour les cas récalcitrants.
   const tryPlay = video.play();
   if (tryPlay && typeof tryPlay.catch === 'function') {
     tryPlay.catch(() => { hide(); });
   }
 }
 
-// ─── Vidéo de présentation (après intro, cadre futuriste) ──
+// ─── Vidéo de présentation (cadre futuriste) ──────────────
 // Auto-skip si déjà vue dans la session.
 function setupPresentationVideo() {
   const overlay = document.getElementById('presentation-overlay');
@@ -77,14 +72,12 @@ function setupPresentationVideo() {
   video.addEventListener('ended', hide, { once: true });
   video.addEventListener('error', hide, { once: true });
   skipBtn?.addEventListener('click', hide);
-  // Touche Échap = Suivant
   const onKey = (e) => { if (e.key === 'Escape') hide(); };
   document.addEventListener('keydown', onKey);
   overlay.addEventListener('transitionend', () => {
     if (overlay.classList.contains('is-leaving')) document.removeEventListener('keydown', onKey);
   });
 
-  // Activer le son (action utilisateur requise par les navigateurs)
   soundBtn?.addEventListener('click', () => {
     video.muted = !video.muted;
     soundBtn.classList.toggle('is-on', !video.muted);
@@ -94,8 +87,7 @@ function setupPresentationVideo() {
     }
   });
 
-  // ── Sous-titres anglais : on masque ::cue natif et on rend nous-même
-  //    dans .pres-subtitle pour un contrôle visuel total.
+  // Sous-titres anglais : on masque ::cue et on rend dans .pres-subtitle
   const ccBtn = document.getElementById('presentation-cc');
   const subEl = document.getElementById('pres-subtitle');
   let subsEnabled = true;
@@ -103,13 +95,12 @@ function setupPresentationVideo() {
   const setTrackMode = () => {
     const t = video.textTracks && video.textTracks[0];
     if (!t) return;
-    t.mode = 'hidden'; // toujours "hidden" : on gère l'affichage en JS
+    t.mode = 'hidden';
     if (!t._boundCueChange) {
       t.addEventListener('cuechange', () => {
         if (!subEl) return;
         const active = t.activeCues && t.activeCues.length ? t.activeCues[0] : null;
         if (subsEnabled && active && active.text) {
-          // Nettoie le balisage WebVTT simple (retire tags et normalise les retours ligne)
           subEl.textContent = active.text.replace(/<[^>]+>/g, '').trim();
           subEl.classList.add('is-visible');
         } else {
@@ -134,24 +125,22 @@ function setupPresentationVideo() {
     }
   });
 
-  // Filet de sécurité : 90 s max (la vidéo dure 76 s)
   setTimeout(hide, 90000);
 
-  // Lecture en muet (autoplay universel)
   const tryPlay = video.play();
   if (tryPlay && typeof tryPlay.catch === 'function') {
     tryPlay.catch(() => { /* l'utilisateur pourra cliquer sur Suivant */ });
   }
 }
 
-// ─── Intro → disparition après 3.2s ─────────────────────
+// ─── Intro → disparition après 13s ─────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   setupOpeningVideo();
 
   setTimeout(() => {
     const intro = document.getElementById('intro-overlay');
     if (intro) intro.style.display = 'none';
-  }, 3800);
+  }, 13500);
 
   setupNavbar();
   setupSmoothScroll();
@@ -161,28 +150,38 @@ document.addEventListener('DOMContentLoaded', () => {
 // ─── Navbar scroll effect ────────────────────────────────
 function setupNavbar() {
   const navbar = document.getElementById('navbar');
+  let ticking = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
     }
-  });
+  }, { passive: true });
 
   // Mobile burger
   const burger = document.getElementById('burger-btn');
   if (burger) {
+    burger.setAttribute('aria-label', 'Menu');
+    burger.setAttribute('aria-expanded', 'false');
     burger.addEventListener('click', () => {
       const links = document.querySelector('.nav-links');
-      links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-      links.style.flexDirection = 'column';
-      links.style.position = 'absolute';
-      links.style.top = '72px';
-      links.style.left = '0';
-      links.style.right = '0';
-      links.style.background = '#FFF';
-      links.style.padding = '20px';
-      links.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+      const isOpen = links.classList.toggle('mobile-open');
+      burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    // Close menu when clicking a nav link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        const links = document.querySelector('.nav-links');
+        links.classList.remove('mobile-open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
     });
   }
 }
@@ -206,6 +205,7 @@ function setupAnimations() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1 });
