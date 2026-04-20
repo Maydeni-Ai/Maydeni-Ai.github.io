@@ -2,93 +2,118 @@
  * Maydeni AI — Site Web JS
  */
 
-// ─── Séquence complète : vidéo d'ouverture → intro AI Neural Genesis →
-//     vidéo de présentation (avatar) → site.
+// ═══════════════════════════════════════════════════════════
+// SÉQUENCE D'ENTRÉE MAYDENI
+//   1. Vidéo d'ouverture plein écran (intro.mp4, 4,6 s)
+//   2. Vidéo de présentation avatar (presentation.mp4, 76 s)
+//   3. Intro AI Neural Genesis (MAYDENI + Dr. Slim Lamouchi)
+//   4. Site
 //
-// Technique bulletproof : l'intro AI Neural Genesis est initialement masquée
-// (display:none inline en HTML) donc AUCUNE de ses @keyframes ne tourne
-// pendant que la vidéo d'ouverture joue. Quand la vidéo se termine, on
-// *clone* le nœud DOM de l'intro : c'est garanti par la spec de redémarrer
-// toutes ses animations CSS et celles de ses enfants depuis 0 (bien plus
-// fiable que `display:none → flex` + reflow, qui dépend du navigateur).
+// L'AI Neural Genesis (étape 3) est masquée en HTML via style="display:none"
+// pour que SES @keyframes ne tournent pas pendant les étapes 1 et 2. Elle est
+// ensuite clonée-remplacée pour forcer un redémarrage propre des animations
+// CSS (technique garantie par la spec DOM).
+// ═══════════════════════════════════════════════════════════
 
-// Durée totale de l'AI Neural Genesis (en ms) — le crédit Dr. Slim Lamouchi
-// s'affiche à 9,5 s, le fondu de sortie démarre à 13 s. On laisse 14,5 s
-// pour que tout soit confortablement visible avant la vidéo avatar.
-const AI_INTRO_DURATION_MS = 14500;
+// Durée totale de l'AI Neural Genesis (en ms). Le crédit Dr. Slim Lamouchi
+// s'affiche à ~9,5 s, le fondu de sortie `introExit` démarre à 12 s et dure
+// 1,2 s. On laisse 13,8 s pour que tout soit confortablement visible avant
+// d'entrer sur le site.
+const AI_INTRO_DURATION_MS = 13800;
 
-// ─── Vidéo d'ouverture plein écran ──────────────────────
-// Se ferme à la fin de la vidéo, sur clic "Passer", ou après 25 s max.
+// ─── 1. Vidéo d'ouverture plein écran ────────────────────
+// Attend que le navigateur ait assez buffé (`canplay`) avant de lancer la
+// lecture, pour éliminer tout stutter / freeze au démarrage.
 function setupOpeningVideo() {
   const overlay = document.getElementById('video-intro-overlay');
   const video   = document.getElementById('video-intro');
   const skipBtn = document.getElementById('video-intro-skip');
   if (!overlay || !video) {
-    playAiIntroThenPresentation();
+    setupPresentationVideo();
     return;
   }
 
+  let played = false;
   const hide = () => {
     if (overlay.classList.contains('is-hidden')) return;
     overlay.classList.add('is-hidden');
     setTimeout(() => {
       overlay.remove();
-      playAiIntroThenPresentation();
-    }, 800);
+      setupPresentationVideo();
+    }, 700);
   };
+
+  // Démarre la lecture seulement quand il y a assez de buffer pour lire
+  // fluidement. Évite tout freeze visible au début.
+  const start = () => {
+    if (played) return;
+    played = true;
+    const p = video.play();
+    if (p && typeof p.catch === 'function') {
+      p.catch(() => { hide(); });
+    }
+  };
+
+  if (video.readyState >= 3) {
+    start();
+  } else {
+    video.addEventListener('canplay', start, { once: true });
+    // Garde-fou : si le réseau est très lent, on démarre quand même au bout
+    // d'1 s pour ne pas bloquer l'utilisateur.
+    setTimeout(start, 1000);
+  }
 
   video.addEventListener('ended', hide, { once: true });
   video.addEventListener('error', hide, { once: true });
   skipBtn?.addEventListener('click', hide);
-  setTimeout(hide, 25000);
 
-  const tryPlay = video.play();
-  if (tryPlay && typeof tryPlay.catch === 'function') {
-    tryPlay.catch(() => { hide(); });
-  }
+  // Safety net : intro.mp4 fait 4,6 s. 12 s max couvre largement même avec
+  // un réseau lent. Au-delà, on passe à la suite sans bloquer l'utilisateur.
+  setTimeout(hide, 12000);
 }
 
-// ─── Révèle l'intro AI Neural Genesis (clone-replace pour redémarrer
-//     toutes les @keyframes à 0) puis enchaîne sur la vidéo de présentation.
-function playAiIntroThenPresentation() {
+// ─── 3. Intro AI Neural Genesis (étape finale avant le site) ──
+// Clone-replace pour redémarrage garanti de toutes les @keyframes CSS,
+// puis efface l'overlay pour révéler le site.
+function playAiNeuralGenesis() {
   const intro = document.getElementById('intro-overlay');
+  if (!intro) return; // site directement visible
 
-  if (intro) {
-    // Clone = reset garanti de toutes les animations CSS (intro + enfants).
-    const fresh = intro.cloneNode(true);
-    fresh.style.display = '';   // retire le display:none inline
-    intro.parentNode.replaceChild(fresh, intro);
+  const fresh = intro.cloneNode(true);
+  fresh.style.display = '';
+  intro.parentNode.replaceChild(fresh, intro);
 
-    // Redémarre le moteur canvas (AI Neural Genesis) sur le canvas cloné,
-    // sinon il resterait noir (l'ancien moteur pointait sur le vieux canvas).
-    if (typeof window.initMaydeniIntroCanvas === 'function') {
-      try { window.initMaydeniIntroCanvas(); } catch (e) { /* ignore */ }
-    }
-
-    // Cache l'intro et lance la présentation quand l'AI intro a fini.
-    setTimeout(() => {
-      const current = document.getElementById('intro-overlay');
-      if (current) current.style.display = 'none';
-      setupPresentationVideo();
-    }, AI_INTRO_DURATION_MS);
-  } else {
-    setupPresentationVideo();
+  // Redémarre le moteur canvas sur le nouveau <canvas>.
+  if (typeof window.initMaydeniIntroCanvas === 'function') {
+    try { window.initMaydeniIntroCanvas(); } catch (e) { /* ignore */ }
   }
+
+  setTimeout(() => {
+    const current = document.getElementById('intro-overlay');
+    if (current) current.style.display = 'none';
+  }, AI_INTRO_DURATION_MS);
 }
 
-// ─── Vidéo de présentation (cadre futuriste) ──────────────
+// ─── 2. Vidéo de présentation (avatar) dans cadre futuriste ──
+// Enchaîne sur l'intro AI Neural Genesis à la fin / skip / erreur.
 function setupPresentationVideo() {
   const overlay = document.getElementById('presentation-overlay');
   const video   = document.getElementById('presentation-video');
   const skipBtn = document.getElementById('presentation-skip');
   const soundBtn = document.getElementById('presentation-sound');
-  if (!overlay || !video) return;
+  if (!overlay || !video) {
+    playAiNeuralGenesis();
+    return;
+  }
 
   const hide = () => {
     if (overlay.classList.contains('is-leaving')) return;
     overlay.classList.add('is-leaving');
     try { video.pause(); } catch (e) { /* ignore */ }
-    setTimeout(() => overlay.remove(), 750);
+    setTimeout(() => {
+      overlay.remove();
+      playAiNeuralGenesis();
+    }, 700);
   };
 
   overlay.classList.add('is-visible');
@@ -158,10 +183,9 @@ function setupPresentationVideo() {
   }
 }
 
-// ─── Bootstrap : la séquence vidéo → intro AI → présentation est pilotée
-//     uniquement par setupOpeningVideo + playAiIntroThenPresentation. Le
-//     masquage final de l'intro est géré par playAiIntroThenPresentation
-//     (surtout PAS un setTimeout concurrent ici, sinon ça coupe l'AI intro).
+// ─── Bootstrap : séquence orchestrée
+//   setupOpeningVideo → setupPresentationVideo → playAiNeuralGenesis → site
+//   (aucun setTimeout concurrent ici : chaque étape enchaîne la suivante).
 document.addEventListener('DOMContentLoaded', () => {
   setupOpeningVideo();
   setupNavbar();
