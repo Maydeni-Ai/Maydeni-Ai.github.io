@@ -2,6 +2,20 @@
  * Maydeni AI — Site Web JS
  */
 
+// ─── Clés de session (versionnées pour invalider les anciens flags) ───
+const SS_INTRO_KEY = 'maydeni_intro_played_v3';
+const SS_PRES_KEY  = 'maydeni_presentation_played_v3';
+
+// URL ?replay=1  → force la relecture complète (utile pour les tests / demos)
+(function cleanSessionOnReplay() {
+  try {
+    if (new URL(window.location.href).searchParams.get('replay') === '1') {
+      sessionStorage.removeItem(SS_INTRO_KEY);
+      sessionStorage.removeItem(SS_PRES_KEY);
+    }
+  } catch (e) { /* ignore */ }
+})();
+
 // ─── Vidéo d'ouverture plein écran (1 fois par session) ──
 // Joue la vidéo plein écran AVANT l'intro AI Neural Genesis.
 // Se ferme à la fin, sur clic "Passer", ou après 20 s max.
@@ -12,7 +26,7 @@ function setupOpeningVideo() {
   if (!overlay || !video) return;
 
   let alreadyShown = false;
-  try { alreadyShown = sessionStorage.getItem('intro_played') === '1'; } catch (e) { /* ignore */ }
+  try { alreadyShown = sessionStorage.getItem(SS_INTRO_KEY) === '1'; } catch (e) { /* ignore */ }
 
   if (alreadyShown) {
     overlay.remove();
@@ -23,7 +37,7 @@ function setupOpeningVideo() {
   const hide = () => {
     if (overlay.classList.contains('is-hidden')) return;
     overlay.classList.add('is-hidden');
-    try { sessionStorage.setItem('intro_played', '1'); } catch (e) { /* ignore */ }
+    try { sessionStorage.setItem(SS_INTRO_KEY, '1'); } catch (e) { /* ignore */ }
     setTimeout(() => {
       overlay.remove();
       runAiIntroThenPresentation();
@@ -51,7 +65,7 @@ function setupPresentationVideo() {
   if (!overlay || !video) return;
 
   let alreadyShown = false;
-  try { alreadyShown = sessionStorage.getItem('presentation_played') === '1'; } catch (e) { /* ignore */ }
+  try { alreadyShown = sessionStorage.getItem(SS_PRES_KEY) === '1'; } catch (e) { /* ignore */ }
 
   if (alreadyShown) {
     overlay.remove();
@@ -61,7 +75,7 @@ function setupPresentationVideo() {
   const hide = () => {
     if (overlay.classList.contains('is-leaving')) return;
     overlay.classList.add('is-leaving');
-    try { sessionStorage.setItem('presentation_played', '1'); } catch (e) { /* ignore */ }
+    try { sessionStorage.setItem(SS_PRES_KEY, '1'); } catch (e) { /* ignore */ }
     try { video.pause(); } catch (e) { /* ignore */ }
     setTimeout(() => overlay.remove(), 750);
   };
@@ -134,23 +148,33 @@ function setupPresentationVideo() {
 }
 
 // ─── Orchestration : vidéo intro → AI Neural Genesis → présentation ──
-// On met l'AI Neural Genesis EN PAUSE tant que la vidéo d'ouverture joue,
-// pour qu'elle puisse être visible ENSUITE en entier.
+// L'AI Neural Genesis est gardé en display:none tant que la vidéo d'ouverture
+// joue, puis réactivé (display:flex). Ça force ses @keyframes à redémarrer
+// proprement de 0 (brain, pulses, MAYDENI reveal, loader, crédit Dr. Slim
+// Lamouchi, puis introExit qui fait le fondu de sortie à 15 s + 1.2 s).
 function runAiIntroThenPresentation() {
   const intro = document.getElementById('intro-overlay');
-  if (intro) intro.classList.remove('is-paused');
 
-  // 16 s = durée de l'AI Neural Genesis (15 s delay + 1.2 s fade + marge)
+  if (intro) {
+    intro.classList.remove('is-hold');      // réveille l'intro
+    // force un reflow pour que le passage display:none → flex redémarre les anims
+    // eslint-disable-next-line no-unused-expressions
+    intro.offsetHeight;
+  }
+
+  // Durée totale AI Neural Genesis : 15 s + 1.2 s fade out + petite marge
   setTimeout(() => {
     if (intro) intro.style.display = 'none';
     setupPresentationVideo();
-  }, 16500);
+  }, 16800);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Au démarrage, on fige l'AI Neural Genesis derrière la vidéo d'ouverture
+  // Tant que la vidéo d'ouverture joue, on cache complètement l'AI Neural
+  // Genesis (display:none) — ses animations ne tourneront pas dans le vide
+  // derrière et repartiront fraîches quand on la dévoilera.
   const intro = document.getElementById('intro-overlay');
-  if (intro) intro.classList.add('is-paused');
+  if (intro) intro.classList.add('is-hold');
 
   setupOpeningVideo();
 

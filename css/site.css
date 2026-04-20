@@ -324,11 +324,11 @@ body {
   animation: introExit 1.2s cubic-bezier(0.77,0,0.175,1) 15s forwards;
 }
 
-/* Pause TOUT l'intro (et ses enfants) tant que la vidéo d'ouverture joue,
-   pour qu'on puisse voir l'AI Neural Genesis APRÈS la vidéo. */
-#intro-overlay.is-paused,
-#intro-overlay.is-paused * {
-  animation-play-state: paused !important;
+/* Cache totalement l'intro tant qu'on n'est pas prêt à la jouer :
+   display:none retire l'élément du rendu, donc toutes ses @keyframes
+   redémarrent proprement de 0 quand on remet display:flex. */
+#intro-overlay.is-hold {
+  display: none !important;
 }
 
 #intro-neural { position: absolute; inset: 0; z-index: 1; }
