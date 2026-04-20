@@ -2,20 +2,29 @@
  * Maydeni AI — Site Web JS
  */
 
-// Mode "validation" : les 2 vidéos jouent à CHAQUE chargement (pas de
-// sessionStorage). Pour revenir à "1 fois par session" plus tard, réactiver
-// le garde-fou sessionStorage ci-dessous (clé versionnée à bumper à chaque
-// changement de contenu vidéo : _vN).
+// ─── Séquence complète : vidéo d'ouverture → intro AI Neural Genesis →
+//     vidéo de présentation (avatar) → site.
+//
+// Technique bulletproof : l'intro AI Neural Genesis est initialement masquée
+// (display:none inline en HTML) donc AUCUNE de ses @keyframes ne tourne
+// pendant que la vidéo d'ouverture joue. Quand la vidéo se termine, on
+// *clone* le nœud DOM de l'intro : c'est garanti par la spec de redémarrer
+// toutes ses animations CSS et celles de ses enfants depuis 0 (bien plus
+// fiable que `display:none → flex` + reflow, qui dépend du navigateur).
+
+// Durée totale de l'AI Neural Genesis (en ms) — le crédit Dr. Slim Lamouchi
+// s'affiche à 9,5 s, le fondu de sortie démarre à 13 s. On laisse 14,5 s
+// pour que tout soit confortablement visible avant la vidéo avatar.
+const AI_INTRO_DURATION_MS = 14500;
 
 // ─── Vidéo d'ouverture plein écran ──────────────────────
-// Joue la vidéo plein écran AVANT l'intro AI Neural Genesis.
-// Se ferme à la fin, sur clic "Passer", ou après 20 s max.
+// Se ferme à la fin de la vidéo, sur clic "Passer", ou après 25 s max.
 function setupOpeningVideo() {
   const overlay = document.getElementById('video-intro-overlay');
   const video   = document.getElementById('video-intro');
   const skipBtn = document.getElementById('video-intro-skip');
   if (!overlay || !video) {
-    runAiIntroThenPresentation();
+    playAiIntroThenPresentation();
     return;
   }
 
@@ -24,18 +33,46 @@ function setupOpeningVideo() {
     overlay.classList.add('is-hidden');
     setTimeout(() => {
       overlay.remove();
-      runAiIntroThenPresentation();
+      playAiIntroThenPresentation();
     }, 800);
   };
 
   video.addEventListener('ended', hide, { once: true });
   video.addEventListener('error', hide, { once: true });
   skipBtn?.addEventListener('click', hide);
-  setTimeout(hide, 20000);
+  setTimeout(hide, 25000);
 
   const tryPlay = video.play();
   if (tryPlay && typeof tryPlay.catch === 'function') {
     tryPlay.catch(() => { hide(); });
+  }
+}
+
+// ─── Révèle l'intro AI Neural Genesis (clone-replace pour redémarrer
+//     toutes les @keyframes à 0) puis enchaîne sur la vidéo de présentation.
+function playAiIntroThenPresentation() {
+  const intro = document.getElementById('intro-overlay');
+
+  if (intro) {
+    // Clone = reset garanti de toutes les animations CSS (intro + enfants).
+    const fresh = intro.cloneNode(true);
+    fresh.style.display = '';   // retire le display:none inline
+    intro.parentNode.replaceChild(fresh, intro);
+
+    // Redémarre le moteur canvas (AI Neural Genesis) sur le canvas cloné,
+    // sinon il resterait noir (l'ancien moteur pointait sur le vieux canvas).
+    if (typeof window.initMaydeniIntroCanvas === 'function') {
+      try { window.initMaydeniIntroCanvas(); } catch (e) { /* ignore */ }
+    }
+
+    // Cache l'intro et lance la présentation quand l'AI intro a fini.
+    setTimeout(() => {
+      const current = document.getElementById('intro-overlay');
+      if (current) current.style.display = 'none';
+      setupPresentationVideo();
+    }, AI_INTRO_DURATION_MS);
+  } else {
+    setupPresentationVideo();
   }
 }
 
@@ -121,39 +158,12 @@ function setupPresentationVideo() {
   }
 }
 
-// ─── Orchestration : vidéo intro → AI Neural Genesis → présentation ──
-// L'AI Neural Genesis est gardé en display:none tant que la vidéo d'ouverture
-// joue, puis réactivé (display:flex). Ça force ses @keyframes à redémarrer
-// proprement de 0 (brain, pulses, MAYDENI reveal, loader, crédit Dr. Slim
-// Lamouchi, puis introExit qui fait le fondu de sortie à 15 s + 1.2 s).
-function runAiIntroThenPresentation() {
-  const intro = document.getElementById('intro-overlay');
-
-  if (intro) {
-    intro.classList.remove('is-hold');      // réveille l'intro
-    // force un reflow pour que le passage display:none → flex redémarre les anims
-    // eslint-disable-next-line no-unused-expressions
-    intro.offsetHeight;
-  }
-
-  // Durée totale AI Neural Genesis : 16.5 s introExit delay + 1.2 s fade + marge
-  // Le crédit "Développé par Dr. Slim Lamouchi" (anim 9.5 s → 11 s) reste ainsi
-  // parfaitement visible entre 11 s et 16.5 s avant le fondu de sortie.
-  setTimeout(() => {
-    if (intro) intro.style.display = 'none';
-    setupPresentationVideo();
-  }, 18500);
-}
-
+// ─── Bootstrap : la séquence vidéo → intro AI → présentation est pilotée
+//     uniquement par setupOpeningVideo + playAiIntroThenPresentation. Le
+//     masquage final de l'intro est géré par playAiIntroThenPresentation
+//     (surtout PAS un setTimeout concurrent ici, sinon ça coupe l'AI intro).
 document.addEventListener('DOMContentLoaded', () => {
-  // Tant que la vidéo d'ouverture joue, on cache complètement l'AI Neural
-  // Genesis (display:none) — ses animations ne tourneront pas dans le vide
-  // derrière et repartiront fraîches quand on la dévoilera.
-  const intro = document.getElementById('intro-overlay');
-  if (intro) intro.classList.add('is-hold');
-
   setupOpeningVideo();
-
   setupNavbar();
   setupSmoothScroll();
   setupAnimations();

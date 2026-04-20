@@ -103,7 +103,11 @@
 </div>
 
 <!-- ════════════ INTRO — AI NEURAL GENESIS ════════════ -->
-<div id="intro-overlay">
+<!-- display:none inline garantit qu'aucune @keyframes ne tourne tant que
+     la vidéo d'ouverture joue : la séquence redémarrera proprement de 0
+     via clone-replace en JS, pour que Dr. Slim Lamouchi + MAYDENI soient
+     bien visibles avant la vidéo de présentation (avatar). -->
+<div id="intro-overlay" style="display:none">
     <canvas id="intro-neural"></canvas>
     <div class="intro-content">
         <!-- Phase 1: AI Brain materializes -->
@@ -906,13 +910,23 @@
 <script src="js/site.js"></script>
 <script>
 // ═══ AI NEURAL GENESIS — Cinematic Intro Engine ═══
-(function(){
+// Exposé en global pour pouvoir être relancé après que la vidéo d'ouverture
+// se termine (site.js clone #intro-overlay pour redémarrer les animations
+// CSS, et rappelle cette fonction pour redémarrer l'animation canvas).
+window.initMaydeniIntroCanvas = function(){
   const c = document.getElementById('intro-neural');
   if(!c) return;
   const ctx = c.getContext('2d');
   let W, H;
   function resize(){ W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
-  resize(); window.addEventListener('resize', resize);
+  resize();
+  if (!window.__maydeniResizeBound) {
+    window.addEventListener('resize', () => {
+      const cc = document.getElementById('intro-neural');
+      if (cc) { cc.width = window.innerWidth; cc.height = window.innerHeight; }
+    });
+    window.__maydeniResizeBound = true;
+  }
 
   // Neural network nodes
   const nodes = [];
@@ -1157,9 +1171,15 @@
   }
   draw();
 
-  // Remove overlay after animation
-  setTimeout(()=>{ const o=document.getElementById('intro-overlay'); if(o) o.remove(); }, 13500);
-})();
+  // NB : la suppression de #intro-overlay est désormais pilotée par site.js
+  // (playAiIntroThenPresentation), qui enchaîne sur la vidéo de présentation.
+  // Plus de setTimeout auto-destructeur ici.
+};
+// Premier lancement : on tente l'init immédiatement. Si l'overlay est en
+// display:none (cas nominal : la vidéo d'ouverture joue d'abord), le canvas
+// existe mais ne dessine rien visible. site.js relancera initMaydeniIntroCanvas
+// après le clone-replace pour une animation parfaitement fraîche.
+try { window.initMaydeniIntroCanvas(); } catch (e) { /* ignore */ }
 </script>
 <script>
 lucide.createIcons();
