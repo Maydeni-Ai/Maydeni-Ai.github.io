@@ -441,13 +441,13 @@
                         <span><i data-lucide="check" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="founder_perk1">Licence offerte</span></span>
                         <span><i data-lucide="check" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="founder_perk2">1er mois gratuit</span></span>
                         <span><i data-lucide="check" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="founder_perk3">Setup &amp; formation inclus</span></span>
-                        <span><i data-lucide="check" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="founder_perk4">Tarif bloqué à vie</span></span>
+                        <span><i data-lucide="check" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="founder_perk4">Support prioritaire à vie</span></span>
                         <span><i data-lucide="shield" style="width:14px;height:14px;vertical-align:middle;margin-right:4px;"></i> <span data-i18n="founder_perk5">Satisfait ou remboursé 60 jours</span></span>
                     </div>
                 </div>
                 <div class="founder-banner-right">
                     <div class="founder-banner-counter">
-                        <div class="founder-counter-num" id="founder-seats-left">7</div>
+                        <div class="founder-counter-num" id="founder-seats-left">10</div>
                         <div class="founder-counter-label" data-i18n="founder_seats_left">places restantes sur 10</div>
                     </div>
                     <a href="#contact" class="founder-banner-cta">
@@ -1226,6 +1226,27 @@ try { window.initMaydeniIntroCanvas(); } catch (e) { /* ignore */ }
 </script>
 <script>
 lucide.createIcons();
+
+// ─── Programme Fondateur : compteur dynamique (places restantes) ───
+(async function loadFounderSeats() {
+  var el = document.getElementById('founder-seats-left');
+  var banner = document.querySelector('.founder-banner');
+  if (!el) return;
+  try {
+    var res = await fetch('https://mega-supervision-api.onrender.com/api/public/founder-seats', { cache: 'no-store' });
+    if (!res.ok) return;
+    var data = await res.json();
+    var left = typeof data.seats_left === 'number' ? data.seats_left : null;
+    if (left === null) return;
+    el.textContent = left;
+    // Si le programme est clos, on masque élégamment la bannière.
+    if (left === 0 && banner) {
+      banner.style.display = 'none';
+    }
+  } catch (e) {
+    // Silence: on garde la valeur statique (fallback gracieux).
+  }
+})();
 
 // ─── Fetch live prices from API (with retry) ────────────────
 (async function loadLivePrices(attempt) {
