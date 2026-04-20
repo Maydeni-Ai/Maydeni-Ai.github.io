@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politique de confidentialité — Maydeni AI</title>
+<meta name="description" content="Politique de confidentialité et traitement des données personnelles Maydeni AI (RGPD / loi tunisienne 2004-63).">
+<link rel="icon" type="image/png" sizes="48x48" href="../img/logo-icon-48.png">
+<link rel="stylesheet" href="_shared.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html" class="brand">MAYDENI</a>
+  <div>
+    <a href="./mentions-legales.html">Mentions</a>
+    &nbsp;·&nbsp;
+    <a href="./cgv.html">CGV</a>
+    &nbsp;·&nbsp;
+    <a href="./confidentialite.html">Confidentialité</a>
+  </div>
+</nav>
+
+<main class="page">
+  <h1>Politique de confidentialité</h1>
+  <p class="lead">Nous respectons votre vie privée. Voici comment sont traitées les données au sein de Maydeni AI.</p>
+
+  <div class="meta">
+    <strong>Dernière mise à jour :</strong> 20 avril 2026 &nbsp;·&nbsp;
+    <strong>Version :</strong> 1.0 &nbsp;·&nbsp;
+    <strong>Cadres applicables :</strong> RGPD (UE 2016/679) et loi tunisienne n° 2004-63 du 27 juillet 2004.
+  </div>
+
+  <h2>1. Qui sommes-nous ?</h2>
+  <p>Le responsable de la publication du service <strong>Maydeni AI</strong> est Dr. Slim Lamouchi, domicilié en Tunisie (coordonnées complètes dans les <a href="./mentions-legales.html">Mentions légales</a>).</p>
+  <p><strong>Délégué à la protection des données (DPO) :</strong> <a href="mailto:privacy@maydeni.ai">privacy@maydeni.ai</a></p>
+
+  <h2>2. Rôles : responsable vs. sous-traitant</h2>
+  <ul>
+    <li><strong>Pour le site vitrine public</strong> (formulaires de contact, inscription, navigation), Maydeni AI agit en qualité de <em>responsable de traitement</em>.</li>
+    <li><strong>Pour les données saisies dans la plateforme par les Clients</strong> (prospects, clients finaux, agents, commandes, positions GPS), Maydeni AI agit en qualité de <em>sous-traitant</em>, le Client étant le responsable de traitement de ces données.</li>
+  </ul>
+
+  <h2>3. Données collectées</h2>
+  <table>
+    <tr><th>Catégorie</th><th>Exemples</th><th>Finalité</th><th>Base légale</th></tr>
+    <tr><td>Identité Client</td><td>Nom société, email, téléphone, matricule fiscal</td><td>Souscription, facturation, support</td><td>Exécution du contrat</td></tr>
+    <tr><td>Identité Utilisateur</td><td>Nom, email, téléphone, rôle, mot de passe hashé (bcrypt)</td><td>Authentification, sécurité</td><td>Exécution du contrat</td></tr>
+    <tr><td>Données d'usage</td><td>Logs de connexion, IP, user-agent</td><td>Sécurité, détection d'anomalies</td><td>Intérêt légitime</td></tr>
+    <tr><td>Données métier</td><td>Prospects, commandes, catalogue, positions GPS des agents</td><td>Fonctionnement du Service</td><td>Contrat / Client responsable</td></tr>
+    <tr><td>Paiement</td><td>N° facture, montant, date, référence transaction</td><td>Facturation légale</td><td>Obligation légale</td></tr>
+  </table>
+  <p><strong>Maydeni AI ne stocke aucun numéro de carte bancaire en clair.</strong> Le traitement est délégué au prestataire de paiement (Stripe ou Paymee) certifié PCI-DSS.</p>
+
+  <h2>4. Durées de conservation</h2>
+  <ul>
+    <li>Données de compte actif : pendant toute la durée de la relation contractuelle.</li>
+    <li>Après résiliation : 30 jours (période d'export) puis suppression définitive dans un délai maximum de 90 jours.</li>
+    <li>Données de facturation : 10 ans (obligation légale tunisienne en matière comptable).</li>
+    <li>Logs de sécurité : 12 mois.</li>
+  </ul>
+
+  <h2>5. Destinataires et sous-traitants</h2>
+  <p>Les données sont hébergées et traitées par les sous-traitants suivants, situés aux États-Unis, avec lesquels des garanties contractuelles appropriées (clauses contractuelles types) ont été mises en place :</p>
+  <table>
+    <tr><th>Sous-traitant</th><th>Rôle</th><th>Localisation</th></tr>
+    <tr><td>Render Services Inc.</td><td>Hébergement backend &amp; base de données PostgreSQL</td><td>États-Unis</td></tr>
+    <tr><td>GitHub Inc.</td><td>Hébergement frontend (GitHub Pages)</td><td>États-Unis</td></tr>
+    <tr><td>Stripe Payments</td><td>Traitement des paiements cartes internationales</td><td>Irlande / États-Unis</td></tr>
+    <tr><td>Paymee</td><td>Traitement des paiements Tunisie</td><td>Tunisie</td></tr>
+  </table>
+
+  <h2>6. Sécurité</h2>
+  <ul>
+    <li>Chiffrement TLS 1.3 pour tous les échanges.</li>
+    <li>Mots de passe hachés avec bcrypt (12 rounds).</li>
+    <li>Jetons JWT signés et limités dans le temps.</li>
+    <li>Isolation multi-tenant stricte au niveau base de données.</li>
+    <li>Journalisation des accès sensibles et détection d'anomalies.</li>
+    <li>Sauvegardes automatiques quotidiennes, rétention 7 jours.</li>
+    <li>Audit de sécurité régulier (0 vulnérabilité npm au dernier audit).</li>
+  </ul>
+
+  <h2>7. Vos droits</h2>
+  <p>Conformément au RGPD (art. 15 à 22) et à la loi tunisienne 2004-63, vous disposez à tout moment des droits suivants :</p>
+  <ul>
+    <li><strong>Accès</strong> à vos données personnelles.</li>
+    <li><strong>Rectification</strong> des données inexactes.</li>
+    <li><strong>Effacement</strong> (« droit à l'oubli ») sauf obligation légale contraire.</li>
+    <li><strong>Limitation</strong> du traitement.</li>
+    <li><strong>Portabilité</strong> (export au format structuré).</li>
+    <li><strong>Opposition</strong> au traitement pour motif légitime.</li>
+    <li><strong>Retrait du consentement</strong> à tout moment, sans affecter la licéité du traitement antérieur.</li>
+  </ul>
+  <p>Pour exercer ces droits, écrivez à <a href="mailto:privacy@maydeni.ai">privacy@maydeni.ai</a>. Nous répondons sous 30 jours maximum. En cas de litige, vous pouvez saisir l'<strong>Instance Nationale de Protection des Données Personnelles (INPDP)</strong> en Tunisie, ou la CNIL (France) / l'autorité de contrôle compétente dans votre pays de résidence dans l'UE.</p>
+
+  <h2>8. Cookies</h2>
+  <p>Le site <code>maydeni-ai.github.io</code> utilise un nombre minimal de cookies techniques strictement nécessaires au fonctionnement (préférence de langue, session d'authentification). Aucun cookie tiers publicitaire ou de suivi cross-site n'est déposé.</p>
+
+  <h2>9. Transferts hors Tunisie / UE</h2>
+  <p>Compte tenu de l'hébergement chez Render et GitHub, certaines données peuvent transiter par les États-Unis. Nous encadrons ces transferts via les clauses contractuelles types de la Commission européenne, conformément aux articles 46 du RGPD.</p>
+
+  <h2>10. Modifications</h2>
+  <p>Toute mise à jour substantielle de la présente politique sera notifiée aux Utilisateurs actifs par email et/ou bannière sur le tableau de bord, au moins 15 jours avant son entrée en vigueur.</p>
+
+  <div class="contact-box">
+    <h3>Exercer un droit RGPD</h3>
+    <p>Email dédié : <a href="mailto:privacy@maydeni.ai">privacy@maydeni.ai</a></p>
+    <p>Nous répondons à toute demande sous 30 jours, gratuitement.</p>
+  </div>
+
+  <div class="footer-legal">
+    © 2026 Maydeni AI — Tous droits réservés &nbsp;·&nbsp;
+    <a href="./mentions-legales.html">Mentions légales</a>
+    <a href="./cgv.html">CGV</a>
+    <a href="./confidentialite.html">Confidentialité</a>
+    <a href="../index.html">Retour à l'accueil</a>
+  </div>
+</main>
+</body>
+</html>
