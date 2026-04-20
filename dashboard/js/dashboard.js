@@ -2955,7 +2955,7 @@ async function loadSubscriptions() {
 
       <div class="grid-3" style="gap:20px;">
         ${plans.map(p => {
-          const licensePrices = { starter: 1500, pro: 3500, enterprise: 6000 };
+          const licensePrices = { starter: 1500, pro: 2990, enterprise: 5990 };
           const licPrice = p.license_price_dt ? Math.round(parseFloat(p.license_price_dt)) : (licensePrices[p.name] || 0);
           return `
           <div class="card" style="padding:24px;border:2px solid ${p.name === 'pro' ? 'var(--primary)' : '#e5e7eb'};">
@@ -5472,10 +5472,15 @@ async function loadLicensesSection() {
           ? `<span style="color:var(--text-light);font-size:11px;">Liée à ${client}</span>`
           : '<span style="color:var(--text-light);font-size:11px;">—</span>';
 
+        const isGift = parseFloat(l.price_dt) === 0;
+        const priceCell = isGift
+          ? `<span style="background:linear-gradient(135deg,#E8A93C,#F4C26B);color:#2B1B00;padding:4px 10px;border-radius:20px;font-weight:700;font-size:11px;letter-spacing:0.5px;">🎁 CADEAU${l.free_months > 1 ? ' · ' + l.free_months + ' mois' : ''}</span>`
+          : `${parseFloat(l.price_dt).toLocaleString()} ${TENANT_CURRENCY_SYMBOL} <small style="font-size:.75em;opacity:.5">HT</small>`;
+
         return `<tr style="border-bottom:1px solid var(--border-color);">
           <td style="padding:10px 16px;font-family:monospace;font-weight:700;letter-spacing:1px;">${l.license_key}</td>
           <td style="padding:10px 16px;">${l.plan_name}</td>
-          <td style="padding:10px 16px;text-align:right;font-weight:600;">${parseFloat(l.price_dt).toLocaleString()} ${TENANT_CURRENCY_SYMBOL} <small style="font-size:.75em;opacity:.5">HT</small></td>
+          <td style="padding:10px 16px;text-align:right;font-weight:600;">${priceCell}</td>
           <td style="padding:10px 16px;text-align:center;">${statusBadge}</td>
           <td style="padding:10px 16px;">${client}</td>
           <td style="padding:10px 16px;color:var(--text-light);">${date}</td>
@@ -5522,9 +5527,9 @@ function showGenerateLicenseModal() {
         <div style="margin-bottom:16px;">
           <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px;">Forfait</label>
           <select id="gen-plan" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;font-size:14px;">
-            <option value="1">Starter — 5 agents — 1 500 ${TENANT_CURRENCY_SYMBOL}</option>
-            <option value="2">Pro — 12 agents — 3 500 ${TENANT_CURRENCY_SYMBOL}</option>
-            <option value="3">Enterprise — Illimité — 6 000 ${TENANT_CURRENCY_SYMBOL}</option>
+            <option value="1">Starter — 3 agents — 1 500 ${TENANT_CURRENCY_SYMBOL}</option>
+            <option value="2">Pro — 5 agents — 2 990 ${TENANT_CURRENCY_SYMBOL}</option>
+            <option value="3">Enterprise — Illimité — 5 990 ${TENANT_CURRENCY_SYMBOL}</option>
           </select>
         </div>
         <div style="margin-bottom:16px;">
@@ -5546,6 +5551,139 @@ function showGenerateLicenseModal() {
     </div>
   `;
   document.body.appendChild(modal);
+}
+
+// ═══════════════════════════════════════════════════════════
+// GIFT LICENSE — Admin offre une licence complète à qui il veut
+// (licence + X mois d'abonnement offerts, prix 0 DT)
+// ═══════════════════════════════════════════════════════════
+function showGiftLicenseModal() {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal" style="max-width:520px;">
+      <div class="modal-header" style="background:linear-gradient(135deg,#E8A93C,#F4C26B);color:#2B1B00;">
+        <h2 style="margin:0;display:flex;align-items:center;gap:8px;">
+          <i data-lucide="gift" style="width:22px;height:22px;"></i>
+          Offrir une licence
+        </h2>
+        <button class="modal-close" onclick="this.closest('.modal-overlay').remove()" style="color:#2B1B00;">&times;</button>
+      </div>
+      <div class="modal-body" style="padding:24px;">
+        <div style="background:#FEF3C7;border-left:4px solid #E8A93C;padding:12px 14px;border-radius:8px;margin-bottom:20px;font-size:13px;color:#78350F;">
+          🎁 Un cadeau complet : licence one-time + nombre de mois d'abonnement inclus, totalement offerts. Le bénéficiaire n'a rien à payer pendant cette période.
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px;">Forfait offert</label>
+          <select id="gift-plan" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;font-size:14px;">
+            <option value="1">Starter — 1 à 3 agents</option>
+            <option value="2" selected>Pro — 1 à 5 agents</option>
+            <option value="3">Enterprise — 6 agents et +</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px;">Durée d'abonnement offerte</label>
+          <select id="gift-months" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;font-size:14px;">
+            <option value="1">1 mois</option>
+            <option value="3" selected>3 mois</option>
+            <option value="6">6 mois</option>
+            <option value="12">12 mois (1 an)</option>
+            <option value="24">24 mois (2 ans)</option>
+          </select>
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px;">Nom du bénéficiaire <span style="color:#EF4444;">*</span></label>
+          <input type="text" id="gift-name" placeholder="Ex: Ahmed Ben Salah / Société XYZ" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;font-size:14px;box-sizing:border-box;">
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px;">Email (optionnel — la clé sera envoyée automatiquement)</label>
+          <input type="email" id="gift-email" placeholder="beneficiaire@email.com" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;font-size:14px;box-sizing:border-box;">
+        </div>
+
+        <div style="margin-bottom:16px;">
+          <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px;">Téléphone (optionnel)</label>
+          <input type="text" id="gift-phone" placeholder="+216 XX XXX XXX" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;font-size:14px;box-sizing:border-box;">
+        </div>
+
+        <div style="margin-bottom:20px;">
+          <label style="display:block;font-weight:600;margin-bottom:6px;font-size:13px;">Message personnel (optionnel)</label>
+          <textarea id="gift-message" rows="3" placeholder="Ex: Merci pour ton aide précieuse au lancement !" style="width:100%;padding:10px;border:1px solid var(--border-color);border-radius:8px;font-size:14px;box-sizing:border-box;resize:vertical;"></textarea>
+        </div>
+
+        <button onclick="giftLicense()" class="btn-primary" style="width:100%;padding:14px;font-size:15px;font-weight:700;background:linear-gradient(135deg,#E8A93C,#F4C26B);color:#2B1B00;border:none;">
+          <i data-lucide="gift" style="width:16px;height:16px;display:inline;vertical-align:middle;margin-right:6px;"></i>
+          Générer le cadeau
+        </button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+async function giftLicense() {
+  const plan_id = parseInt(document.getElementById('gift-plan').value);
+  const free_months = parseInt(document.getElementById('gift-months').value);
+  const recipient_name = document.getElementById('gift-name').value.trim();
+  const recipient_email = document.getElementById('gift-email').value.trim();
+  const recipient_phone = document.getElementById('gift-phone').value.trim();
+  const gift_message = document.getElementById('gift-message').value.trim();
+
+  if (!recipient_name) {
+    showToast('Le nom du bénéficiaire est obligatoire', 'error');
+    return;
+  }
+
+  try {
+    const data = await api.post('/licenses/gift', {
+      plan_id, free_months, recipient_name, recipient_email, recipient_phone, gift_message,
+    });
+
+    document.querySelector('.modal-overlay').remove();
+
+    if (data.license) {
+      const lic = data.license;
+      const keyModal = document.createElement('div');
+      keyModal.className = 'modal-overlay';
+      keyModal.innerHTML = `
+        <div class="modal" style="max-width:540px;text-align:center;">
+          <div class="modal-body" style="padding:32px;">
+            <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#E8A93C,#F4C26B);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;">
+              <i data-lucide="gift" style="width:34px;height:34px;color:#2B1B00;"></i>
+            </div>
+            <h2 style="margin:0 0 8px;">🎁 Cadeau prêt !</h2>
+            <p style="color:var(--text-light);margin:0 0 4px;font-size:14px;">
+              <strong>${lic.plan}</strong> offert à <strong>${escHtml(lic.recipient_name)}</strong>
+            </p>
+            <p style="color:var(--text-light);margin:0 0 20px;font-size:13px;">
+              ${lic.free_months} mois d'abonnement inclus
+              ${lic.email_sent ? '· ✉️ Email envoyé' : ''}
+            </p>
+            <div style="background:linear-gradient(135deg,#0D6B6E,#094D4F);border-radius:12px;padding:20px;margin-bottom:20px;">
+              <div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.7);margin-bottom:6px;">Clé de licence</div>
+              <div style="font-family:monospace;font-size:22px;font-weight:800;letter-spacing:3px;color:#FFF;">${lic.license_key}</div>
+            </div>
+            <p style="font-size:12px;color:var(--text-light);margin-bottom:20px;">
+              Cette clé est utilisable une seule fois. ${lic.email_sent ? 'Le bénéficiaire a reçu un email avec la clé.' : 'Transmettez-la au bénéficiaire.'}
+            </p>
+            <button onclick="copyLicenseKey('${lic.license_key}');this.closest('.modal-overlay').remove();" class="btn-primary" style="width:100%;padding:12px;font-size:15px;">
+              Copier la clé & Fermer
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(keyModal);
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    loadLicensesSection();
+  } catch (err) {
+    showToast('Erreur: ' + (err.message || 'Création du cadeau échouée'), 'error');
+  }
 }
 
 async function generateLicense() {

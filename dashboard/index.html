@@ -1259,12 +1259,17 @@
         <section id="section-licenses" class="section admin-only">
             <div class="section-header">
                 <h1><i data-lucide="key-round" style="width:24px;height:24px;display:inline;vertical-align:middle;margin-right:8px;"></i> Gestion des Licences</h1>
-                <button class="btn-primary" onclick="showGenerateLicenseModal()" style="margin-left:auto;display:flex;align-items:center;gap:6px;">
-                    <i data-lucide="plus" style="width:16px;height:16px;"></i> Générer une licence
-                </button>
+                <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+                    <button class="btn-primary" onclick="showGiftLicenseModal()" style="display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#E8A93C,#F4C26B);color:#2B1B00;border:none;">
+                        <i data-lucide="gift" style="width:16px;height:16px;"></i> Offrir une licence
+                    </button>
+                    <button class="btn-primary" onclick="showGenerateLicenseModal()" style="display:flex;align-items:center;gap:6px;">
+                        <i data-lucide="plus" style="width:16px;height:16px;"></i> Générer une licence
+                    </button>
+                </div>
             </div>
             <p style="color:var(--text-light);font-size:14px;margin-bottom:20px;">
-                Chaque client doit acheter une licence unique (one-time) avant de s'abonner. La licence active le compte, le calibrage commence, puis l'abonnement (1 mois offert) démarre automatiquement.
+                Chaque client achète une licence unique (one-time) avant de s'abonner. Vous pouvez aussi <strong>offrir</strong> une licence complète avec mois d'abonnement inclus — idéal pour remercier vos alliés, partenaires ou early supporters.
             </p>
 
             <!-- License stats -->

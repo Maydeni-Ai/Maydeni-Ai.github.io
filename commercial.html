@@ -86,21 +86,12 @@
     margin-bottom: 16px;
   }
   .brand-block { display: flex; align-items: center; gap: 14px; }
-  .logo-mark {
-    width: 56px; height: 56px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 900;
-    font-size: 28px;
-    letter-spacing: -2px;
-    box-shadow: 0 4px 14px rgba(13,107,110,0.3);
+  .logo-img {
+    height: 54px;
+    width: auto;
+    display: block;
   }
-  .brand-name { font-size: 28px; font-weight: 900; letter-spacing: 3px; color: var(--primary-dark); }
-  .brand-tag { font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+  .brand-tag { font-size: 11px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; font-weight: 600; }
   .header-right { text-align: right; font-size: 11px; color: var(--muted); line-height: 1.6; }
   .header-right strong { color: var(--primary-dark); font-size: 12px; }
 
@@ -235,22 +226,69 @@
   .vp-num { font-size: 20px; font-weight: 900; color: var(--primary); }
   .vp-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
-  /* CTA / Contact */
+  /* CTA / Contact — harmonisé avec le reste de la charte */
   .cta {
-    background: linear-gradient(90deg, var(--gold), #F4C26B);
-    color: #2B1B00;
-    border-radius: 10px;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    color: #fff;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(232,169,60,0.25);
+    box-shadow: 0 6px 22px rgba(13,107,110,0.18);
+    position: relative;
+    overflow: hidden;
   }
-  .cta-title { font-size: 14px; font-weight: 800; letter-spacing: 0.5px; }
-  .cta-sub { font-size: 10.5px; opacity: 0.85; margin-top: 2px; }
-  .cta-right { text-align: right; }
-  .cta-contact { font-weight: 700; font-size: 13px; }
-  .cta-contact-sub { font-size: 10px; opacity: 0.75; }
+  .cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 90% 50%, rgba(232,169,60,0.18), transparent 55%);
+    pointer-events: none;
+  }
+  .cta-content { position: relative; z-index: 1; }
+  .cta-title {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    margin-bottom: 4px;
+    color: #fff;
+  }
+  .cta-title .cta-icon {
+    display: inline-block;
+    color: var(--gold);
+    margin-right: 6px;
+  }
+  .cta-sub { font-size: 11px; opacity: 0.85; color: rgba(255,255,255,0.9); }
+  .cta-right {
+    position: relative;
+    z-index: 1;
+    text-align: right;
+    padding-left: 18px;
+    border-left: 1px solid rgba(232,169,60,0.35);
+  }
+  .cta-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .cta-contact {
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    letter-spacing: 0.3px;
+  }
+  .cta-contact-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.7);
+    margin-top: 2px;
+  }
 
   /* Footer */
   .footer {
@@ -291,15 +329,14 @@
 
   <header class="header">
     <div class="brand-block">
-      <div class="logo-mark">M</div>
+      <img src="img/logo-full.png" alt="Maydeni AI" class="logo-img">
       <div>
-        <div class="brand-name">MAYDENI AI</div>
         <div class="brand-tag">Smart Field Operations · v1.0</div>
       </div>
     </div>
     <div class="header-right">
       <strong>Dr. Slim Lamouchi — Fondateur</strong><br>
-      contact@maydeni.ai<br>
+      Maydeni@outlook.fr<br>
       maydeni-ai.github.io<br>
       Édition du 20 avril 2026
     </div>
@@ -395,13 +432,14 @@
 
   <!-- CTA -->
   <section class="cta">
-    <div>
-      <div class="cta-title">🎯 Démo gratuite 15 minutes</div>
-      <div class="cta-sub">Voyez votre activité pilotée en temps réel avec Maydeni AI.</div>
+    <div class="cta-content">
+      <div class="cta-title"><span class="cta-icon">🎯</span>Démo gratuite — 15 minutes chrono</div>
+      <div class="cta-sub">Voyez votre activité pilotée en temps réel, données réelles, sans engagement.</div>
     </div>
     <div class="cta-right">
-      <div class="cta-contact">contact@maydeni.ai</div>
-      <div class="cta-contact-sub">WhatsApp Business : à compléter</div>
+      <div class="cta-label">Contact direct</div>
+      <div class="cta-contact">Maydeni@outlook.fr</div>
+      <div class="cta-contact-sub">Dr. Slim Lamouchi — Fondateur</div>
     </div>
   </section>
 
