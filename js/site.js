@@ -2,34 +2,19 @@
  * Maydeni AI — Site Web JS
  */
 
-// ─── Clés de session (versionnées pour invalider les anciens flags) ───
-const SS_INTRO_KEY = 'maydeni_intro_played_v3';
-const SS_PRES_KEY  = 'maydeni_presentation_played_v3';
+// Mode "validation" : les 2 vidéos jouent à CHAQUE chargement (pas de
+// sessionStorage). Pour revenir à "1 fois par session" plus tard, réactiver
+// le garde-fou sessionStorage ci-dessous (clé versionnée à bumper à chaque
+// changement de contenu vidéo : _vN).
 
-// URL ?replay=1  → force la relecture complète (utile pour les tests / demos)
-(function cleanSessionOnReplay() {
-  try {
-    if (new URL(window.location.href).searchParams.get('replay') === '1') {
-      sessionStorage.removeItem(SS_INTRO_KEY);
-      sessionStorage.removeItem(SS_PRES_KEY);
-    }
-  } catch (e) { /* ignore */ }
-})();
-
-// ─── Vidéo d'ouverture plein écran (1 fois par session) ──
+// ─── Vidéo d'ouverture plein écran ──────────────────────
 // Joue la vidéo plein écran AVANT l'intro AI Neural Genesis.
 // Se ferme à la fin, sur clic "Passer", ou après 20 s max.
 function setupOpeningVideo() {
   const overlay = document.getElementById('video-intro-overlay');
   const video   = document.getElementById('video-intro');
   const skipBtn = document.getElementById('video-intro-skip');
-  if (!overlay || !video) return;
-
-  let alreadyShown = false;
-  try { alreadyShown = sessionStorage.getItem(SS_INTRO_KEY) === '1'; } catch (e) { /* ignore */ }
-
-  if (alreadyShown) {
-    overlay.remove();
+  if (!overlay || !video) {
     runAiIntroThenPresentation();
     return;
   }
@@ -37,7 +22,6 @@ function setupOpeningVideo() {
   const hide = () => {
     if (overlay.classList.contains('is-hidden')) return;
     overlay.classList.add('is-hidden');
-    try { sessionStorage.setItem(SS_INTRO_KEY, '1'); } catch (e) { /* ignore */ }
     setTimeout(() => {
       overlay.remove();
       runAiIntroThenPresentation();
@@ -56,7 +40,6 @@ function setupOpeningVideo() {
 }
 
 // ─── Vidéo de présentation (cadre futuriste) ──────────────
-// Auto-skip si déjà vue dans la session.
 function setupPresentationVideo() {
   const overlay = document.getElementById('presentation-overlay');
   const video   = document.getElementById('presentation-video');
@@ -64,18 +47,9 @@ function setupPresentationVideo() {
   const soundBtn = document.getElementById('presentation-sound');
   if (!overlay || !video) return;
 
-  let alreadyShown = false;
-  try { alreadyShown = sessionStorage.getItem(SS_PRES_KEY) === '1'; } catch (e) { /* ignore */ }
-
-  if (alreadyShown) {
-    overlay.remove();
-    return;
-  }
-
   const hide = () => {
     if (overlay.classList.contains('is-leaving')) return;
     overlay.classList.add('is-leaving');
-    try { sessionStorage.setItem(SS_PRES_KEY, '1'); } catch (e) { /* ignore */ }
     try { video.pause(); } catch (e) { /* ignore */ }
     setTimeout(() => overlay.remove(), 750);
   };
@@ -162,11 +136,13 @@ function runAiIntroThenPresentation() {
     intro.offsetHeight;
   }
 
-  // Durée totale AI Neural Genesis : 15 s + 1.2 s fade out + petite marge
+  // Durée totale AI Neural Genesis : 16.5 s introExit delay + 1.2 s fade + marge
+  // Le crédit "Développé par Dr. Slim Lamouchi" (anim 9.5 s → 11 s) reste ainsi
+  // parfaitement visible entre 11 s et 16.5 s avant le fondu de sortie.
   setTimeout(() => {
     if (intro) intro.style.display = 'none';
     setupPresentationVideo();
-  }, 16800);
+  }, 18500);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
