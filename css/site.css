@@ -321,7 +321,7 @@ body {
   position: fixed; inset: 0; background: #030B0C; z-index: 10000;
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
-  animation: introExit 1.2s cubic-bezier(0.77,0,0.175,1) 12s forwards;
+  animation: introExit 1.2s cubic-bezier(0.77,0,0.175,1) 16s forwards;
 }
 
 #intro-neural { position: absolute; inset: 0; z-index: 1; }

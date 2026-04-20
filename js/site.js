@@ -15,11 +15,20 @@
 // CSS (technique garantie par la spec DOM).
 // ═══════════════════════════════════════════════════════════
 
-// Durée totale de l'AI Neural Genesis (en ms). Le crédit Dr. Slim Lamouchi
-// s'affiche à ~9,5 s, le fondu de sortie `introExit` démarre à 12 s et dure
-// 1,2 s. On laisse 13,8 s pour que tout soit confortablement visible avant
-// d'entrer sur le site.
-const AI_INTRO_DURATION_MS = 13800;
+// Durée totale de l'AI Neural Genesis (en ms).
+// Timeline CSS (timings des @keyframes dans site.css) :
+//   0,5 s  → le réseau neuronal prend forme
+//   2,5 s  → texte "AI"
+//   6,5 s  → genèse du logo MAYDENI
+//   8 s    → wrap de la marque apparait
+//   8,5 s  → loader bar se remplit
+//   9,5 s  → crédit "Développé par le Dr. Slim Lamouchi" fade-in (1,5 s)
+//   11 s   → crédit pleinement visible
+//   16 s   → `introExit` démarre (fondu 1,2 s)
+//   17,2 s → overlay à opacité 0
+// On laisse 17,6 s pour assurer que la sortie soit complètement terminée
+// (le crédit reste affiché pleinement de 11 s à 16 s = 5 s de lecture).
+const AI_INTRO_DURATION_MS = 17600;
 
 // ─── 1. Vidéo d'ouverture plein écran ────────────────────
 // Attend que le navigateur ait assez buffé (`canplay`) avant de lancer la
@@ -36,11 +45,15 @@ function setupOpeningVideo() {
   let played = false;
   const hide = () => {
     if (overlay.classList.contains('is-hidden')) return;
-    overlay.classList.add('is-hidden');
-    setTimeout(() => {
-      overlay.remove();
-      setupPresentationVideo();
-    }, 700);
+    // CROSS-FADE : on démarre la présentation (qui est derrière à z:10040)
+    // AVANT de faire disparaître l'overlay d'ouverture (z:10050). Pas de
+    // flash du site entre les deux étapes.
+    setupPresentationVideo();
+    // Délai minimal pour laisser l'avatar commencer à s'afficher, puis fondu.
+    requestAnimationFrame(() => {
+      overlay.classList.add('is-hidden');
+      setTimeout(() => overlay.remove(), 700);
+    });
   };
 
   // Démarre la lecture seulement quand il y a assez de buffer pour lire
@@ -108,12 +121,14 @@ function setupPresentationVideo() {
 
   const hide = () => {
     if (overlay.classList.contains('is-leaving')) return;
-    overlay.classList.add('is-leaving');
+    // CROSS-FADE : on révèle l'AI Neural Genesis (z:10000, en dessous)
+    // AVANT de faire disparaître l'avatar (z:10040). Pas de flash du site.
+    playAiNeuralGenesis();
     try { video.pause(); } catch (e) { /* ignore */ }
-    setTimeout(() => {
-      overlay.remove();
-      playAiNeuralGenesis();
-    }, 700);
+    requestAnimationFrame(() => {
+      overlay.classList.add('is-leaving');
+      setTimeout(() => overlay.remove(), 700);
+    });
   };
 
   overlay.classList.add('is-visible');
@@ -177,9 +192,22 @@ function setupPresentationVideo() {
 
   setTimeout(hide, 90000);
 
-  const tryPlay = video.play();
-  if (tryPlay && typeof tryPlay.catch === 'function') {
-    tryPlay.catch(() => { /* l'utilisateur pourra cliquer sur Suivant */ });
+  // Attend que l'avatar puisse lire fluidement avant de lancer la lecture.
+  let avatarStarted = false;
+  const startAvatar = () => {
+    if (avatarStarted) return;
+    avatarStarted = true;
+    const tryPlay = video.play();
+    if (tryPlay && typeof tryPlay.catch === 'function') {
+      tryPlay.catch(() => { /* l'utilisateur pourra cliquer sur Suivant */ });
+    }
+  };
+  if (video.readyState >= 3) {
+    startAvatar();
+  } else {
+    video.addEventListener('canplay', startAvatar, { once: true });
+    // Garde-fou réseau lent : démarre au bout de 1,5 s même sans canplay.
+    setTimeout(startAvatar, 1500);
   }
 }
 
