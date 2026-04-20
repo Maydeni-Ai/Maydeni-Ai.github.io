@@ -4657,8 +4657,8 @@ function setupDemoAPI(plan, config) {
     subscription: {
       plan: plan.charAt(0).toUpperCase() + plan.slice(1),
       plan_name: plan,
-      price_dt: plan === 'starter' ? 99 : plan === 'pro' ? 199 : 399,
-      max_delegates: plan === 'starter' ? 5 : plan === 'pro' ? 12 : -1,
+      price_dt: plan === 'starter' ? 99 : plan === 'pro' ? 249 : 499,
+      max_delegates: plan === 'starter' ? 3 : plan === 'pro' ? 5 : 9999,
       status: 'active',
       start_date: new Date(Date.now() - 90 * 86400000).toISOString(),
       expires_at: new Date(Date.now() + 270 * 86400000).toISOString(),
